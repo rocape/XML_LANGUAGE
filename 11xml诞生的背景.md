@@ -14,7 +14,7 @@
 
 * eXtensible Markup Language （XML）
 
- ### 标记语言（ML）的发展过程
+ #### 标记语言（ML）的发展过程
 
  **1.SGML （Standard Generalized Markup Language）**
 
@@ -28,7 +28,7 @@
 
 * 经历了HTML 1.0、HTML 2.0、HTML 3.0和HTML 4.0等多个版本，同时DHTML（ 动态HTML实际上是script+css+html）、VHTML（虚拟HTML用于在浏览器中浏览三维对象的技术）、SHTML（一种服务器API）等技术逐步出现。
 
-###标记语言存在的问题
+####标记语言存在的问题
 
 * HTML包含许多内置标记，比如&lt;head>、&lt;table>等都是在HTML 4.0里规范和定义。每一种标记的意义都非常明确，用于表示如何在浏览器中显示相应的数据，比如使用表格、或者采用粗体字体。
 
