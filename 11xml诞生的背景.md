@@ -1,10 +1,6 @@
 ## 第一章 XML的技术背景及其发展
 
-
-
 ### 1.1 XML诞生的背景
-
-
 
 * 专用数据格式：Proprietary Data Format（与生成厂商、平台密切相关）
 
@@ -18,15 +14,9 @@
 
 * eXtensible Markup Language （XML）
 
-
-
  ### 标记语言（ML）的发展过程
 
-
-
  **1.SGML （Standard Generalized Markup Language）**
-
-
 
 * SGML是一种通用的文档结构描述符号化语言，主要用来定义文献模型的逻辑和物理结构，一个SGML语言文件由三部分组成，即语法定义，文件类型定义DTD和文件实例。
 
@@ -42,22 +32,21 @@
 
 * HTML包含许多内置标记，比如&lt;head>、&lt;table>等都是在HTML 4.0里规范和定义。每一种标记的意义都非常明确，用于表示如何在浏览器中显示相应的数据，比如使用表格、或者采用粗体字体。
 
-``` 
-    <html> 
-    <head> <title>Title of page</title> </head>
-    <body> This is my first homepage. <br/>
-    <b>Hello World!</b>
-    </body>
-    </html>
+```
+ <html>
+ <head> <title>Title of page</title> </head>
+ <body> This is my first homepage. <br/>
+ <b>Hello World!</b>
+ </body>
+ </html>
 ```
 
-* 当然，HTML也无法解决所有信息的显式，比如化学公式、音乐符号等其他形态的内容。
+* 当然，HTML也无法解决所有信息的显式，比如化学 公式、音乐符号等其他形态的内容。
 
 * 一方面，随着Web的飞速发展，网络成为了一个庞大的数据库，人们需要从中搜索、甄别、挑选出自己感兴趣的信息。
+
 * 另一方面，对于HTML文档来说，除了便于在浏览器中进行显示之外，要使用计算机程序对其进行复杂的处理非常困难。
 
 * 为了解决前面提出的问题，专家们使用SGML标准并依照HTML的发展经验，提出一套使用上规则严谨，但是语法简单的信息描述语言：XML（eXtensible Markup Language）。
 
 * XML的目的是以一种更中立的方式，让用户自行决定要如何理解、呈现从服务端所ᨀ供的信息，而着重表示数据以及数据之间的联系。
-
-###1.2XML的特点及技术
