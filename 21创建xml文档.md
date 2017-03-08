@@ -1,0 +1,1 @@
+2.1 创建XML文档 nn可以利用任何的文字编辑器来创建和编辑XML文档 nn也可以采用专业的开发环境来创建和编辑XML文档（XMLSpy, Eclipse）2.1 创建XML文档 nn扩展名(.xml) qq其他扩展名(.dtd, .xsd, .xslt)nn文档结构、逻辑和层次关系 nnXML是包装在XML标签中的纯粹的信息 nn使用软件或程序来传送、接收和显示信息 nn对XML树的操作：增、删、改、查 
