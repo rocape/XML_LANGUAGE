@@ -40,7 +40,14 @@
 
 ###标记语言存在的问题
 
-* HTML包含许多内置标记，比如<head>、<table>等都是在HTML 4.0里规范和定义。每一种标记的意义都非常明确，用于表示如何在浏览器中显示相应的数
+* HTML包含许多内置标记，比如&lt;head>、&lt;table>等都是在HTML 4.0里规范和定义。每一种标记的意义都非常明确，用于表示如何在浏览器中显示相应的数据，比如使用表格、或者采用粗体字体。
+
+    <html>
+    <head> <title>Title of page</title> </head>
+    <body> This is my first homepage. <br/>
+    <b>Hello World!</b>
+    </body>
+    </html>
 
 
 
