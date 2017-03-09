@@ -18,7 +18,28 @@
     * [4.3DTD的声明](43dtd的声明.md)
     * [4.4DTD的语法](44dtd的语法.md)
 * 第五章 XML Schema
+    * 5.1  什么是 XML Schema
+    * 5.2 DTD 与 XML Schema
+    * 5.3 XML Schema 的语法
+    * 5.4  来自多个文档的模式
+    * 5.5 XML Schema 的开发文档
 * [第六章 XSLT](xslt.md)
+    * 6.1 XSLT 概述
+    * 6.2 XSLT 样式单基本元素
+    * 6.3 XSLT 样式单的元素和指令
+    * 6.4 XSLT 函数
+    * 6.5 XSLT 2.0
 * [第七章 XPath、XLink、XPointer、XInclude和XBase](xpath、xlink、xpointer、xinclude和xbase.md)
-* 第八章 XML与数据库
+    * 7.1 XPath的前世今生
+    * 7.2 XML 文档模型
+    * 7.3 XPath 数据模型
+    * 7.4 XPointer 和 XLink
+    * 7.5 XInclude
+    * 7.6 XBase
+* [第八章 XML与数据库](第八章-xml与数据库.md)
+    * 8.1 XML 与数据库的”爱恨情仇“
+    * 8.2 XML 数据的存储和管理方式
+    * 8.3 DB 产品中的 XML
+* [第九章 DOM](dom.md)
+    * 9.1 DOM 的概念和组成 
 
