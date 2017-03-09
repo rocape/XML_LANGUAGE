@@ -2,7 +2,6 @@
  <head>
  <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 
- <title>网页中运行代码的实现方法 </title>
 
  <script type="text/javascript" language="javascript" >
 
