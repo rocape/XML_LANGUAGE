@@ -13,6 +13,10 @@
     * [3.1命名空间](31命名空间.md)
     * [3.2命名空间的运行机制](32命名空间的运行机制.md)
 * [第四章 XML文档类型定义DTD](xml文档类型定义dtd.md)
+    * [4.1什么是DTD](41什么是dtd.md)
+    * [4.2DTD的作用](42dtd的作用.md)
+    * [4.3DTD的声明](43dtd的声明.md)
+    * [4.4DTD的语法](44dtd的语法.md)
 * 第五章 XML Schema
 * [第六章 XSLT](xslt.md)
 * [第七章 XPath、XLink、XPointer、XInclude和XBase](xpath、xlink、xpointer、xinclude和xbase.md)
