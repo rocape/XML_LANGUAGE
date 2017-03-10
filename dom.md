@@ -30,7 +30,8 @@
  <TEXTAREA id=code1 style="WIDTH: 560px; HEIGHT: 200px">
  这里是你想运行的代码区域
  </TEXTAREA>
- <BR><BUTTON onclick=Preview(code1)>点击测试</BUTTON><BUTTON
- onclick=copyCode(code1)>复制代码</BUTTON><BUTTON
+ <BR>
+<BUTTON onclick=Preview(code1)>Run</BUTTON>
+<BUTTON onclick=copyCode(code1)>Copy</BUTTON>
  </body>
  </html>
