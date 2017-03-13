@@ -24,17 +24,16 @@ memo元素的属性id是必须的，并且该属性的值必须在整个文档�
 
  + 使用实体必须在文档中插入实体的引用
  + 实体引用是指引用实体所代表的一个字符、文本或外部文件
-首字符是&，之后是实体名称，结尾是分号，之间不允许空格（&）
-qq可以在元素内容和属性值里面插入实体引用
-qq不能在元素名或属性名里面使用实体
+ + 首字符是&，之后是实体名称，结尾是分号，之间不允许空格（&）
+ + 可以在元素内容和属性值里面插入实体引用
+ + 不能在元素名或属性名里面使用实体
+
 <description>Author & programmer</description> <contacts version="1.0">
- 4.4 DTD的语法
-nn实体声明
-qq字符实体
-nn不需要在DTD中声明
-nn用来表示不易输入的字符或非ASCII字符（©或者©表示©）
-nn可以在元素内容和属性值里面使用 
-nn不能在元素名或属性名里面使用，也不能代替实际的XML标记
+ + 字符实体
+* 不需要在DTD中声明
+*用来表示不易输入的字符或非ASCII字符（©或者©表示©）
+* 可以在元素内容和属性值里面使用 
+* 不能在元素名或属性名里面使用，也不能代替实际的XML标记
 4.4 DTD的语法 
 nn实体声明
 qq普通实体
@@ -42,7 +41,13 @@ nn必须在DTD中先声明
 nn可表示多个字符、文本段，甚至整个文档
 nn实体的值可以是任何良构的XML，但是不能含有根元素，也不能自引用
 
-<!ENTITY 实体名称“实体的值”> <!ENTITY source-text “Beginning XML 4E's Contact List”> <!ENTITY address-unknown “The address for this location is "Unknown"”> <!ENTITY empty-gps“<latitude></latitude><longitude></longitude>”> <address>&address-unknown;</address> <!ENTITY address-unknown “The address for this location is &address-unknown;”> <!ENTITY address-start “<address>”><!ENTITY address-end “</address>”> 
+<!ENTITY 实体名称“实体的值”>
+<!ENTITY source-text “Beginning XML 4E's Contact List”>
+<!ENTITY address-unknown “The address for this location is "Unknown"”>
+<!ENTITY empty-gps“<latitude></latitude><longitude></longitude>”> <address>&address-unknown;</address>
+<!ENTITY address-unknown “The address for this location is &address-unknown;”>
+<!ENTITY address-start “<address>”>
+<!ENTITY address-end “</address>”> 
 
 *实体声明
  + 普通实体
