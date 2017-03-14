@@ -18,10 +18,10 @@
     * [4.3DTD的声明](43dtd的声明.md)
     * [4.4DTD的语法](44dtd的语法.md)
 * [第五章 XML Schema](第五章-xml-schema.md)
-    * 5.1  什么是 XML Schema
-    * 5.2 DTD 与 XML Schema
-    * 5.3 XML Schema 的语法
-    * 5.4  来自多个文档的模式
+    * [5.1  什么是 XML Schema](51--什么是-xml-schema.md)
+    * [5.2 DTD 与 XML Schema](52-dtd-与-xml-schema.md)
+    * [5.3 XML Schema 的语法](53-xml-schema-的语法.md)
+    * [5.4  来自多个文档的模式](54--来自多个文档的模式.md)
     * 5.5 XML Schema 的开发文档
 * [第六章 XSLT](xslt.md)
     * 6.1 XSLT 概述
