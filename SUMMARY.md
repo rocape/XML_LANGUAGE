@@ -22,7 +22,7 @@
     * [5.2 DTD 与 XML Schema](52-dtd-与-xml-schema.md)
     * [5.3 XML Schema 的语法](53-xml-schema-的语法.md)
     * [5.4  来自多个文档的模式](54--来自多个文档的模式.md)
-    * 5.5 XML Schema 的开发文档
+    * [5.5 XML Schema 的开发文档](55-xml-schema-的开发文档.md)
 * [第六章 XSLT](xslt.md)
     * 6.1 XSLT 概述
     * 6.2 XSLT 样式单基本元素
