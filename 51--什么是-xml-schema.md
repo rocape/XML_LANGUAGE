@@ -16,6 +16,6 @@
  + XDR (XML-DATA Reduced)
     + 是由Microsoft提出的XML简化模式语言，作为W3C在讨论XML Schema工作草案过程中提出的一种过渡性Schema语言，XDR已经被业界普遍认可，得到许多产品（例如MS-BiztalkServer, MS-SQLServer和MS-Office）的广泛支持。
  + XML Schema 
-    +W3C的正式推荐标准，提供了XML模式声明的完整语法、丰富的数据结构等，目前已成为应用最广泛的XML模式语言。
+    + W3C的正式推荐标准，提供了XML模式声明的完整语法、丰富的数据结构等，目前已成为应用最广泛的XML模式语言。
  + RELAX NG 
     + 一种基于语法的XML模式语言，可用于描述、定义和限制XML词汇表。它以简洁性和表达能力著称，并且具有良好的可扩展性。
