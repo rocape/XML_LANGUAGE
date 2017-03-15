@@ -1,9 +1,132 @@
-5.3 XML Schema的语法 nn<element>声明qq指定元素名和定义元素内容<element name=“name of the element” type=“global type” ref=“global element declaration” form=“qualified or unqualified” minOccurs=“non negative number” maxOccurs=“non negative number or ‘unbounded’” default=“default value” fixed=“fixed value”>5.3 XML Schema的语法 nn<element>声明qq元素内容由type属性决定，元素类型分为简单类型和复杂类型nn简单类型不包含任何子元素和属性的元素，只包含文本内容，或者为不包含属性的空元素（文本内容为空）nn复杂类型包含子元素和/或属性的元素（其中属性的声明包含在元素的复杂类型定义中）qq主要可用两种方法指定元素类型nn创建一个局部类型nn使用一个全局类型qq还可通过引用一个全局元素声明重用已有的元素声明，引用时不必指定类型5.3 XML Schema的语法 nn全局与局部qqXML Schema声明可分为两类nn全局声明（Global Declaration）作为<Schema>元素的直接子元素声明，可以在整个XML Schema中重用nn局部声明（Local Declaration）没有<Schema>元素作为其直接双亲，并只能在指定的上下文内使用5.3 XML Schema的语法 nn全局与局部<?xml version=“1.0”?> <schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:target=“http://www.example.com/name” targetNamespace=“http://www.example.com/name” elementFormDefault=“qualified”> <element name=“name”> <complexType> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> </element> </schema>全局声明（元素）局部声明（元素）5.3 XML Schema的语法 nn全局与局部<Schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:target=“http://www.example.com/name” targetNamespace=“http://www.example.com/name” elementFormDefault=“qualified”> <complexTypename=“NameType”> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> <element name=“name” type=“target:NameType”/> </Schema> 全局声明（元素）全局声明（类型）5.3 XML Schema的语法 nn全局与局部qq创建局部类型，只需在元素中插入类型声明，作为元素声明的孩子qq同一个元素声明，<complexType>和<simpleType>不能同时存在<element name=“name”> <complexType> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> </element> <element name=“name”> <simpleType> <restriction base=“string”> <enumeration value=“Home”/> <enumeration value=“Work”/> <enumeration value=“Cell”/> <enumeration value=“Fax”/> </restriction> </simpleType> </element> 5.3 XML Schema的语法 nn全局与局部qq对相同内容的元素，可使用全局类型避免重复声明局部类型qq在元素声明中通过类型名引用一个全局类型<element name=“first” type=“string”/> 全局类型（内置数据类型string）5.3 XML Schema的语法 nn全局与局部qq自定义全局声明并引用<Schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:target=“http://www.example.com/name” targetNamespace=“http://www.example.com/name” elementFormDefault=“qualified”> <complexTypename=“NameType”> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> <element name=“name” type=“target:NameType”/> </Schema>
+###5.3 XML Schema的语法
+* XML Schema文档
+ + 大多数XML Schema单独保存在一个XML文档（*.xsd）中，形式上类似于外部DTD
+ + 一个XML文档可引用一个定义了一种模式的XML Schema
+ +遵循某个特定XML Schema模式的XML文档称为该XML Schema的一个实例（Instance）文档
+* `<Schema>`声明
+ + `<Schema>``是XML Schema的根元素
+ + 在`<Schema>`中声明命名空间信息和文档中声明的默认值
+ + 还可插入版本属性
+```
+<schema targetNamespace="URL" attributeFormDefault="qualified or unqualified" elementFormDefault="qualified or unqualified" version="version number">
+```
+*　XML Schema的命名空间
+ + 常用三个形式之一
+```
+<schema xmlns=“http://www.w3.org/2001/XMLSchema”>
+<xs:schema xmlns:xs=“http://www.w3.org/2001/XMLSchema”>
+<xsd:schema xmlns:xsd=“http://www.w3.org/2001/XMLSchema”>
+```
+ + XML Schema推荐标准自身使用xs前缀
+* 目标命名空间
+ + XML Schema主要用于声明词汇（Vocabulary
+ + 词汇由targetNamespace属性指定的一个命名空间来标识
+ + 不是所有的XML Schema定义都有一个targetNamespace属性
+ + 声明targetNamespace属性时，必需一个相匹配的命名空间声明
+```
+<Schema xmlns=“http://www.w3.org/2001/XMLSchema” targetNamespace=“http://www.example.com/name” xmlns:target=“http://www.example.com/name”>
+```
+```
+<xs:Schema xmlns:xs=“http://www.w3.org/2001/XMLSchema” targetNamespace=“http://www.example.com/name” xmlns=“http://www.example.com/name”>
+```
+```
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.w3school.com.cn" xmlns="http://www.w3school.com.cn" elementFormDefault="qualified">
+```
+ + xmlns:xs="http://www.w3.org/2001/XMLSchema表示schema中用到的声明和数据类型来自命名空间http://www.w3.org/2001/XMLSchema，其前缀为xs。
+ + targetNamespace="http://www.w3school.com.cn" 表示schema定义的元素来自命名空间http://www.w3school.com.cn
+ + xmlns="http://www.w3school.com.cn" 表示默认命名空间http://www.w3school.com.cn 
+ +　elementFormDefault="qualified"表示任何XML实例文档所使用的且在此schema中声明过的元素必须被命名空间限定
 
 
+* 元素和属性限定词
+ +　在XML实例文档中，元素和属性可以是限定的（qualified）或非限定的（unqualified）
+ + 如果一个元素或属性关联到一个命名空间，则是限定的
+ + 非限定元素没有关联的命名空间
+```
+<name xmlns=“http://www.example.com/name”>
+    <first>John</first>
+    <middle>Fitzgerald</middle>
+    <last>Doe</last>
+</name>
+```
+```
+<n:name xmlns:n=“http://www.example.com/name”>
+    <n:first>John</n:first>
+    <n:middle>Fitzgerald</n:middle>
+    <n:last>Doe</n:last>
+</n:name>
+```
+```
+<n:name xmlns:n=“http://www.example.com/name”>
+    <first>John</first>
+    <middle>Fitzgerald</middle>
+    <last>Doe</last>
+</n:name>
+ + XML Schema的默认格式是将限定与非限定元素组合使用
+ + 使用elementFormDefault和arrtibuteFormDefault指定元素的限定方式，默认限定值都是unqualified
+    + XML实例文档中的全局元素声明必须在XML实例文档中受到限定，大多数文档中应该限定文档的全部元素，即总是把elementFormDefault设置为qualified
+    + XML文档的大多数属性都是非限定的，则一般保持attributeFormDefault的默认值，但全局声明的属性在XML实例文档中必须限定
 
-� �L� �
+* <element>声明
+ + 指定元素名和定义元素内容
+```
+<element 
+    name=“name of the element”
+    type=“global type”
+    ref=“global element declaration”
+    form=“qualified or unqualified”
+    minOccurs=“non negative number”
+    maxOccurs=“non negative number or ‘unbounded’”
+    default=“default value”
+    fixed=“fixed value”>
+```
+ + 元素内容由type属性决定，元素类型分为简单类型和复杂类型
+    + 简单类型不包含任何子元素和属性的元素，只包含文本内容，或者为不包含属性的空元素（文本内容为空)
+    + 复杂类型包含子元素和/或属性的元素（其中属性的声明包含在元素的复杂类型定义中）
+ + 主要可用两种方法指定元素类型
+    + 创建一个局部类型
+    + 使用一个全局类型
+ + 还可通过引用一个全局元素声明重用已有的元素声明，引用时不必指定类型
 
+* 全局与局部
+ + XML Schema声明可分为两类
+    + 全局声明（Global Declaration）作为<Schema>元素的直接子元素声明，可以在整个XML Schema中重用
+    + 局部声明（Local Declaration）没有<Schema>元素作为其直接双亲，并只能在指定的上下文内使用
+```
+<?xml version=“1.0”?>
+<schema xmlns=“http://www.w3.org/2001/XMLSchema”     
+    xmlns:target=“http://www.example.com/name” 
+    targetNamespace=“http://www.example.com/name” 
+    elementFormDefault=“qualified”>
+    <element name=“name”>
+        <complexType>
+            <sequence>
+                <element name=“first” type=“string”/>
+                <element name=“middle” type=“string”/>
+                <element name=“last” type=“string”/>
+            </sequence>
+            <attribute name=“title” type=“string”/>
+        </complexType>
+    </element>
+</schema>
+```
+    + `<element name=“name”>`为全局声明（元素）
+    +  `<element name=“first” type=“string”/><element name=“middle” type=“string”/><element name=“last” type=“string”/>`为局部声明（元素）
+
+
+<Schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:target=“http://www.example.com/name” targetNamespace=“http://www.example.com/name” elementFormDefault=“qualified”> <complexTypename=“NameType”> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> <element name=“name” type=“target:NameType”/> </Schema> 全局声明（元素）全局声明（类型）
+5.3 XML Schema的语法 
+nn全局与局部
+qq创建局部类型，只需在元素中插入类型声明，作为元素声明的孩子
+qq同一个元素声明，<complexType>和<simpleType>不能同时存在<element name=“name”> <complexType> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> </element> <element name=“name”> <simpleType> <restriction base=“string”> <enumeration value=“Home”/> <enumeration value=“Work”/> <enumeration value=“Cell”/> <enumeration value=“Fax”/> </restriction> </simpleType> </element> 
+5.3 XML Schema的语法 
+nn全局与局部
+qq对相同内容的元素，可使用全局类型避免重复声明局部类型
+qq在元素声明中通过类型名引用一个全局类型<element name=“first” type=“string”/> 全局类型（内置数据类型string）
+5.3 XML Schema的语法 
+nn全局与局部
+qq自定义全局声明并引用<Schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:target=“http://www.example.com/name” targetNamespace=“http://www.example.com/name” elementFormDefault=“qualified”> <complexTypename=“NameType”> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> <element name=“name” type=“target:NameType”/> </Schema>
 
 
 
