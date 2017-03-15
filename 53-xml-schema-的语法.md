@@ -113,13 +113,28 @@
 ```
     + `<element name=“name”>`为全局声明（元素）
     +  `<element name=“first” type=“string”/><element name=“middle” type=“string”/><element name=“last” type=“string”/>`为局部声明（元素）
+```
+<Schema xmlns=“http://www.w3.org/2001/XMLSchema” 
+    xmlns:target=“http://www.example.com/name” 
+    targetNamespace=“http://www.example.com/name” 
+    elementFormDefault=“qualified”>
+    <complexTypename=“NameType”>
+        <sequence>
+            <element name=“first” type=“string”/>
+            <element name=“middle” type=“string”/>
+            <element name=“last” type=“string”/>
+        </sequence>
+        <attribute name=“title” type=“string”/>
+    </complexType>
+    <element name=“name” type=“target:NameType”/>
+</Schema> 
+```
+    + `<complexTypename=“NameType”>`为全局声明（元素）
+    + `<element name=“name” type=“target:NameType”/>`为全局声明（类型）
+ + 创建局部类型，只需在元素中插入类型声明，作为元素声明的孩子
+ + 同一个元素声明，`<complexType>`和`<simpleType>`不能同时存在
 
-
-<Schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:target=“http://www.example.com/name” targetNamespace=“http://www.example.com/name” elementFormDefault=“qualified”> <complexTypename=“NameType”> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> <element name=“name” type=“target:NameType”/> </Schema> 全局声明（元素）全局声明（类型）
-5.3 XML Schema的语法 
-nn全局与局部
-qq创建局部类型，只需在元素中插入类型声明，作为元素声明的孩子
-qq同一个元素声明，<complexType>和<simpleType>不能同时存在<element name=“name”> <complexType> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> </element> <element name=“name”> <simpleType> <restriction base=“string”> <enumeration value=“Home”/> <enumeration value=“Work”/> <enumeration value=“Cell”/> <enumeration value=“Fax”/> </restriction> </simpleType> </element> 
+<element name=“name”> <complexType> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> </element> <element name=“name”> <simpleType> <restriction base=“string”> <enumeration value=“Home”/> <enumeration value=“Work”/> <enumeration value=“Cell”/> <enumeration value=“Fax”/> </restriction> </simpleType> </element> 
 5.3 XML Schema的语法 
 nn全局与局部
 qq对相同内容的元素，可使用全局类型避免重复声明局部类型
