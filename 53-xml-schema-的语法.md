@@ -267,7 +267,11 @@
 * 元素通配符（Wildcard）
  + 不用显示声明就可以在XML Schema中包含某些元素，包括自身命名空间中声明的任一元素，或来自另一个命名空间中的任何元素
 ```
-<any minOccurs=“non negative number” maxOccurs=“non negative number or unbounded” namespace=“allowable namespaces” processContents=“lax or skip or strict”>
+<any 
+minOccurs=“non negative number” 
+maxOccurs=“non negative number or unbounded” 
+namespace=“allowable namespaces” 
+processContents=“lax or skip or strict”>
 ```
 ```
 <element name=“name”>
@@ -283,7 +287,13 @@
     </complexType>
 </element>
 ```
-来自所有命名空间的元素都被定义为通配符的一部分
+```<!-- allow any element from any namespace -->
+    <any 
+        namespace=“##any”
+        processContents=“lax”
+        minOccurs=“0”
+        maxOccurs=“unbounded”/>
+```来自所有命名空间的元素都被定义为通配符的一部分
 
 * 元素通配符（Wildcard）
  + 包含任何命名空间中的元素声明称为元素通配符
@@ -296,34 +306,117 @@
     + lax: 如果解析器可访问通配符的XML Schema定义，则验证通配符元素；找不到定义则忽略
     + strict: 默认值，解析器验证通配符元素，如果找不到其XML Schema定义，则报告错误
  + 使用namespace属性控制元素来自哪个命名空间
-namespace属性允许值
-5.3 XML Schema的语法 
-nn<complexType>声明
-qq定义元素内容
- qq全局<complexType>定义需要命名，局部不需要<complexTypemixed=“true or false” name=“Name of complexType”> <element name=“name”> <complexType> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> </element> <complexTypename=“NameType”> <sequence> <element name=“first” type=“string”/> <element name=“middle” type=“string”/> <element name=“last” type=“string”/> </sequence> <attribute name=“title” type=“string”/> </complexType> 
-5.3 XML Schema的语法 
-nn<complexType>声明
-qq使用mixed属性建立混合内容模型，同时插入文本和元素内容
 
-<element name=“description”> <complexTypemixed=“true”> <choice minOccurs=“0” maxOccurs=“unbounded”> <element name=“em” type=“string”/> <element name=“strong” type=“string”/> <element name=“br” type=“string”/> </choice> </complexType> </element> <description>Jeff is a developer & author for Beginning XML <em>4th edition</em> © 2006 Wiley Publishing.<br/>Jeff <strong>loves</strong> XML! </description> <element name="person"> <complexType> <sequence> <element name="firstname" type="string"/> <element name="lastname" type="string"/> </sequence> </complexType> </element> <person> <firstname>John</firstname> <lastname>Smith</lastname> </person> 
+|值|说明|
+|-|-|
+|##any|通配符包括了来自所有名称空间的元素|
+|##other|通配符包括了除targetNamespace之外其他命名空间的元素|
+|##targetNamespace|通配符指包括来自targetNamespace命名空间的元素|
+|##local|通配符包括所有没有命名空间限定的元素|
+|由命名空间URI组成的以空白符分隔的列表|通配符包括了来自命名空间列表的元素，列表可包括##targetNamespace和##local|
+* `<complexType>`声明
+ + 定义元素内容
+`<complexType 
+        mixed=“true or false” 
+        name=“Name of complexType”>`
+ + 全局`<complexType>`定义需要命名，局部不需要
+```
+<element name=“name”>
+    <complexType>
+        <sequence>
+            <element name=“first” type=“string”/>
+            <element name=“middle” type=“string”/>
+            <element name=“last” type=“string”/>
+        </sequence>
+        <attribute name=“title” type=“string”/>
+    </complexType>
+</element>
+```
+```
+<complexTypename=“NameType”>
+    <sequence>
+        <element name=“first” type=“string”/>
+        <element name=“middle” type=“string”/>
+        <element name=“last” type=“string”/>
+    </sequence>
+    <attribute name=“title” type=“string”/>
+</complexType> 
+```
+ + 使用mixed属性建立混合内容模型，同时插入文本和元素内容
+```
+<element name=“description”>
+    <complexTypemixed=“true”>
+        <choice minOccurs=“0” maxOccurs=“unbounded”>
+            <element name=“em” type=“string”/>
+            <element name=“strong” type=“string”/>
+            <element name=“br” type=“string”/>
+        </choice>
+    </complexType>
+</element>
+```
+```
+<description>
+    Jeff is a developer & author for Beginning XML <em>4th edition</em> © 2006 Wiley Publishing.<br/>Jeff     
+    <strong>loves</strong> 
+    XML! 
+</description>
+```为混合内容
+```
+<element name="person">
+    <complexType>
+        <sequence>
+            <element name="firstname" type="string"/>
+            <element name="lastname" type="string"/>
+        </sequence>
+    </complexType>
+</element>
+```
+```
+<person>
+    <firstname>John</firstname>
+    <lastname>Smith</lastname>
+</person> 
+```
+ + 空内容模型表明元素没有文本内容或子元素，在实例文档中必须是空元素 +   
+ + `<complexType>`定义中可以包含`<attribute>`声明
+    + 声明空元素时仍可插入`<attribute>`声明
+```
+<element name=“knows”> 
+    <complexType>
+    </complexType>
+</element>
+```
+```
+<element name=“knows”>
+    <complexType/>
+</element>
+<knows/>
+<knows></knows>
+```
+```
+<element name=“knows”>
+    <complexType>
+        <attribute name=“contacts” type=“IDREFS”/>
+    </complexType>
+</element>
+```
+* `<group>`声明
+ + 定义可重用的组元素
+ + 全局<group>声明必须被命名
+    + 符合XML命名规则，不含前缀
+    + 允许在内容模型中引用全局元素组
+```
+<group name=“name of global group”>
+    <group name=“NameGroup”>
+    <!-- content model goes here -->
+</group>
+```
+`<group  
+    ref=“global group definition”
+    minOccurs=“non negative number”
+    maxOccurs=“non negative number or unbounded”>`
 
-混合内容仅含元素
-5.3 XML Schema的语法 nn<complexType>声明
-qq空内容模型表明元素没有文本内容或子元素，在实例文档中必须是空元素qq<complexType>定义中可以包含<attribute>声明
-nn声明空元素时仍可插入<attribute>声明
-<element name=“knows”> <complexType> </complexType> </element> <element name=“knows”> <complexType/> </element> <knows/> <knows></knows> <element name=“knows”> <complexType> <attribute name=“contacts” type=“IDREFS”/> </complexType> </element>
-
-5.3 XML Schema的语法 
-nn<group>声明
-qq定义可重用的组元素q
-q全局<group>声明必须被命名
-nn符合XML命名规则，不含前缀
-nn允许在内容模型中引用全局元素组
-
-<group name=“name of global group”> <group name=“NameGroup”> <!-- content model goes here --> </group> <group ref=“global group definition” minOccurs=“non negative number” maxOccurs=“non negative number or unbounded”>
-
-5.3 XML Schema的语法 
-nn属性的使用
+* 属性的使用
 qq在<attribute>声明中使用use属性设定其在XML实例文档中的出现方式
 nnprohibited表明该属性不会出现在XML实例文档中
 qq属性通配符和prohibited通常结合使用
