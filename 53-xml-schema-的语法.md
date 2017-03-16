@@ -235,16 +235,36 @@
     + maxOccurs>=minOccurs
  + 全局元素不允许定义minOccurs和maxOccurs属性，但可在内容模型中引用元素时使用
 
-5.3 XML Schema的语法 nn基数（Cardinality）<element name=“first” type=“string” minOccurs=“2” maxOccurs=“2”/> <element ref=“target:first” maxOccurs=“10”/> <element name=“location” “minOccurs=“0” maxOccurs=“unbounded”/>5.3 XML Schema的语法 nn默认值和固定值qqXML Schema可声明元素的默认值和固定值qq声明默认值只能设置一个文本值nn元素的内容模型如果有其他元素，则不允许设置默认值nn设置默认值可确保其作为XML实例文档的一部分nn使用default属性设置默认值nn如果设置了默认值的元素不在XML实例文档中，或者已经有内容，则默认值不起作用<element name=“last” type=“string” default=“Doe”/> <last></last> <last/> <last>Doe</last>5.3 XML Schema的语法 nn默认值和固定值qqXML Schema中的元素和属性都可以有固定值nn希望元素的值不变化则可设置固定值nn使用fixed属性设置固定值nn设置了固定值的元素，XML实例文档中元素的内容要与固定属性值匹配nn如果设置了默认值的元素在XML实例文档没有内容，则解析器插入固定值<element name=“version” type=“string” fixed=“1.0”/> <version>1.0</version> <version></version> <version/> <version>2.0</vers
+```
+<element name=“first” type=“string” minOccurs=“2” maxOccurs=“2”/>
+<element ref=“target:first” maxOccurs=“10”/>
+<element name=“location” “minOccurs=“0” maxOccurs=“unbounded”/>
+```
 
-
-
-
-
-
-
-
-* 素通配符（Wildcard）
+* 默认值和固定值
+ + XML Schema可声明元素的默认值和固定值
+ + 声明默认值只能设置一个文本值
+* 元素的内容模型如果有其他元素，则不允许设置默认值
+* 设置默认值可确保其作为XML实例文档的一部分
+* 使用default属性设置默认值
+* 如果设置了默认值的元素不在XML实例文档中，或者已经有内容，则默认值不起作用
+```
+<element name=“last” type=“string” default=“Doe”/>
+<last></last>
+<last/>
+<last>Doe</last>
+```
+ + XML Schema中的元素和属性都可以有固定值
+* 希望元素的值不变化则可设置固定值
+* 使用fixed属性设置固定值
+* 设置了固定值的元素，XML实例文档中元素的内容要与固定属性值匹配
+* 如果设置了默认值的元素在XML实例文档没有内容，则解析器插入固定值
+```
+<element name=“version” type=“string” fixed=“1.0”/>
+<version>1.0</version> <version></version> <version/> 
+<version>2.0</vers
+```
+* 元素通配符（Wildcard）
  + 不用显示声明就可以在XML Schema中包含某些元素，包括自身命名空间中声明的任一元素，或来自另一个命名空间中的任何元素
 ```
 <any minOccurs=“non negative number” maxOccurs=“non negative number or unbounded” namespace=“allowable namespaces” processContents=“lax or skip or strict”>
