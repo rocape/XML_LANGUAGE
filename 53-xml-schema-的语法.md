@@ -417,14 +417,14 @@ processContents=“lax or skip or strict”>
     maxOccurs=“non negative number or unbounded”>`
 
 * 属性的使用
-qq在<attribute>声明中使用use属性设定其在XML实例文档中的出现方式
-nnprohibited表明该属性不会出现在XML实例文档中
-qq属性通配符和prohibited通常结合使用
-nnrequired表明该属性必须出现在XML实例文档中
-nnoptional是use的默认值，表明该属性是可选的
-qq如果为属性声明定义了一个默认值，则use只能为optional 
-nn全局<attribute>声明不可以使用use 5.3 XML Schema的语法
- nn属性的默认值和固定值
+ + 在<attribute>声明中使用use属性设定其在XML实例文档中的出现方式
+* prohibited表明该属性不会出现在XML实例文档中
+ + 属性通配符和prohibited通常结合使用
+* required表明该属性必须出现在XML实例文档中
+* optional是use的默认值，表明该属性是可选的
+ +如果为属性声明定义了一个默认值，则use只能为optional 
+* 全局<attribute>声明不可以使用use 5.3 XML Schema的语法
+属性的默认值和固定值
 qq使用default赋予默认值
 qq使用fixed赋予固定值
 nn如果属性存在固定值，则解析器检查属性值与固定值是否相同，不同则提示模式验证错误
