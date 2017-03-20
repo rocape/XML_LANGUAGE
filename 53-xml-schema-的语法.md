@@ -1,4 +1,4 @@
-###5.3 XML Schema的语法
+   ###5.3 XML Schema的语法
 * XML Schema文档
  + 大多数XML Schema单独保存在一个XML文档（*.xsd）中，形式上类似于外部DTD
  + 一个XML文档可引用一个定义了一种模式的XML Schema
@@ -506,64 +506,174 @@ processContents=“lax or skip or strict”>
 <last>Doe</last> or <first>John</first> <last>Doe</last> <middle>Fitzgerald</middle>
 * `<attribute>`声明
  + 属性声明与元素声明类似
-nn两种方法指定属性类型qq创建一个局部类型qq使用一个全局类型nn属性声明只限于简单类型，属性只包含文本内容qq复杂类型用来定义包含属性或元素的类型qq简单类型用来限制纯文本内容nn可通过引用全局属性声明来重用属性qq属性类型已包括在全局属性声明中，不需在属性引用中指定<attribute name=“name of the attribute” type=“global type” ref=“global attribute declaration” form=“qualified or unqualified” use=“optional or prohibited or required” default=“default value” fixed=“fixed value”> 5.3 XML Schema的语法 nn<attribute>声明qq使用全局类型nn许多属性有相同类型的值，可建立全局<simpleType>来重用nn属性声明中可通过名字引用全局类型nn全局类型可以是XML Schema内置的数据类型之一，也可建立并引用自定义的全局类型<attribute name=“title” type=“string”/> 5.3 XML Schema的语法 nn<attribute>声明<schema xmlns=“http://www.w3.org/2001/XMLSchema” xmlns:contacts=“http://www.example.com/contacts” targetNamespace=“http://www.example.com/contacts” elementFormDefault=“qualified”> <simpleTypename=“KindType”> <!-- type information --> </simpleType> <element name=“phone”> <complexType> <!-- content model information --> <attribute name=“kind” type=“contacts:KindType”/> </complexType> </element> </schema> <xs:schemaxmlns:xs=“http://www.w3.org/2001/XMLSchema” xmlns=“http://www.example.com/contacts” targetNamespace=“http://www.example.com/contacts” elementFormDefault=“qualified”> <xs:simpleTypename=“KindType”> <!-- type information --> </xs:simpleType> <xs:elementname=“phone”> <xs:complexType> <!-- content model information --> <xs:attributename=“kind” type=“KindType”/> </xs:complexType> </xs:element> </xs:schema> 5.3 XML Schema的语法 nn引用一个已存在的全局属性qq引用全局<simpleType>定义，可重用属性类型qq经常需要重用整个属性声明，而不限于类型声明qqXML Schema允许在<complexType>定义中重用全局属性声明nn在<attribute>声明中插入ref属性，其值为全局属性名nn属性名必须用命名空间限定nn不使用type属性和局部类型声明，而使用被引用的<attribute>声明中的类型nn被全局声明的属性必须用XML实例文档中的命名空间限定，由于默认命名空间对属性不起作用，因此必须使用命名空间前缀来限定，会导致XML实例文档变得复杂与混乱<attribute ref=“contacts:kind”/> 5.3 XML Schema的语法 nn命名属性qq属性名必须符合XML命名规则qqXML Schema可感知命名空间，只需指定属性名，模式验证器可识别XML实例文档中使用的任何前缀5.3 XML Schema的语法 nn属性的限定形式qq属性限定与元素限定功能类似，form属性可覆盖属性限定的默认值qq一个限定的属性，在XML实例文档中必须有一个关联的命名空间qq默认命名空间对XML实例文档中的属性不起作用，只能使用命名空间前缀来限定一个属性qq如果没有定义form属性，则模式验证器使用attibuteFormDefault属性值，在<schema>中定义nn任何全局声明的属性都是限定（qualified）属性nnXML实例文档中常有非限定属性，故很少使用form
+* 两种方法指定属性类型
+ + 创建一个局部类型
+ + 使用一个全局类型
+* 属性声明只限于简单类型，属性只包含文本内容
+ + 复杂类型用来定义包含属性或元素的类型
+ + 简单类型用来限制纯文本内容
+* 可通过引用全局属性声明来重用属性
+ + 属性类型已包括在全局属性声明中，不需在属性引用中指定
+```
+<attribute 
+    name=“name of the attribute” 
+    type=“global type” 
+    ref=“global attribute declaration” 
+    form=“qualified or unqualified” 
+    use=“optional or prohibited or required” 
+    default=“default value” 
+    fixed=“fixed value”>
+```
+* 创建局部类型
+ + 在属性中插入类型声明，作为`<attribute>`的子元素
+ + 属性声明可以只包含一个`<simpleType>`定义
+```
+<attribute name="title">
+    <simpleType>
+        <!--type information-->
+    </simpleType>
+</element>
+```
+* 使用全局类型
+ + 许多属性有相同类型的值，可建立全局`<simpleType>`来重用
+ + 属性声明中可通过名字引用全局类型
+ + 全局类型可以是XML Schema内置的数据类型之一，也可建立并引用自定义的全局类型
+`<attribute name=“title” type=“string”/> `
 
- �1�U 
+```
+<schema xmlns=“http://www.w3.org/2001/XMLSchema” 
+    xmlns:contacts=“http://www.example.com/contacts” 
+    targetNamespace=“http://www.example.com/contacts” 
+    elementFormDefault=“qualified”>
+    <simpleTypename=“KindType”>
+        <!-- type information -->
+    </simpleType>
+    <element name=“phone”>
+        <complexType>
+            <!-- content model information -->
+            <attribute name=“kind” type=“contacts:KindType”/>     
+        </complexType>
+    </element>
+</schema> 
+```
+```
+<xs:schema xmlns:xs=“http://www.w3.org/2001/XMLSchema”     
+    xmlns=“http://www.example.com/contacts”     
+    targetNamespace=“http://www.example.com/contacts” 
+    elementFormDefault=“qualified”>     
+    <xs:simpleTypename=“KindType”>
+        <!-- type information -->
+    </xs:simpleType>
+    <xs:elementname=“phone”>
+        <xs:complexType>
+            <!-- content model information -->
+            <xs:attributename=“kind” type=“KindType”/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema> 
+```
 
+* 引用一个已存在的全局属性
+ + 引用全局`<simpleType>`定义，可重用属性类型
+ + 经常需要重用整个属性声明，而不限于类型声明
+ + XML Schema允许在`<complexType>`定义中重用全局属性声明
+    + 在`<attribute>`声明中插入ref属性，其值为全局属性名
+    + 属性名必须用命名空间限定
+    + 不使用type属性和局部类型声明，而使用被引用的`<attribute>`声明中的类型
+    + 被全局声明的属性必须用XML实例文档中的命名空间限定，由于默认命名空间对属性不起作用，因此必须使用命名空间前缀来限定，会导致XML实例文档变得复杂与混乱`<attribute ref=“contacts:kind”/>` 
+ 
+* 命名属性
+ + 属性名必须符合XML命名规则
+ + XML Schema可感知命名空间，只需指定属性名，模式验证器可识别XML实例文档中使用的任何前缀
 
-
-
-
+* 属性的限定形式
+ + 属性限定与元素限定功能类似，form属性可覆盖属性限定的默认值
+ + 一个限定的属性，在XML实例文档中必须有一个关联的命名空间
+ + 默认命名空间对XML实例文档中的属性不起作用，只能使用命名空间前缀来限定一个属性
+ + 如果没有定义form属性，则模式验证器使用attibuteFormDefault属性值，在<schema>中定义
+    + 任何全局声明的属性都是限定（qualified）属性nnXML实例文档中常有非限定属性，故很少使用form
 
 * 属性的使用
- + 在<attribute>声明中使用use属性设定其在XML实例文档中的出现方式
+ + 在`<attribute>`声明中使用use属性设定其在XML实例文档中的出现方式
 * prohibited表明该属性不会出现在XML实例文档中
  + 属性通配符和prohibited通常结合使用
 * required表明该属性必须出现在XML实例文档中
 * optional是use的默认值，表明该属性是可选的
  +如果为属性声明定义了一个默认值，则use只能为optional 
-* 全局<attribute>声明不可以使用use 5.3 XML Schema的语法
-属性的默认值和固定值
-qq使用default赋予默认值
-qq使用fixed赋予固定值
-nn如果属性存在固定值，则解析器检查属性值与固定值是否相同，不同则提示模式验证错误
-nn如果某属性在Schema中设置了固定值，而XML实例文档中其对应的元素没有该属性，则解析器插入该属性并赋予固定值
-qq默认值或固定值必须与对应属性的类型相符
-qq不能在同一个属性声明中同时使用默认值和固定值<attribute name=“version” type=“decimal” fixed=“1.1”/> 如果模式验证器发现元素没有kind属性，则插入该属性并将属性值设为Home <attribute name=“version” type=“string” fixed=“1.0”/> <attribute name=“kind” type=“contacts:KindType” default=“Home”/>
- 5.3 XML Schema的语法 
-nn属性通配符
-qq包括来自一个命名空间的任何属性的声明称为属性通配符nn<anyAttribute>只能出现在<complexType>或<attrbuteGourp>中，不能建立全局的<anyAttribute>声明
-nn可以插入namespace属性来控制属性可使用的命名空间<anyAttributenamespace=“allowable namespaces” processContents=“lax or skip or strict”> 
-5.3 XML Schema的语法
- nn属性通配符值 说明 ##any 包括来自所有命名空间的属性 ##other 包括除了targetNamespace之外其他命名空间的属性 ##targetNamespace只包括来自targetNamespace命名空间的属性 ##local 包括所有没有命名空间限定的属性 由命名空间URI组成的，以空白符分隔的列表包括来自命名空间列表中的属性，列表可包括##targetNamespace和##local的属性 namespace属性允许值<complexType> <anyAttributenamespace=“##local http://www.w3.org/XML/1998/namespace” processContents=“lax”/> </complexType> 包括任何非限定属性以及来自http://www.w3.org/XML/1998/namespace命名空间的属性
-5.3 XML Schema的语法 
-nn属性通配符
-qq对于包含属性通配符声明的元素，模式验证器根据processContents的值验证XML实例文档
-nnskip: 跳过元素中的所有通配符属性
-nnlax: 不严格验证，如果验证器可以访问XML Schema，则对通配符属性进行验证
-nnstrict（默认值）或没有使用processContents属性: 对通配符属性进行验证，如果没有找到使用通配符属性的元素的全局XML Schema定义，则产生一个验证错误
+* 全局`<attribute>`声明不可以使用use
 
-5.3 XML Schema的语法
- nn<attributeGroup>声明
-qq用同一组属性描述多个元素，可建立一个能在<complexType>定义中重用的全局属性组
-qq必须给全局<attributeGroup>声明定义name属性并指定合适的名字<attributeGroupname=“name of global attribute group”> <attributeGroupname=“ContactsAttributes”> <!-- attribute declarations go here --> </attributeGroup> 
-5.3 XML Schema的语法 
-nn<attributeGroup>声明qq<attributeGroup>声明中允许有<attribute>声明作为其子声明，还允许属性通配符和对全局<attribute>和<attributeGroup>的引用，但不能递归引用自己
-qq使用<attributeGroup>，可在<complexType>中插入一个引用或<attributeGroup>全局声明<attributeGroupname=”AttGroup1”> <attributeGroupref=”target:AttGroup1”/> </attributeGroup> <attributeGroupname=”AttGroup1”> <attributeGroupref=”target:AttGroup2”/> </attributeGroup> <attributeGroupname=”AttGroup2”> <attributeGroupref=”target:AttGroup1”/> </attributeGroup> 5.3 XML Schema的语法 
-nn用简单内容和属性创建元素
-qq如果元素只包含简单内容和属性
-nn<simpleContent>声明表明<complexType>中不含子元素
-nn可以有属性，但必须被定义为简单类型nn使用<extension>声明可增加属性声明，扩展现有数据类型
-qq该声明的base属性可引用任何全局<simpleType>类型
+* 属性的默认值和固定值
++ 使用default赋予默认值
+`<attribute name=“kind” type=“contacts:KindType” default=“Home”/>`
+    + 如果模式验证器发现元素没有kind属性，则插入该属性并将属性值设为Home  
+ + 使用fixed赋予固定值
+    + 如果属性存在固定值，则解析器检查属性值与固定值是否相同，不同则提示模式验证错误
+    + 如果某属性在Schema中设置了固定值，而XML实例文档中其对应的元素没有该属性，则解析器插入该属性并赋予固定值
+`<attribute name=“version” type=“string” fixed=“1.0”/>`
+ + 默认值或固定值必须与对应属性的类型相符
+ + 不能在同一个属性声明中同时使用默认值和固定值
 
-<element name=“phone”> <complexType> <simpleContent> <!-- Specify type here --> </simpleContent> </complexType> </element> <element name=“phone”> <complexType> <simpleContent> <extension base=“string”> <attribute name=“kind” type=“string” default=“Home” /> </extension> </simpleContent> </complexType> </element> <phone kind=“Home”>001-909-555-1212</phone> <phone>001-909-555-1212</phone> <phone />
+* 属性通配符
+ + 包括来自一个命名空间的任何属性的声明称为属性通配符
+`<anyAttributenamespace=“allowable namespaces” processContents=“lax or skip or strict”> `
+    + `<anyAttribute>`只能出现在`<complexType>`或`<attrbuteGourp`>中，不能建立全局的`<anyAttribute>`声明
+    + 可以插入namespace属性来控制属性可使用的命名空间
 
+* 属性通配符
+|namespace属性允许值|说明|
+|-|-| 
+|##any|包括来自所有命名空间的属性|
+|##other|包括除了targetNamespace之外其他命名空间的属性| 
+|##targetNamespace|只包括来自targetNamespace命名空间的属性| 
+|##local|包括所有没有命名空间限定的属性|
+|由命名空间URI组成的，以空白符分隔的列表|包括来自命名空间列表中的属性，列表可包括##targetNamespace和##local的属性|
+```
+<complexType>
+    <anyAttributenamespace=“##local http://www.w3.org/XML/1998/namespace” processContents=“lax”/> </complexType> 
+```
+    + 包括任何非限定属性以及来自`http://www.w3.org/XML/1998/namespace`命名空间的属性
 
+ + 对于包含属性通配符声明的元素，模式验证器根据processContents的值验证XML实例文档
+    + skip: 跳过元素中的所有通配符属性
+    + lax: 不严格验证，如果验证器可以访问XML Schema，则对通配符属性进行验证
+    + strict（默认值）或没有使用processContents属性: 对通配符属性进行验证，如果没有找到使用通配符属性的元素的全局XML Schema定义，则产生一个验证错误
 
-
-
-
-
+* `<attributeGroup>`声明
+ + 用同一组属性描述多个元素，可建立一个能在`<complexType>`定义中重用的全局属性组
+`<attributeGroupname=“name of global attribute group”> `
+ + 必须给全局`<attributeGroup>`声明定义name属性并指定合适的名字```
+<attributeGroupname=“ContactsAttributes”>
+    <!-- attribute declarations go here -->
+</attributeGroup> 
+```
+ ＋ `<attributeGroup>`声明中允许有`<attribute>`声明作为其子声明，还允许属性通配符和对全局`<attribute>`和`<attributeGroup>`的引用，但不能递归引用自己
+ + 使用`<attributeGroup>`，可在`<complexType>`中插入一个引用或`<attributeGroup>`全局声明
+* 用简单内容和属性创建元素
+ + 如果元素只包含简单内容和属性
+ + `<simpleContent>`声明表明`<complexType>`中不含子元素
+    + 可以有属性，但必须被定义为简单类型
+    + 使用`<extension>`声明可增加属性声明，扩展现有数据类型
+        + 该声明的base属性可引用任何全局`<simpleType>`类型
+```
+<element name=“phone”>
+    <complexType>
+        <simpleContent>
+            <!-- Specify type here -->
+        </simpleContent>
+    </complexType>
+</element> 
+```
+```
+<element name=“phone”>
+    <complexType>
+        <simpleContent>
+            <extension base=“string”>
+                <attribute name=“kind” type=“string” default=“Home” />
+            </extension>
+        </simpleContent>
+    </complexType>
+</element> 
+```
 5.3 XML Schema的语法
 n数据类型
 q内置数据类型
