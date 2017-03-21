@@ -678,6 +678,18 @@ processContents=“lax or skip or strict”>
 * 数据类型
  + 内置数据类型
  + 用户自定义数据类型
+
+
+|字符串类型|
+|-|-|
+|string|string数据类型的取值可以是任意字符串，其中可以包含空格、LF、CR和制表符等空白字符。对于string数据类型，XML解析器将不会修改其内容|
+|normalizedString|normalizedString数据类型派生于string数据类型。normalizedString数据类型的值可以包含任意字符，但是XML解析器将删除其中的LF、CR和制表符等空白字符；换句话说，normalizedString数据类型是不包含上述特殊字符的字符串|
+|token|token数据类型也是string数据类型的派生类型，其中可以包含任意字符，但是XML解析器将删除其中的LF、CR和制表符等空白字符、开头和结尾的空格，以及连续的空格|
+|language|包含合法语言id字符串|
+|Name|包含合法XML 名称的字符串，可以包含命名空间前缀|
+|NCName|包含合法XML名称的字符串，不可以包含命名空间前缀|
+|ID、IDREFS、NMTOKEN等|这些数据类型来自于DTD，在XML Schema 中保留了这些数据类型，并且与DTD 中的使用方式相同，这些类型只能用于元素的属性|
+|...|...|
  + 任何一种类型都可以用来限制元素和属性的内容
 ```
 <element name=“latitude” type=“float”/>
