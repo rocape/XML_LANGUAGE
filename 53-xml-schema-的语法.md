@@ -701,11 +701,16 @@ processContents=“lax or skip or strict”>
 |nonPositiveInteger|派生于integer,限制条件是最大值为0|
 |...|...|
 
-|||
-|||
-|||
-|||
-|||
+||日期、时间类型|
+|-|-|
+|data|用于|
+|time||
+|datetime||
+|duration||
+|boolean||
+|base64Binary、hexBinary||
+|anyURI||
+
 
  + 任何一种类型都可以用来限制元素和属性的内容
 ```
