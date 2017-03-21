@@ -680,16 +680,33 @@ processContents=“lax or skip or strict”>
  + 用户自定义数据类型
 
 
-|字符串类型|
+||字符串类型|
 |-|-|
 |string|string数据类型的取值可以是任意字符串，其中可以包含空格、LF、CR和制表符等空白字符。对于string数据类型，XML解析器将不会修改其内容|
 |normalizedString|normalizedString数据类型派生于string数据类型。normalizedString数据类型的值可以包含任意字符，但是XML解析器将删除其中的LF、CR和制表符等空白字符；换句话说，normalizedString数据类型是不包含上述特殊字符的字符串|
 |token|token数据类型也是string数据类型的派生类型，其中可以包含任意字符，但是XML解析器将删除其中的LF、CR和制表符等空白字符、开头和结尾的空格，以及连续的空格|
 |language|包含合法语言id字符串|
-|Name|包含合法XML 名称的字符串，可以包含命名空间前缀|
-|NCName|包含合法XML名称的字符串，不可以包含命名空间前缀|
-|ID、IDREFS、NMTOKEN等|这些数据类型来自于DTD，在XML Schema 中保留了这些数据类型，并且与DTD 中的使用方式相同，这些类型只能用于元素的属性|
+|Name|包含合法xml名称的字符串，可以包含命名空间前缀|
+|NCName|包含合法 XML名称的字符串 ， 不可以包含命名空间前缀 |
+|ID、IDREFS、NMTOKEN等|这些数据类型来自于DTD,在XML Schema中保留了这些数据类型，并且与DTD中的使用方式相同，这些类型只能用于元素的属性|
 |...|...|
+
+||数值类型|
+|-|-|
+|float|IEEE的单精度32位浮点数|
+|decimal|可以使用十进制数字表示的实数|
+|integer|派生于decimal，限制条件是十进制整数|
+|long|派生于integer,限制条件是最大值为9220072036854775807、最小值为-9220072036854775807|
+|int|派生于long，限制条件是最大值为2147483647、最小值为-2147483648|
+|nonPositiveInteger|派生于integer,限制条件是最大值为0|
+|...|...|
+
+|||
+|||
+|||
+|||
+|||
+
  + 任何一种类型都可以用来限制元素和属性的内容
 ```
 <element name=“latitude” type=“float”/>
