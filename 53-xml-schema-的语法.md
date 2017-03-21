@@ -680,6 +680,11 @@ processContents=“lax or skip or strict”>
  + 用户自定义数据类型
 
 
+
+
+
+
+
 ||字符串类型|
 |-|-|
 |string|string数据类型的取值可以是任意字符串，其中可以包含空格、LF、CR和制表符等空白字符。对于string数据类型，XML解析器将不会修改其内容|
@@ -703,46 +708,61 @@ processContents=“lax or skip or strict”>
 
 ||日期、时间类型|
 |-|-|
-|data|用于|
-|time||
-|datetime||
-|duration||
-|boolean||
-|base64Binary、hexBinary||
-|anyURI||
-
+|data|用于指定一个日期，具体格式为YYYY-MM-DD，其中：YYYY表示年：MM表示月；DD表示日。假如`<xsd:element name="start" type="xsd:date"/>`那么该元素可以为`<start>2002-09-24<start>`|
+|time|用于指定一个时间，具体格式为：hh:mm:ss，其中：hh表示时；mm表示分；ss表示秒。假如`<xsd:element name="start" type="xsd:time"/>`那么该元素可以为`<start>09:00:00<start>`|
+|datetime|用于指定一日期和时间，具体格式为YYYY-MM-DDThh:mm:ss。假如`<xsd:element name="startdate" type="xsd:dateTime"/>`那么该元素可以为`<startdate>2002-05-30T09:00:00</startdate>`|
+|duration|指定一个时间间隔，具体格式为PnYnMnTnHnMnS,其中：P表示时间间隔（必需的）；nY表示年数；nM表示月数；以此类推|
+||其他类型|
+|boolean|用于指定true或者false。合法的取值包括：true、false、1（表示true）、0（表示false）|
+|base64Binary、hexBinary|用于表示二进制格式的数据，base64Binary表示Base64编码的二进制数据，hexBinary表示十六进制编码的二进制数据。|
+|anyURI|用于表示一个URI,如果其中包括空格，必须使用%20进行替换|
 
  + 任何一种类型都可以用来限制元素和属性的内容
 ```
 <element name=“latitude” type=“float”/>
 <element name=“longitude” type=“float”/> 
 ```
-数据类型
-qq用户自定义数据类型
-nn内置数据类型不能包括所有的数据类型
-qq合法但无效的数据值
-qq使用<simpleType>定义建立一个新类型kind=“Walkie-Talkie”
-5.3 XML Schema的语法 nn<simpleType>声明
-qq可以建立用户自定义的数据类型
-nn必须以现有数据类型为基础
-qq内置的XML Schema数据类型
-qq另一个自定义数据类型
-qq包括三个主要的派生类型
-nn约束（Restriction）类型
-nn列表（List）类型
-nn联合（Union）类型<simpleTypename=“name of the simpleType” final=“#all or list or union or restriction”>
-5.3 XML Schema的语法
-nn<restriction>声明
-qq约束面（Facet）控制了XML Schema的全部简单类型
-nn约束面是<simpleType>独有的
-qq通过定义现有类型的约束面，可以创建更多自定义约束类型§§nonNegativeInteger由Integer派生，相当于将Integer的约束面minInclusive为0
-qq不是所有类型都使用每个约束面
-qq使用base属性定义约束类型§§base属性值是一个对全局<simpleType>或内置数据类型的引用
-5.3 XML Schema的语法 nn<restriction>声明<attribute name=“kind”> <simpleType> <restriction base=“string”> <enumerationvalue=“Home”/> <enumerationvalue=“Work”/> <enumerationvalue=“Cell”/> <enumerationvalue=“Fax”/> </restriction> </simpleType> </attribute> 基类型string，用多个枚举约束面定义kind类型的允许值列表
+ + 用户自定义数据类型
+    + 内置数据类型不能包括所有的数据类型
+        + 合法但无效的数据值 kind=“Walkie-Talkie”
+        + 使用`<simpleType>`定义建立一个新类型
+* `<simpleType>`声明
+ + 可以建立用户自定义的数据类型
+    + 必须以现有数据类型为基础
+        + 内置的XML Schema数据类型
+        + 另一个自定义数据类型
+ + 包括三个主要的派生类型
+    + 约束（Restriction）类型
+    + 列表（List）类型
+    + 联合（Union）类型
 
-
+`<simpleTypename=“name of the simpleType” final=“#all or list or union or restriction”>`
+`<restriction>`声明
+ + 最常见的`<simpleType>`派生类型
+ + 定义的派生类型是基类型的一个子集
+`<restriction base="name of the simpleType you are deriving from">`
+ + 约束面（Facet）控制了XML Schema的全部简单类型
+  + 约束面是`<simpleType>`独有的
+    + 通过定义现有类型的约束面，可以创建更多自定义约束类型            
+        + nonNegativeInteger由Integer派生，相当于将Integer的约束面minInclusive为0
+    + 不是所有类型都使用每个约束面
+    + 使用base属性定义约束类型
+        + base属性值是一个对全局`<simpleType>`或内置数据类型的引用
 * `<restriction>`声明
-
+```
+<attribute name=“kind”>
+    <simpleType>
+        <restriction base=“string”>
+            <enumerationvalue=“Home”/>
+            <enumerationvalue=“Work”/>
+            <enumerationvalue=“Cell”/>
+            <enumerationvalue=“Fax”/>
+        </restriction>
+    </simpleType>
+</attribute> 
+```
+ + 基类型string，用多个枚举约束面定义kind类型的允许值列表
+* `<restriction>`声明
 |约束面|描述|
 |-|-|
 |enumeration|定义一组合法的取值|
