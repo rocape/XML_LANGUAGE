@@ -678,12 +678,16 @@ processContents=“lax or skip or strict”>
 * 数据类型
  + 内置数据类型
  + 用户自定义数据类型
-
-
-
-
-
-
+![](/assets/5_1.jpg)
+![](/assets/5_1_1.bmp)
+![](/assets/5_2.jpg)
+![](/assets/5_3.jpg)
+![](/assets/5_4.bmp)
+![](/assets/5_5.jpg)
+![](/assets/5_6.bmp)
+![](/assets/5_7.jpg)
+![](/assets/5_8.bmp)
+![](/assets/5_9.bmp)
 
 ||字符串类型|
 |-|-|
