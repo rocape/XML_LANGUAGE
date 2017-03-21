@@ -674,19 +674,16 @@ processContents=“lax or skip or strict”>
     </complexType>
 </element> 
 ```
-5.3 XML Schema的语法
-n数据类型
-q内置数据类型
-q用户自定义数据类型
 
-
-
-
-5.3 XML Schema的语法 
-nn数据类型
-qq任何一种类型都可以用来限制元素和属性的内容<element name=“latitude” type=“float”/> <element name=“longitude” type=“float”/> 
-5.3 XML Schema的语法 
-nn数据类型
+* 数据类型
+ + 内置数据类型
+ + 用户自定义数据类型
+ + 任何一种类型都可以用来限制元素和属性的内容
+```
+<element name=“latitude” type=“float”/>
+<element name=“longitude” type=“float”/> 
+```
+数据类型
 qq用户自定义数据类型
 nn内置数据类型不能包括所有的数据类型
 qq合法但无效的数据值
