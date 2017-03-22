@@ -189,12 +189,10 @@
 </xsl:variable>
 ```
     + 全局变量（xsl:stylesheet的直接子元素）可在文档转换之前用程序赋值（转换器相关）
-
-  使用select给变量赋字符串值Ages.xml Ages.xsltAges.html6.3 XSLT样式单的元素和指令
- nn命名模板和<xsl:call-template>元素
-qq命名模板由xsl:template元素的name属性标识
-qq调用命名模板使用xsl:call-template元素
-qqxsl:with-param元素用于在使用xsl:template声明模板时声明参数，也用于在xsl:call-template或者xsl:apply-templates中传递调用参数nnxsl:with-param的select属性可选，其值为表达式，表示如何选取需要传递的值<xsl:call-templatename=”TemplateName” />不带任何参数调用命名模板<xsl:templatename=”TemplateName”> <!-- The template content goes here. --> </xsl:template>
+* 命名模板和`<xsl:call-template>`元素
+ + 命名模板由xsl:template元素的name属性标识
+ + 调用命名模板使用xsl:call-template元素
+ + xsl:with-param元素用于在使用xsl:template声明模板时声明参数，也用于在xsl:call-template或者xsl:apply-templates中传递调用参数nnxsl:with-param的select属性可选，其值为表达式，表示如何选取需要传递的值<xsl:call-templatename=”TemplateName” />不带任何参数调用命名模板<xsl:templatename=”TemplateName”> <!-- The template content goes here. --> </xsl:template>
 6.3 XSLT样式单的元素和指令 
 nn命名模板和<xsl:call-template>元素<xsl:call-templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- More <xsl:with-param> elements can go here. --> </xsl:call-template>要把一个参数传递给一个命名模板，该模板的定义格式（xsl:with-param）用来声明命名模板的参数<xsl:templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- Rest of template goes here. --> </xsl:template>使用xsl:with-param传递一个或多个参数给命名模板
 6.3 XSLT样式单的元素和指令 
