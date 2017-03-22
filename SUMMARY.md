@@ -24,7 +24,7 @@
     * [5.4  来自多个文档的模式](54--来自多个文档的模式.md)
     * [5.5 XML Schema 的开发文档](55-xml-schema-的开发文档.md)
 * [第六章 XSLT](xslt.md)
-    * 6.1 XSLT 概述
+    * [6.1 XSLT 概述](61-xslt-概述.md)
     * 6.2 XSLT 样式单基本元素
     * 6.3 XSLT 样式单的元素和指令
     * 6.4 XSLT 函数
