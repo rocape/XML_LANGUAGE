@@ -1,10 +1,142 @@
-6.3 XSLT样式单的元素和指令 nn<xsl:apply-templates>元素qqselect属性nnxsl:apply-templates的作用就是指定继续遍历当前节点的所有子节点（以便根据实际路径和模板的match属性取值调用对应的模板），而select属性（取值为一个XPath表达式）允许指定仅遍历当前节点的哪些子节点（以调用相应的模板，如果存在）nn如果将(a)的模板1中的<xsl:apply-templates/>更改为<xsl:apply-templatesselect="message"/>，那么将仅调用message元素所对应的模板（而不会调用处理指令所对应的模板）。这样就可以根据具体的转换要求，仅遍历文档树中的部分内容 6.3 XSLT样式单的元素和指令 nn<xsl:apply-templates>元素qqmode属性可实现某个节点多次处理的需要nn当xsl:apply-templates有一个mode属性时，只有当match和mode两个属性值都有匹配值时，其模板才可实例化nnmode属性用于指定需要在match属性取值相同的模板中选择哪一个进行调用nn需要与xsl:template元素的mode属性配合使用 6.3 XSLT样式单的元素和指令 nn<xsl:apply-templates>元素qqmode属性可实现某个节点多次处理的需要 <Company><Name>Acme</Name><Person><Name>Dave</Name><Phone>123</Phone></Person></Company><xsl:templatematch="/"> 模板1 <xsl:apply-templates/></xsl:template><xsl:templatematch="Company"> 模板2 <xsl:apply-templatesselect="Name" mode="C"/><xsl:apply-templatesselect="Person/Name" mode="P"/></xsl:template><xsl:templatematch="Name"mode="C"> 模板3 ...Do sthfor Company Name...</xsl:template><xsl:templatematch="Name"mode="P"> 模板4 ...Do sthfor Person Name...</xsl:template>可以为模板3和模板4的match属性取不同的值6.3 XSLT样式单的元素和指令 nn<xsl:variable>和<xsl:param>元素qq定义变量和参数nn引用变量和参数使用$ nn参数可以从外部传递给转换程序，变量则在XSLT样式表内部定义nn变量赋值qq使用xsl:variable的select属性qq在xsl:variable元素的起始标签和结束标签之间定义qq全局变量（xsl:stylesheet的直接子元素）可在文档转换之前用程序赋值（转换器相关）<xsl:variablename=” variableName” select=” someExpression” /> <xsl:variablename=” variableName”> <!-- Some content goes here which can define the value of the variable. --> </xsl:variable> <xsl:paramname=”searchLetter” select=”’A’”/> 使用select给变量赋字符串值Ages.xml Ages.xsltAges.html6.3 XSLT样式单的元素和指令 nn命名模板和<xsl:call-template>元素qq命名模板由xsl:template元素的name属性标识qq调用命名模板使用xsl:call-template元素qqxsl:with-param元素用于在使用xsl:template声明模板时声明参数，也用于在xsl:call-template或者xsl:apply-templates中传递调用参数nnxsl:with-param的select属性可选，其值为表达式，表示如何选取需要传递的值<xsl:call-templatename=”TemplateName” />不带任何参数调用命名模板<xsl:templatename=”TemplateName”> <!-- The template content goes here. --> </xsl:template>6.3 XSLT样式单的元素和指令 nn命名模板和<xsl:call-template>元素<xsl:call-templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- More <xsl:with-param> elements can go here. --> </xsl:call-template>要把一个参数传递给一个命名模板，该模板的定义格式（xsl:with-param）用来声明命名模板的参数<xsl:templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- Rest of template goes here. --> </xsl:template>使用xsl:with-param传递一个或多个参数给命名模板6.3 XSLT样式单的元素和指令 nn模板参数的声明和传值qq在xsl:template元素开始标记和结束标记之间，使用xsl:param元素为所在的模板声明相应的模板参数qq在xsl:call-template元素的开始标记和结束标记之间，可以使用xsl:with-param元素为所调用的模板传递所需的参数 <xsl:templatename="doSth"><xsl:paramname="paramOne"/><xsl:paramname="paramTwo"/>...模板正文......使用"$paramOne" 和"$paramTwo" 引用两个模板参数... </xsl:template><xsl:call-templatename="doSth"><xsl:with-paramname="paramOne"select="'One'"/><xsl:with-paramname="paramTwo"select="."/> </xsl:call-template>使用xsl:with-param元素时必须指明具体的模板参数名称，以便为其进行赋值，所以可以不按照声明时的顺序书写可以使用xsl:with-param元素的as属性，为形式参数指定数据类型 6.3 XSLT样式单的元素和指令 nnXSLT中的内置模板qq内置模板（Built-in Templates）是XSLT中的一个关键内容，对于理解XSLT对XML文档树结构的遍历方式、模板调用机制等都是至关重要的qq通过一个具体的示例来说明内置模板的存在，并观察和解释各种内置模板的含义、以及处理对象 <xsl:stylesheetversion=“1.0"xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:templatematch="*|/"> 模板1<xsl:apply-templates/></xsl:template><xsl:templatematch="text()|@*"> 模板2 <xsl:value-ofselect="."/></xsl:template><xsl:templatematch="processing-instruction()|comment()"/> 模板3
+###6.3 XSLT样式单的元素和指令 
+* `<xsl:stylesheet>`元素
+ + 每个完整的XSLT样式单都有一个xsl:stylesheet或xsl:transform元素作为其文档元素
+    + `<xsl:stylesheet>`和`<xsl:transform>`语义上等同，可互换使用
+    + 某些非常简单的XSLT样式单可能没有xsl:stylesheet，但可存在一个HTML文档里面分散包含来自XSLT命名空间的元素
+    + xsl:stylesheet开始标签必须有一个version属性（位置）
+        + 现在常用1.0
+    + 必须有一个命名空间声明
+        + 命名空间声明中的其他URL表示非XSLT命名空间中的元素
+        + XSLT命名空间前缀：xslt/xsl或其他
+* `<xsl:template>`元素
+ + XSLT处理器在样式表中查找一个match属性值为/的xsl:template元素（根节点）
+ + 搜索到根节点时就根据模板内容，在目标树中增加一个与模板内容相对应的树形结构
+    + 只有一个根节点，则只允许根节点在目标树中添加一次
+    + 模板中与根节点匹配的元素大都是HTML或XHTML元素
+        + 字面结果元素（Literal Result Elements）
+    + 模板中来自XSLT命名空间的元素被称为指令（Instructions）
+ + 模板是XSLT转换工作的具体规则，所有的转换任务是通过一系列的模板体现出来的。因此，如何声明和调用模板，是XSLT转换任务的关键 
+ + 在XSLT文档中通常至少包含一个模板，即<xsl:templatematch=“/”>，该模板用于处理文档节点（Document Node），相当于程序设计语言中的main()函数
+ + 模板在很多方面都与函数非常类似，必须首先声明（可以指定模板的名称、参数、返回类型等），然后在合适的地方显式地调用（在遍历文档树节点的过程中或直接调用），才能够执行相应的转换规则
+ + 完整的模板声明语法
+```
+<xsl:templatematch=Pattern name=QNamemode=QNamepriority=Number as=Sequence-type>
+    <!--other xslelements and literal result elements-->
+......
+</xsl:template>
+```
+ + `<xsl:template>`和`</xsl:template>`之间的内容相当于一个函数的函数体，表示在调用该模板时应执行的具体操作。而xsl:template元素开始标记中的属性（match, name, mode和priority）用于描述该模板的相关信息 
 
+ + match属性的取值涉及到模板的调用，分两种方式
+    + 根据模板的匹配路径（在遍历的过程中）进行调用，具体有两种情况
+        + 对于模板<xsl:templatematch=“/“>，XSLT处理器将在碰到XML文档的文档节点时自动调用该模板，类似程序执行的入口，Java 虚拟机自动调用主类的main()方法
+        + 对于其他的模板match=other-pattern，将在模板<xsl:templatematch="/“>的转换规则（函数体）中通过指出匹配路径的方式（使用xsl:apply-templates）进行隐式或者显式地调用
+    + 根据模板名称属性（name），使用<xsl:call-templatename=template-name>进行调用 
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <!--transform the input root (/) and the message element-->
+    <xsl:template match="/"> 模板1
+        ......
+    </xsl:template>
+    <xsl:template match="message"> 模板2
+        ......
+    </xsl:template>
+</xsl:stylesheet>
+```
+ + match属性值可以使用绝对路径表达式（比如“/message”），这表示在遍历文档树的过程中碰到/message元素时，需要执行该模板中的内容；如果使用相对路径表达式，模板2将应用于/message、/*/message 等（所有含message的元素）
 
+ + 模板`<xsl:templatematch=“/”>`和`<xsl:templatematch=“message”>`都没有具体的名称，称为**无名模板** 
+ + 这些模板之所以可以没有名称，是因为它们的调用是在遍历文档树的过程中自动进行的，根本不需要名称
+ + 也可以使用name属性为模板指定一个名称，使其成为命名模板
+```
+<xsl:stylesheetversion="2.0"xmlns:xsl="http://www.w3.org/1999/XSL/Transform">    
+    <xsl:templatematch="/"name="one"><!--命名模板one-->
+        <xsl:call-templatename="another"/>    
+        </xsl:template>
+    <xsl:templatename="another"> <!--命名模板another-->
+        <output>Simple output</output>
+    </xsl:template></xsl:stylesheet> 
+```
+    + 输出结果为：`<output>Simple output</output>`
+ + 对于一个模板来说，可以同时使用match和name属性，以便能够在遍历过程中根据路径匹配情况自动地调用，或者使用xsl:call-template直接调用 
 
-6.3 XSLT样式单的元素和指令 nn节点选择方式qq<xsl:template>的match属性用于指定要匹配的节点qq<xsl:copy-of>, <xsl:for-each>, <xsl:sort>, <xsl:apply-template>和<xsl:value-of>的select属性用于选择节点6.3 XSLT样式单的元素和指令 nn<xsl:copy>元素qq把一个节点复制到目标树，但不复制子孙节点qq如果上下文节点是一个元素节点，则不会复制节点的任何属性值nn使用某个元素并可改变其内容或增删属性<Persons> <Person /> <Person /> <Person /> </Person><?xml version=“1.0” encoding=“UTF-8”?> <Persons> <Person FirstName=“Jill” LastName=“Harper”/> <Person FirstName=“Claire” LastName=“Vogue”/> <Person FirstName=“Paul” LastName=“Cathedral”/> </Persons>只处理xsl:copy使用xsl:attribute增加属性Persons.xml Persons.xsltPersonsOut.xml Persons2.xslt6.3 XSLT样式单的元素和指令 nn<xsl:copy-of>元素qq深度复制，把一个节点及其所有属性节点和子孙节点都复制到目标树xsl:copyxsl:copy-of功能将当前节点从源文档复制到目标树复制任何节点集到目标树对当前节点的处理仅复制当前节点，不复制其子元素或者属性复制节点及其所有的子孙节点，包括属性和子元素节点内容可以使用XSLT代码为新的节点创建内容，如果当前节点是元素节点或者根节点所有的内容都来自select属性中指定的节点集PurchaseOrder.xml PurchaseOrder.xsltInvoice.xml6.3 XSLT样式单的元素和指令 nn<xsl:output>元素qq使用method属性从XML, HTML或文本文档中选择一种输出格式nnmethod属性的值大小写敏感，并且必须小写（xml, html, text）<xsl:output method=“output type” />6.3 XSLT样式单的元素和指令 nn<xsl:if>元素qq测试一个布尔条件nn为真则实例化<xsl:if>元素的内容nn为假则<xsl:if>元素的内容不会被添加到目标树nn输出一些内容或没有任何输出<Characters> <Character age=“99”>Julius Caesar</Character> <Character age=“23”>Anne Boleyn</Character> <Character age=“41”>George Washington</Character> <Character age=“45”>Martin Luther</Character> <Character age=“800”>Methuselah</Character> <Character age=“119”>Moses</Character> <Character age=“50”>Asterixthe Gaul</Character> </Characters> <xsl:templatematch=“Character”> <xsl:iftest=“@age > 110 ” > <p><b><xsl:value-ofselect=“.” /></b> is older than expected. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p> </xsl:if> </xsl:template> test属性返回false时，Character元素的模板不输出任何内容Characters.xml Characters.xslt6.3 XSLT样式单的元素和指令 nn<xsl:choose>元素qq多个选项中选取一个nnxsl:choose可以有任意个xsl:when元素作为其子元素，每一个都有一个test属性进行逻辑判断 nn如果xsl:when元素内容均未输出，则输出xsl:otherwise元素内容<xsl:templatematch=“Character”> <xsl:choose> <xsl:whentest=“@age > 110” > <p><b><xsl:value-ofselect=“.” /></b> - too high. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p> </xsl:when> <xsl:otherwise> <p><b><xsl:value-ofselect=“.” /></b> - ok</p>. </xsl:otherwise> </xsl:choose> </xsl:template>
++ 模板的mode属性可用于对模板进行进一步的标识<xsl:templatematch="Name"mode="C"> 模板1...Do sthfor Company Name...</xsl:template><xsl:templatematch="Name"mode="P"> 模板2...Do sthfor Person Name...</xsl:template> <Company><Name>Acme</Name><Person><Name>Dave</Name><Phone>123</Phone></Person> </Company>
+6.3 XSLT样式单的元素和指令
+ nn<xsl:template>元素
+qqpriority属性是用来表示模板的优先级
+qq碰到Name元素时将使用priority取值较大的模板 <xsl:templatematch="Name" > 模板1...Do sth...</xsl:template><xsl:templatematch="Name" > 模板2...Do other things...</xsl:template> priority="2" priority=“1" 
+6.3 XSLT样式单的元素和指令 
+nn<xsl:template>元素
+qq模板返回类型属性as的取值，表示该模板应该返回的数据类型
+qq表示该模板将会返回一个XML元素作为结果，其中可能包含子元素和文本内容。如果该模板输出多个XML元素组成的序列、非XML元素内容或者文本内容，则XSLT处理器在执行模板的过程中将会报错
+qqas是一个可选的参数，如果不指定该参数，则模板可以输出任意的文本内容
 
-ate�Pc��
+6.3 XSLT样式单的元素和指令 
+nn<xsl:apply-templates>元素
+qqselect属性
+nnxsl:apply-templates的作用就是指定继续遍历当前节点的所有子节点（以便根据实际路径和模板的match属性取值调用对应的模板），而select属性（取值为一个XPath表达式）允许指定仅遍历当前节点的哪些子节点（以调用相应的模板，如果存在）
+nn如果将(a)的模板1中的<xsl:apply-templates/>更改为<xsl:apply-templatesselect="message"/>，那么将仅调用message元素所对应的模板（而不会调用处理指令所对应的模板）。这样就可以根据具体的转换要求，仅遍历文档树中的部分内容 
+6.3 XSLT样式单的元素和指令
+ nn<xsl:apply-templates>元素qqmode属性可实现某个节点多次处理的需要
+nn当xsl:apply-templates有一个mode属性时，只有当match和mode两个属性值都有匹配值时，其模板才可实例化
+nnmode属性用于指定需要在match属性取值相同的模板中选择哪一个进行调用
+nn需要与xsl:template元素的mode属性配合使用 
+6.3 XSLT样式单的元素和指令
+ nn<xsl:apply-templates>元素
+qqmode属性可实现某个节点多次处理的需要 <Company><Name>Acme</Name><Person><Name>Dave</Name><Phone>123</Phone></Person></Company><xsl:templatematch="/"> 模板1 <xsl:apply-templates/></xsl:template><xsl:templatematch="Company"> 模板2 <xsl:apply-templatesselect="Name" mode="C"/><xsl:apply-templatesselect="Person/Name" mode="P"/></xsl:template><xsl:templatematch="Name"mode="C"> 模板3 ...Do sthfor Company Name...</xsl:template><xsl:templatematch="Name"mode="P"> 模板4 ...Do sthfor Person Name...</xsl:template>可以为模板3和模板4的match属性取不同的值
+6.3 XSLT样式单的元素和指令
+ nn<xsl:variable>和<xsl:param>元素
+qq定义变量和参数nn引用变量和参数使用$ 
+nn参数可以从外部传递给转换程序，变量则在XSLT样式表内部定义
+nn变量赋值
+qq使用xsl:variable的select属性
+qq在xsl:variable元素的起始标签和结束标签之间定义
+qq全局变量（xsl:stylesheet的直接子元素）可在文档转换之前用程序赋值（转换器相关）<xsl:variablename=” variableName” select=” someExpression” /> <xsl:variablename=” variableName”> <!-- Some content goes here which can define the value of the variable. --> </xsl:variable> <xsl:paramname=”searchLetter” select=”’A’”/> 使用select给变量赋字符串值Ages.xml Ages.xsltAges.html6.3 XSLT样式单的元素和指令
+ nn命名模板和<xsl:call-template>元素
+qq命名模板由xsl:template元素的name属性标识
+qq调用命名模板使用xsl:call-template元素
+qqxsl:with-param元素用于在使用xsl:template声明模板时声明参数，也用于在xsl:call-template或者xsl:apply-templates中传递调用参数nnxsl:with-param的select属性可选，其值为表达式，表示如何选取需要传递的值<xsl:call-templatename=”TemplateName” />不带任何参数调用命名模板<xsl:templatename=”TemplateName”> <!-- The template content goes here. --> </xsl:template>
+6.3 XSLT样式单的元素和指令 
+nn命名模板和<xsl:call-template>元素<xsl:call-templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- More <xsl:with-param> elements can go here. --> </xsl:call-template>要把一个参数传递给一个命名模板，该模板的定义格式（xsl:with-param）用来声明命名模板的参数<xsl:templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- Rest of template goes here. --> </xsl:template>使用xsl:with-param传递一个或多个参数给命名模板
+6.3 XSLT样式单的元素和指令 
+nn模板参数的声明和传值
+qq在xsl:template元素开始标记和结束标记之间，使用xsl:param元素为所在的模板声明相应的模板参数
+qq在xsl:call-template元素的开始标记和结束标记之间，可以使用xsl:with-param元素为所调用的模板传递所需的参数 <xsl:templatename="doSth"><xsl:paramname="paramOne"/><xsl:paramname="paramTwo"/>...模板正文......使用"$paramOne" 和"$paramTwo" 引用两个模板参数... </xsl:template><xsl:call-templatename="doSth"><xsl:with-paramname="paramOne"select="'One'"/><xsl:with-paramname="paramTwo"select="."/> </xsl:call-template>使用xsl:with-param元素时必须指明具体的模板参数名称，以便为其进行赋值，所以可以不按照声明时的顺序书写可以使用xsl:with-param元素的as属性，为形式参数指定数据类型 
+6.3 XSLT样式单的元素和指令 
+nnXSLT中的内置模板
+qq内置模板（Built-in Templates）是XSLT中的一个关键内容，对于理解XSLT对XML文档树结构的遍历方式、模板调用机制等都是至关重要的
+qq通过一个具体的示例来说明内置模板的存在，并观察和解释各种内置模板的含义、以及处理对象 <xsl:stylesheetversion=“1.0"xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:templatematch="*|/"> 模板1<xsl:apply-templates/></xsl:template><xsl:templatematch="text()|@*"> 模板2 <xsl:value-ofselect="."/></xsl:template><xsl:templatematch="processing-instruction()|comment()"/> 模板3
+
+6.3 XSLT样式单的元素和指令
+ nn节点选择方式
+qq<xsl:template>的match属性用于指定要匹配的节点
+qq<xsl:copy-of>, <xsl:for-each>, <xsl:sort>, <xsl:apply-template>和<xsl:value-of>的select属性用于选择节点
+6.3 XSLT样式单的元素和指令 
+nn<xsl:copy>元素
+qq把一个节点复制到目标树，但不复制子孙节点
+qq如果上下文节点是一个元素节点，则不会复制节点的任何属性值
+nn使用某个元素并可改变其内容或增删属性
+<Persons> <Person /> <Person /> <Person /> </Person><?xml version=“1.0” encoding=“UTF-8”?> <Persons> <Person FirstName=“Jill” LastName=“Harper”/> <Person FirstName=“Claire” LastName=“Vogue”/> <Person FirstName=“Paul” LastName=“Cathedral”/> </Persons>只处理xsl:copy使用xsl:attribute增加属性Persons.xml Persons.xsltPersonsOut.xml Persons2.xslt
+6.3 XSLT样式单的元素和指令 
+nn<xsl:copy-of>元素
+qq深度复制，把一个节点及其所有属性节点和子孙节点都复制到目标树xsl:copyxsl:copy-of功能将当前节点从源文档复制到目标树复制任何节点集到目标树对当前节点的处理仅复制当前节点，不复制其子元素或者属性复制节点及其所有的子孙节点，包括属性和子元素节点内容可以使用XSLT代码为新的节点创建内容，如果当前节点是元素节点或者根节点所有的内容都来自select属性中指定的节点集PurchaseOrder.xml PurchaseOrder.xsltInvoice.xml
+6.3 XSLT样式单的元素和指令 nn<xsl:output>元素
+qq使用method属性从XML, HTML或文本文档中选择一种输出格式
+nnmethod属性的值大小写敏感，并且必须小写（xml, html, text）<xsl:output method=“output type” />
+6.3 XSLT样式单的元素和指令 
+nn<xsl:if>元素
+qq测试一个布尔条件
+nn为真则实例化<xsl:if>元素的内容
+nn为假则<xsl:if>元素的内容不会被添加到目标树
+nn输出一些内容或没有任何输出
+<Characters> <Character age=“99”>Julius Caesar</Character> <Character age=“23”>Anne Boleyn</Character> <Character age=“41”>George Washington</Character> <Character age=“45”>Martin Luther</Character> <Character age=“800”>Methuselah</Character> <Character age=“119”>Moses</Character> <Character age=“50”>Asterixthe Gaul</Character> </Characters> <xsl:templatematch=“Character”> <xsl:iftest=“@age > 110 ” > <p><b><xsl:value-ofselect=“.” /></b> is older than expected. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p> </xsl:if> </xsl:template> test属性返回false时，Character元素的模板不输出任何内容Characters.xml Characters.xslt
+6.3 XSLT样式单的元素和指令 
+nn<xsl:choose>元素
+qq多个选项中选取一个
+nnxsl:choose可以有任意个xsl:when元素作为其子元素，每一个都有一个test属性进行逻辑判断
+ nn如果xsl:when元素内容均未输出，则输出xsl:otherwise元素内容
+<xsl:templatematch=“Character”> <xsl:choose> <xsl:whentest=“@age > 110” > <p><b><xsl:value-ofselect=“.” /></b> - too high. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p> </xsl:when> <xsl:otherwise> <p><b><xsl:value-ofselect=“.” /></b> - ok</p>. </xsl:otherwise> </xsl:choose> </xsl:template>
 
 
 
