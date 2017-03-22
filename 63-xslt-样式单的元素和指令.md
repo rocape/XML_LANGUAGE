@@ -60,20 +60,78 @@
 ```
     + 输出结果为：`<output>Simple output</output>`
  + 对于一个模板来说，可以同时使用match和name属性，以便能够在遍历过程中根据路径匹配情况自动地调用，或者使用xsl:call-template直接调用 
++ 模板的mode属性可用于对模板进行进一步的标识
+```
+<xsl:templatematch="Name"mode="C"> <!--模板1-->
+    ...Do sthfor Company Name...
+</xsl:template>
+<xsl:templatematch="Name"mode="P"> <!--模板2-->
+    ...Do sthfor Person Name...
+</xsl:template>
+```
+```
+<Company>
+    <Name>Acme</Name>
+    <Person>
+        <Name>Dave</Name>
+        <Phone>123</Phone>
+    </Person>
+</Company>
+```
+ + priority属性是用来表示模板的优先级
+```
+<xsl:templatematch="Name" priority="2" ><!--模板1-->
+    ...Do sth...
+</xsl:template>
+<xsl:templatematch="Name" priority=“1" ><!--模板2-->
+    ...Do other things...
+</xsl:template>
+```
+ + 碰到Name元素时将使用priority取值较大的模板 
+ + 模板返回类型属性as的取值，表示该模板应该返回的数据类型
+```
+<xsl:template match="Name" as="element()">
+    ...Do sth...
+</xsl:template>
+```
+```
+<Person>
+    <Name>Dave</Name>
+    <phone>123</Phone>
+</Person>
+```
+ + 表示该模板将会返回一个XML元素作为结果，其中可能包含子元素和文本内容。如果该模板输出多个XML元素组成的序列、非XML元素内容或者文本内容，则XSLT处理器在执行模板的过程中将会报错
+ + as是一个可选的参数，如果不指定该参数，则模板可以输出任意的文本内容
 
-+ 模板的mode属性可用于对模板进行进一步的标识<xsl:templatematch="Name"mode="C"> 模板1...Do sthfor Company Name...</xsl:template><xsl:templatematch="Name"mode="P"> 模板2...Do sthfor Person Name...</xsl:template> <Company><Name>Acme</Name><Person><Name>Dave</Name><Phone>123</Phone></Person> </Company>
-6.3 XSLT样式单的元素和指令
- nn<xsl:template>元素
-qqpriority属性是用来表示模板的优先级
-qq碰到Name元素时将使用priority取值较大的模板 <xsl:templatematch="Name" > 模板1...Do sth...</xsl:template><xsl:templatematch="Name" > 模板2...Do other things...</xsl:template> priority="2" priority=“1" 
-6.3 XSLT样式单的元素和指令 
-nn<xsl:template>元素
-qq模板返回类型属性as的取值，表示该模板应该返回的数据类型
-qq表示该模板将会返回一个XML元素作为结果，其中可能包含子元素和文本内容。如果该模板输出多个XML元素组成的序列、非XML元素内容或者文本内容，则XSLT处理器在执行模板的过程中将会报错
-qqas是一个可选的参数，如果不指定该参数，则模板可以输出任意的文本内容
+* `<xsl:apply-templates>`元素
+ + 与根节点对应的模板中有一个名为xsl:apply-templates的元素
+    + 促使XSLT处理器根据select属性（可选）指定要处理的节点集
+        + 省略则表示处理元素子节点
+        + 可实现对模板的递归引用
+    + 模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
+
+<xsl:templatematch=Pattern name=QNamemode=QNamepriority=Number as=Sequence-type><!--other xslelements and literal result elements-->......</xsl:template><xsl:apply-templates>元素qq与根节点对应的模板中有一个名为xsl:apply-templates的元素nn促使XSLT处理器根据select属性（可选）指定要处理的节点集qq省略则表示处理元素子节点qq可实现对模板的递归引用nn模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
 
 6.3 XSLT样式单的元素和指令 
-nn<xsl:apply-templates>元素
+nn<xsl:apply-templates>元素<xsl:apply-templatesselect="/People/Person" /> ... <xsl:templatematch="Person"> <h3><xsl:value-ofselect="Name" /></h3> <p><xsl:value-ofselect="Description" /></p> <br/> 路径/People/Person确定了需要搜索的节点，表示People元素是根节点的子节点，Person是People元素的子节点，xsl:apply-templates促使处理器搜索一个与Person元素节点匹配的模板模板为xsl:apply-templates元素的select属性提供了一个匹配值，则XSLT处理器在/People/Person定位路径中找到Person元素节点时就处理模板的内容，并把内容添加到目标树；应用模板的次数与匹配节点的个数相同
+
+ + 模板的调用
+    + 在遍历（广度优先遍历）的过程中匹配调用
+    + 通过名称直接调用 
+
+ + 使用xsl:apply-templates在广度优先、逐层向下的遍历过程中调用模板
+nnXSLT中apply-templates元素的完整语法形式如下 
+
+<xsl:apply-templatesselect=Expression mode=QName>......</xsl:apply-templates><?xml version="1.0"?><?xml-stylesheettype="text/xsl" href="hello.xslt"?><message>Hello!</message><xsl:templatematch="/"> 模板1 <xsl:apply-templates/></xsl:template><xsl:templatematch="message"> 模板2 ..... </xsl:template>(a) 两个模板(b) XML文档的文档树结构文档节点处理指令message元素文本节点select和mode属性都是可选的在xsl:apply-templates元素中可以传递调用参数
+
+
+
+
+
+
+
+
+
 qqselect属性
 nnxsl:apply-templates的作用就是指定继续遍历当前节点的所有子节点（以便根据实际路径和模板的match属性取值调用对应的模板），而select属性（取值为一个XPath表达式）允许指定仅遍历当前节点的哪些子节点（以调用相应的模板，如果存在）
 nn如果将(a)的模板1中的<xsl:apply-templates/>更改为<xsl:apply-templatesselect="message"/>，那么将仅调用message元素所对应的模板（而不会调用处理指令所对应的模板）。这样就可以根据具体的转换要求，仅遍历文档树中的部分内容 
