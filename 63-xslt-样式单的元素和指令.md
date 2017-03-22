@@ -191,28 +191,118 @@
     + 全局变量（xsl:stylesheet的直接子元素）可在文档转换之前用程序赋值（转换器相关）
 * 命名模板和`<xsl:call-template>`元素
  + 命名模板由xsl:template元素的name属性标识
+```
+<xsl:templatename=”TemplateName”>
+    <!-- The template content goes here. -->
+</xsl:template>
+```
  + 调用命名模板使用xsl:call-template元素
- + xsl:with-param元素用于在使用xsl:template声明模板时声明参数，也用于在xsl:call-template或者xsl:apply-templates中传递调用参数nnxsl:with-param的select属性可选，其值为表达式，表示如何选取需要传递的值<xsl:call-templatename=”TemplateName” />不带任何参数调用命名模板<xsl:templatename=”TemplateName”> <!-- The template content goes here. --> </xsl:template>
-6.3 XSLT样式单的元素和指令 
-nn命名模板和<xsl:call-template>元素<xsl:call-templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- More <xsl:with-param> elements can go here. --> </xsl:call-template>要把一个参数传递给一个命名模板，该模板的定义格式（xsl:with-param）用来声明命名模板的参数<xsl:templatename=”TemplateName”> <xsl:with-paramname=”ParameterName” /> <!-- Rest of template goes here. --> </xsl:template>使用xsl:with-param传递一个或多个参数给命名模板
-6.3 XSLT样式单的元素和指令 
-nn模板参数的声明和传值
-qq在xsl:template元素开始标记和结束标记之间，使用xsl:param元素为所在的模板声明相应的模板参数
-qq在xsl:call-template元素的开始标记和结束标记之间，可以使用xsl:with-param元素为所调用的模板传递所需的参数 <xsl:templatename="doSth"><xsl:paramname="paramOne"/><xsl:paramname="paramTwo"/>...模板正文......使用"$paramOne" 和"$paramTwo" 引用两个模板参数... </xsl:template><xsl:call-templatename="doSth"><xsl:with-paramname="paramOne"select="'One'"/><xsl:with-paramname="paramTwo"select="."/> </xsl:call-template>使用xsl:with-param元素时必须指明具体的模板参数名称，以便为其进行赋值，所以可以不按照声明时的顺序书写可以使用xsl:with-param元素的as属性，为形式参数指定数据类型 
-6.3 XSLT样式单的元素和指令 
-nnXSLT中的内置模板
-qq内置模板（Built-in Templates）是XSLT中的一个关键内容，对于理解XSLT对XML文档树结构的遍历方式、模板调用机制等都是至关重要的
-qq通过一个具体的示例来说明内置模板的存在，并观察和解释各种内置模板的含义、以及处理对象 <xsl:stylesheetversion=“1.0"xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:templatematch="*|/"> 模板1<xsl:apply-templates/></xsl:template><xsl:templatematch="text()|@*"> 模板2 <xsl:value-ofselect="."/></xsl:template><xsl:templatematch="processing-instruction()|comment()"/> 模板3
+`<xsl:call-templatename=”TemplateName” />`
+    + 不带任何参数调用命名模板
+ + xsl:with-param元素用于在使用xsl:template声明模板时声明参数，也用于在xsl:call-template或者xsl:apply-templates中传递调用参数
+    + xsl:with-param的select属性可选，其值为表达式，表示如何选取需要传递的值
+```
+<xsl:call-templatename=”TemplateName”>
+    <xsl:with-paramname=”ParameterName” />
+    <!-- More <xsl:with-param> elements can go here. -->
+</xsl:call-template>
+```
+    + 使用xsl:with-param传递一个或多个参数给命名模板
+```
+<xsl:templatename=”TemplateName”>
+    <xsl:with-paramname=”ParameterName” />
+    <!-- Rest of template goes here. -->
+</xsl:template>
+```
+    + 要把一个参数传递给一个命名模板，该模板的定义格式（xsl:with-param）用来声明命名模板的参数
+* 模板参数的声明和传值
+ + 在xsl:template元素开始标记和结束标记之间，使用xsl:param元素为所在的模板声明相应的模板参数
+```
+<xsl:templatename="doSth">
+    <xsl:paramname="paramOne"/>
+    <xsl:paramname="paramTwo"/>
+    ...模板正文...
+    ...使用"$paramOne" 和"$paramTwo" 引用两个模板参数... 
+</xsl:template>
+```
+ + 在xsl:call-template元素的开始标记和结束标记之间，可以使用xsl:with-param元素为所调用的模板传递所需的参数 
+```
+<xsl:call-templatename="doSth">
+    <xsl:with-paramname="paramOne"select="'One'"/>
+    <xsl:with-paramname="paramTwo"select="."/>
+</xsl:call-template>
+```
+    + 使用xsl:with-param元素时必须指明具体的模板参数名称，以便为其进行赋值，所以可以不按照声明时的顺序书写可以使用xsl:with-param元素的as属性，为形式参数指定数据类型 
+* XSLT中的内置模板
+ + 内置模板（Built-in Templates）是XSLT中的一个关键内容，对于理解XSLT对XML文档树结构的遍历方式、模板调用机制等都是至关重要的
+ + 通过一个具体的示例来说明内置模板的存在，并观察和解释各种内置模板的含义、以及处理对象
+```
+<xsl:stylesheetversion=“1.0"xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:templatematch="*|/"><!--模板1-->
+    <xsl:apply-templates/>
+</xsl:template>
+<xsl:templatematch="text()|@*"> <!--模板2--> 
+    <xsl:value-ofselect="."/>
+    </xsl:template>
+<xsl:templatematch="processing-instruction()|comment()"/> <!--模板3-->
+```
+ + 内置模板的作用在于能够让我们集中精力编写相关节点的处理模板，而无需过多地操心整个遍历过程中模板的逐层调用
+ + 只有在用户没有自定义处理某个节点的模块规则时，才会调用内置模块中的规则，否则，用户自定义的模块规则将覆盖内置模块中的规则
+```
+<xsl:stylesheetversion="2.0"xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <!--transform the input root (/) and the message element-->
+    <xsl:templatematch="message">
+    .....
+    </xsl:template>
+</xsl:stylesheet>
+```
 
-6.3 XSLT样式单的元素和指令
- nn节点选择方式
-qq<xsl:template>的match属性用于指定要匹配的节点
-qq<xsl:copy-of>, <xsl:for-each>, <xsl:sort>, <xsl:apply-template>和<xsl:value-of>的select属性用于选择节点
-6.3 XSLT样式单的元素和指令 
-nn<xsl:copy>元素
-qq把一个节点复制到目标树，但不复制子孙节点
-qq如果上下文节点是一个元素节点，则不会复制节点的任何属性值
-nn使用某个元素并可改变其内容或增删属性
+<xsl:value-of>元素
+qq提供源树中某一部分的值
+nn必须有一个select属性表明定位路径nn模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
+```
+<html>
+<head>
+<title>Information about
+<xsl:value-of select="count(/People/Person)" /> people.</title> </head>
+<body>
+<h3>Information about
+<xsl:value-ofselect="count(/People/Person)" />people.</h3> <title>Information about 3 people.</title>
+```
+```
+<xsl:templatematch=“Person”>
+<h3><xsl:value-ofselect=“Name” /></h3>
+<p><xsl:value-of select=“Description” /></p>
+<br/>
+</xsl:template>
+```
+ + 上下文节点（Context Node）
+    + 上下文是指当前处理器正在处理的节点的位置，该节点称为上下文节点
+    + 上下文不只包括上下文节点，也包括上下文位置、上下文大小等
+```
+<xsl:templatematch=“Person”>
+<h3><xsl:value-ofselect=“Name” /></h3>
+<p><xsl:value-of select=“Description” /></p>
+<br/>
+</xsl:template>
+```
+ + 可获得XML文档结构树中所有节点的值
+|节点类型|节点值|
+|-|-|
+|根节点|用“/”匹配，通常不直接求节点值|
+|指令|用processing-instruction()匹配，值不包含值令名称、<？和？>|
+|注释|用comment（）匹配，值不包含<?--和-->|
+|元素|可用多种方式匹配，值为元素本身以及元素内容|
+|元素属性|用@属性名匹配，值为属性值，不含双引导|
+|元素内容|用text()匹配，元素本身包含的文本内容|
+* 节点选择方式
+ + `<xsl:template>`的match属性用于指定要匹配的节点
+ + `<xsl:copy-of>`, `<xsl:for-each>`, `<xsl:sort>`, `<xsl:apply-template>`和`<xsl:value-of>`的select属性用于选择节点
+* `<xsl:copy>`元素
+ + 把一个节点复制到目标树，但不复制子孙节点
+ + 如果上下文节点是一个元素节点，则不会复制节点的任何属性值
+    + 使用某个元素并可改变其内容或增删属性
+
 <Persons> <Person /> <Person /> <Person /> </Person><?xml version=“1.0” encoding=“UTF-8”?> <Persons> <Person FirstName=“Jill” LastName=“Harper”/> <Person FirstName=“Claire” LastName=“Vogue”/> <Person FirstName=“Paul” LastName=“Cathedral”/> </Persons>只处理xsl:copy使用xsl:attribute增加属性Persons.xml Persons.xsltPersonsOut.xml Persons2.xslt
 6.3 XSLT样式单的元素和指令 
 nn<xsl:copy-of>元素
