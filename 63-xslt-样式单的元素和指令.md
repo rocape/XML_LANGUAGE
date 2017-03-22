@@ -109,48 +109,88 @@
         + 省略则表示处理元素子节点
         + 可实现对模板的递归引用
     + 模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
-
-<xsl:templatematch=Pattern name=QNamemode=QNamepriority=Number as=Sequence-type><!--other xslelements and literal result elements-->......</xsl:template><xsl:apply-templates>元素qq与根节点对应的模板中有一个名为xsl:apply-templates的元素nn促使XSLT处理器根据select属性（可选）指定要处理的节点集qq省略则表示处理元素子节点qq可实现对模板的递归引用nn模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
-
-6.3 XSLT样式单的元素和指令 
-nn<xsl:apply-templates>元素<xsl:apply-templatesselect="/People/Person" /> ... <xsl:templatematch="Person"> <h3><xsl:value-ofselect="Name" /></h3> <p><xsl:value-ofselect="Description" /></p> <br/> 路径/People/Person确定了需要搜索的节点，表示People元素是根节点的子节点，Person是People元素的子节点，xsl:apply-templates促使处理器搜索一个与Person元素节点匹配的模板模板为xsl:apply-templates元素的select属性提供了一个匹配值，则XSLT处理器在/People/Person定位路径中找到Person元素节点时就处理模板的内容，并把内容添加到目标树；应用模板的次数与匹配节点的个数相同
-
+```
+<xsl:apply-templatesselect="/People/Person" /> 
+... 
+<xsl:templatematch="Person">
+<h3><xsl:value-ofselect="Name" /></h3>
+<p><xsl:value-ofselect="Description" /></p>
+<br/>
+```
+    + 路径/People/Person确定了需要搜索的节点，表示People元素是根节点的子节点，Person是People元素的子节点，xsl:apply-templates促使处理器搜索一个与Person元素节点匹配的模板
+    + 模板为xsl:apply-templates元素的select属性提供了一个匹配值，则XSLT处理器在/People/Person定位路径中找到Person元素节点时就处理模板的内容，并把内容添加到目标树；应用模板的次数与匹配节点的个数相同
  + 模板的调用
     + 在遍历（广度优先遍历）的过程中匹配调用
     + 通过名称直接调用 
-
  + 使用xsl:apply-templates在广度优先、逐层向下的遍历过程中调用模板
-nnXSLT中apply-templates元素的完整语法形式如下 
+    + XSLT中apply-templates元素的完整语法形式如下 
+```
+<xsl:apply-templatesselect=Expression mode=QName>
+......
+</xsl:apply-templates>
+<xsl:templatematch="/"> <!--模板1-->
+    <xsl:apply-templates/>
+</xsl:template>
+<xsl:templatematch="message"> <!--模板2-->
+.....
+ </xsl:template>
+```
+```
+<?xml version="1.0"?>
+<?xml-stylesheettype="text/xsl" href="hello.xslt"?>
+<message>Hello!</message>
+```
++ select和mode属性都是可选的在xsl:apply-templates元素中可以传递调用参数
+ + select属性
+    + xsl:apply-templates的作用就是指定继续遍历当前节点的所有子节点（以便根据实际路径和模板的match属性取值调用对应的模板），而select属性（取值为一个XPath表达式）允许指定仅遍历当前节点的哪些子节点（以调用相应的模板，如果存在）
+    + 如果将上述源码的模板1中的<xsl:apply-templates/>更改为<xsl:apply-templatesselect="message"/>，那么将仅调用message元素所对应的模板（而不会调用处理指令所对应的模板）。这样就可以根据具体的转换要求，仅遍历文档树中的部分内容 
+ + mode属性可实现某个节点多次处理的需要
+    + 当xsl:apply-templates有一个mode属性时，只有当match和mode两个属性值都有匹配值时，其模板才可实例化
+    + mode属性用于指定需要在match属性取值相同的模板中选择哪一个进行调用
+    + 需要与xsl:template元素的mode属性配合使用 
+ + mode属性可实现某个节点多次处理的需要 
+```
+<Company>
+    <Name>Acme</Name>
+    <Person>
+        <Name>Dave</Name>
+        <Phone>123</Phone>
+    </Person>
+</Company>
+```
+```
+<xsl:templatematch="/"><!--模板1-->
+    <xsl:apply-templates/>
+</xsl:template>
+<xsl:templatematch="Company"> <!--模板2-->
+    <xsl:apply-templatesselect="Name" mode="C"/>
+    <xsl:apply-templatesselect="Person/Name" mode="P"/>
+</xsl:template>
+<xsl:templatematch="Name"mode="C"> <!--模板3-->
+    ...Do sthfor Company Name...
+</xsl:template>
+<xsl:templatematch="Name"mode="P"> <!--模板4-->
+    ...Do sthfor Person Name...
+</xsl:template>
+```
+ + 可以为模板3和模板4的match属性取不同的值
+* `<xsl:variable>`和`<xsl:param>`元素
+ + 定义变量和参数
+ + 引用变量和参数使用$ 
+ + 参数可以从外部传递给转换程序，变量则在XSLT样式表内部定义
+ + 变量赋值
+`<xsl:paramname=”searchLetter” select=”’A’”/>`
+    + 使用xsl:variable的select属性
+`<xsl:variablename=” variableName” select=” someExpression” />`
+    + 在xsl:variable元素的起始标签和结束标签之间定义
+```
+<xsl:variablename=” variableName”>
+<!-- Some content goes here which can define the value of the variable. -->
+</xsl:variable>
+```
+    + 全局变量（xsl:stylesheet的直接子元素）可在文档转换之前用程序赋值（转换器相关）
 
-<xsl:apply-templatesselect=Expression mode=QName>......</xsl:apply-templates><?xml version="1.0"?><?xml-stylesheettype="text/xsl" href="hello.xslt"?><message>Hello!</message><xsl:templatematch="/"> 模板1 <xsl:apply-templates/></xsl:template><xsl:templatematch="message"> 模板2 ..... </xsl:template>(a) 两个模板(b) XML文档的文档树结构文档节点处理指令message元素文本节点select和mode属性都是可选的在xsl:apply-templates元素中可以传递调用参数
-
-
-
-
-
-
-
-
-
-qqselect属性
-nnxsl:apply-templates的作用就是指定继续遍历当前节点的所有子节点（以便根据实际路径和模板的match属性取值调用对应的模板），而select属性（取值为一个XPath表达式）允许指定仅遍历当前节点的哪些子节点（以调用相应的模板，如果存在）
-nn如果将(a)的模板1中的<xsl:apply-templates/>更改为<xsl:apply-templatesselect="message"/>，那么将仅调用message元素所对应的模板（而不会调用处理指令所对应的模板）。这样就可以根据具体的转换要求，仅遍历文档树中的部分内容 
-6.3 XSLT样式单的元素和指令
- nn<xsl:apply-templates>元素qqmode属性可实现某个节点多次处理的需要
-nn当xsl:apply-templates有一个mode属性时，只有当match和mode两个属性值都有匹配值时，其模板才可实例化
-nnmode属性用于指定需要在match属性取值相同的模板中选择哪一个进行调用
-nn需要与xsl:template元素的mode属性配合使用 
-6.3 XSLT样式单的元素和指令
- nn<xsl:apply-templates>元素
-qqmode属性可实现某个节点多次处理的需要 <Company><Name>Acme</Name><Person><Name>Dave</Name><Phone>123</Phone></Person></Company><xsl:templatematch="/"> 模板1 <xsl:apply-templates/></xsl:template><xsl:templatematch="Company"> 模板2 <xsl:apply-templatesselect="Name" mode="C"/><xsl:apply-templatesselect="Person/Name" mode="P"/></xsl:template><xsl:templatematch="Name"mode="C"> 模板3 ...Do sthfor Company Name...</xsl:template><xsl:templatematch="Name"mode="P"> 模板4 ...Do sthfor Person Name...</xsl:template>可以为模板3和模板4的match属性取不同的值
-6.3 XSLT样式单的元素和指令
- nn<xsl:variable>和<xsl:param>元素
-qq定义变量和参数nn引用变量和参数使用$ 
-nn参数可以从外部传递给转换程序，变量则在XSLT样式表内部定义
-nn变量赋值
-qq使用xsl:variable的select属性
-qq在xsl:variable元素的起始标签和结束标签之间定义
-qq全局变量（xsl:stylesheet的直接子元素）可在文档转换之前用程序赋值（转换器相关）<xsl:variablename=” variableName” select=” someExpression” /> <xsl:variablename=” variableName”> <!-- Some content goes here which can define the value of the variable. --> </xsl:variable> <xsl:paramname=”searchLetter” select=”’A’”/> 使用select给变量赋字符串值Ages.xml Ages.xsltAges.html6.3 XSLT样式单的元素和指令
+  使用select给变量赋字符串值Ages.xml Ages.xsltAges.html6.3 XSLT样式单的元素和指令
  nn命名模板和<xsl:call-template>元素
 qq命名模板由xsl:template元素的name属性标识
 qq调用命名模板使用xsl:call-template元素
