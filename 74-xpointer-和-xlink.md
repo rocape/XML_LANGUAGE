@@ -1,4 +1,50 @@
+###7.4 XPointer和XLink 
+* 设计XML指针语言（XML Pointer Language, XPointer）的目的是为了使用XML链接语言（XML Link Language, XLink）
+ + http://www.w3.org/XML/Linking nnXLink定义了一套标准的在XML文档中创建超级链接的方法 
+* XPointer使超级链接可以指向XML文档中更多具体的部分（片断）
+* 2001年XLink被确立为W3C推荐标准，2003年XPointer成为W3C推荐标准 
+* XPointer使超级链接可以指向XML文档中更多具体的部分（片断）
+* XPointer使用XPath表达式在XML文档中进行定位
+* XPointer为XML文档的横向路径定义了一个寻址方案，可以被任何要识别XML文档的一部分或一个位置的应用程序使用 
+* 是W3C推荐的解决链接到文档指定位置的问题的解决方案 
+* XLink是用于在XML文档中创建超级链接的语言，为了提高和改善XML文档的链接能力设计的规范
+* XLink类似于HTML链接，但是更为强大 
+* XML文档中的任何元素均可成为XLink
+* XLink支持简单链接，也支持可将多重资源链接在一起的扩展链接 
+* 通过XLink，链接可在被链接文件外进行定义
+* 允许XML文档在多个文档之间创建链接关系，并创建与被链接文档相互独立的源文档 
+* Link 
+ + 如果在这个世界上每部电脑中的每个资料块都能够被识别、定址及链接，那将是十分令人振奋的事 
+ + Link就是说明如何在网络上做到这点的规格文件 
+ + 一个链接可以有一个、二个甚至是很多个ends，而每一个end都可以是指标，事实上链接本身可以很明确地指定是外部（externally）链接，因而连接到每一个end
+ + 一个链接并不一定要有方向，但它也可以有很多或是没有方向，除此之外，链接的方向不要一定得从context到part才行 
+ + 链接的end可以是某一范围，不一定是要链接到整个resource或某一地方 
+* HTML超链接的局限性
+ + 只能指向单个文档 
+ + 链接是单向的 
+ + 为了克服HTML超链接的局限性，W3C推荐使用两个新型的XML链接机制
+    + XLink和XPointer
+* XLink尽可能与HTML超链接兼容 
+* 可指向指定的XML文档，结合XPointer可指向XML文档内部
+
+
+
+
+简单XLinkqq与HTML超链接功能类似，但不需定义专门的超链接元素，使用元素属性定义简单XLinkqqinline属性为true表示XLink将链接当前元素与其他元素，为false表示XLink将链接非当前元素的两个元素，默认为true qq使用href属性定义链接目标 nn可指向绝对/相对XML文档地址 <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple”> <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true”> <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true” hrefCDATA #REQUIRED> 7.4 XPointer和XLink nn简单XLinkqqhref链接的目标URI，用来指定链接的目标 qqrole给应用程序提供链接的补充说明的方法，使用XLink的应用程序可以通过查阅此属性来得到一个链接角色的信息 qqtitle可以指定一个给用户提供信息的标签，当该属性为系统和应用程序提供信息时，此属性为用户提供辅助的信息 <PARAGRAPH> This paragraph got a <MYLINK href=“http://www.w3.org/demo.xml”> link </PARAGRAPH> 7.4 XPointer和XLink nn简单Xlinkqqshow属性定义了如何向用户显示目标内容。常取以下三个值：nnnew目标内容应该显示在独立的环境中（对于浏览器，应该是新的浏览器窗口），将xlink:show属性设置为new，与HTML中target="_blank"的意思是一样的 nnreplace目标内容应该替换原来环境中的源内容，对于浏览器，这是超链接的常规特征 nnembedded内容应该嵌入源文档的链接位置，选择embedded与在HTML页面中嵌入一张图片非常相似，目标资源将源文档中定义的链接替换掉7.4 XPointer和XLink nn简单Xlinkqqxlink:show属性其他可能的值还包括other和none。other值的意思是使链接按具体的实现进行动作，并表示它应该在链接中寻找其他信息来表明它该如何动作。none值也是将链接的动作留给具体实现来决定，但它并不表示在链接内有何种暗示7.4 XPointer和XLink nn简单Xlinkqqactuate属性定义了何时触发链接。它可以取以下两个值：nnonRequest用户必须采取某些操作才能够触发链接。它类似于HTML超链接的工作方式，用户必须点击链接的文本才能够激活链接 nnonLoad加载源文档时，链接将自动激活。当xlink:show属性为embedded时，该属性最有用，但是当xlink:show为new时，也可以使用该属性。例如，打开源文档时，自动打开另一个环境窗口，并加载目的信息7.4 XPointer和XLink nn简单Xlinkqqtype指定作为一个元素被创建的链接的类型，分为：nnsimple简单链接，类似html的超链接 nnextendedresource允许创建一个指向多个文档的多向链接 nnlocator指向远程资源 nnarc描述两个链接之间的横向路径<GOTO xlink:type=”simple” xlink:href=”http://www.123.com” xlink:title=”Address” xlink:show=”replace” xlink:actuate=”onRequest”> this is as linked element </GOTO> 7.4 XPointer和XLink nn扩展XLinkqq把描述链接本身的属性与描述链接目标的属性分开 qq父元素定义描述链接本身的属性，不同子元素定义各自的href属性，则不同子元素可共享相同的链接基本属性 nn父元素称为扩展XLink元素，子元素称为XLink定位符 <!ELEMENT MYEXTLINK ANY> <!ATTLIST MEXTLINK xml:linkCDATA #FIXED “extended” inline(true|false) “true” content-title CDATA #IMPLIED content-role CDATA #IMPLIED> <!ELEMENT MYEXTLOCATOR EMPTY> <!ATTLIST MEXTLOCATOR xml:linkCDATA #FIXED “locator” role CDATA #IMPLIED title CDATA #IMPLIED show(embed|replace|new) #IMPLIED actuate(auto|user) #IMPLIED behavior CDATA #IMPLIED> 7.4 XPointer和XLink nn扩展XLinkqq扩展链接具有更复杂的链接功能，它可以：nn链接两个以上的资源 nn创建位于源文档以外的资源之间的链接（out-of-line-linking）nn从被链接资源的定义中分离出链接的方向qq声明扩展链接时，会用到四种类型的子元素：<xlink:title>, <xlink:arc>, <xlink:locator>和<xlink:resource>，和一些属性：xlink:type, xlink:role,xlink:title, xlink:from, xlink:t
+
+
+
+
+
+
+
+
+
+
 7.4 XPointer和XLink 
+
+
+
 nn简单Xlinkqqxlink:show属性其他可能的值还包括other和none。other值的意思是使链接按具体的实现进行动作，并表示它应该在链接中寻找其他信息来表明它该如何动作。none值也是将链接的动作留给具体实现来决定，但它并不表示在链接内有何种暗示
 7.4 XPointer和XLink 
 nn简单Xlinkqqactuate属性定义了何时触发链接。它可以取以下两个值：
@@ -92,8 +138,10 @@ nnattr表示所有拥有某属性的元素
 nnstring用来定位元素内某个字符串文本
 qq字符串位置项指向指定字符出现的位置。不像大多数其他位置项那样，字符串位置项可以指向注释、CDATA以及类似方面内部的位置
 
+外联XLinkqq前面所介绍的链接（简单和扩展）都是内联链接。内联链接（如同HTML中的a元素）使用内联元素的内容作为包含链接的文档部分。通过这种方式展示给访问者 qqXLink也可以是外联方式。外联链接可能不存在于它所连接的任何文档中，而是将链接保存在各个独立的链接文档中 qq要将链接标记为外联，可将xlink:inline属性设置成false值 7.4 XPointer和XLink nn扩展XLink组qq扩展链接组元素包含连接一组特定文档的链接。依靠扩展链接文档元素，组中的每个文档都作为目标来定位。应用程序负责推定如何激活组成员中的连接、并怎么理解这种连接。利用扩展链接组，可以在文档之间维护链接列表7.4 XPointer和XLink nnXPointer由说明元素在XML文档中位置的名词来表达 qq绝对位置：root表明整个文档的开始 nn必须出现在XPointer的开始，即使在开始不注明绝对位置，也默认使用一个绝对位置 qq相对位置：child表明上下文节点的子节点 qq直接指定元素id qq前后两个相邻位置名词相同时，后一个可省略 child(3, #element) root().child(3, #element) 根元素的第三个⼦子元素id(ELEMENT).child(3, #element)(1, #element) id(ELEMENT).child(3, #element).child(1, #element) id为ELEMENT的第三个⼦子元素的第⼀一个⼦子元素7.4 XPointer和XLink nnXPointer定位XML文档中的元素也是把整个XML文档看作一棵结构树，文档中每个元素都是树上的节点 nn定位某个节点有不同的搜索路径 qq通过根节点逐级搜索，通过元素id直接定位，通过父元素id先定位父元素再定位子元素 qq根据不同情况选择合适的搜索路径（位置名词）7.4 XPointer和XLink nnXPointer关于范围的定义qq[Definition:point]表示在XML文档中的位置 qq[Definition:range]表示一对points节点之间XML文档 qq[Definition:location]表示包括points和range的节点集合 qq[Definition:location-set]表示一个locations的集合 qq[Definition:singleton]是对point和range的一个综合，一个point是一个singleton，一个range也是一个singletonqq[Definition:sub-resource]表示在文档中的一个特定的资源。这里的资源可以是一个特定的元素 7.4 XPointer和XLink nnXPointer的绝对位置 qqXPointer是根据位置项（location term）创建的。每个位置项指定目标文档中的一个点，通常为相对于某个其他已知点（如文档的开始或另一个位置项）。位置项的类型是由关键字如id()、root()或child()来给定。有些位置项在圆括号内有参数nnroot()指向XML文档的根元素 nnorigin()指向当前XPointer所在的元素 nnhtml()用来与HTML文档兼容 nnid()通过指定id属性的取值，精确快速定位XML中拥有绝对属性的元素 nn元素必须有id属性，若无则只能使用其他绝对或相对位置定位 <a href=“#origin().ancestor(1, #element)”> <a name=“PointerName”> html(PointerName)定位指针指向的位置<list id=“possibilities”> id(possibilities)直接定位该元素7.4 XPointer和XLink nnXPointer的绝对位置 qq绝对位置项origin在与一个或多个相对位置项结合起来时才有用。在文档内的链接（即文档中的一处与同一文档中的另一处链接）中，常常需要引用“此元素后的下一个元素”或“此元素的父元素”。origin绝对位置项引用当前元素，因此这类引用是可能的 7.4 XPointer和XLink nnXPointer的相对位置 qq首先定义一个绝对位置作为基准，然后说明需定位的节点与基准的相对位置关系 qq相对位置词说明相对于基准的搜索方式（如前后），节点类型说明搜索的目标节点类型（如元素），序号说明需定位的节点是按搜索方式搜索到的目标节点集合的第几个或全部（all）qq可以是具体的属性名，也可以是* nn具体属性名限制该属性取值，*则只要求属性中有符合属性值要求的即可 nn属性取值为*表示任意取值，为#implied表示取值必为#implied，也可是双引号表示的具体属性值 相对位置词(序号, 节点类型) 相对位置词(序号, 节点类型, 属性名, 属性取值)
 
 
+7.4 XPointer和XLink nnXPointer的相对位置 qq节点类型 qq具体元素名 nn#element（默认类型）表示任一XML元素 nn#pi表示任一处理指令，只有string可使用 nn#comment表示任一注释，只有string可使用 nn#text表示XML元素内部文本内容，只有string可使用 nn#cdata表示cdata内部文本内容，只有string可使用 nn#all表示XML文档的所有节点，如果相对位置词同时具有属性名和属性值，则#all节点类型等同于#element 7.4 XPointer和XLink nnXPointer的相对位置 qq相对位置词 nnchild为基准的直接子元素 nndescendant为基准的子元素 nnancestor为基准的祖先元素 nnpreceding为基准前面的元素 nnfollowing为基准后面的元素 nnpsibling为preceding中的兄弟元素 nnfsibling为following中的兄弟元素 7.4 XPointer和XLink nnXPointer的相对位置 qq其他位置 nnspan表示两个指针所代表的元素之间的所有元素 nnattr表示所有拥有某属性的元素 nnstring用来定位元素内某个字符串文本qq字符串位置项指向指定字符出现的位置。不像大多数其他位置项那样，字符串位置项可以指向注释、CDATA以及类似方面内部的位置
 
 
 
