@@ -257,9 +257,10 @@
 </xsl:stylesheet>
 ```
 
-<xsl:value-of>元素
-qq提供源树中某一部分的值
-nn必须有一个select属性表明定位路径nn模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
+* `<xsl:value-of>`元素
+ + 提供源树中某一部分的值
+    + 必须有一个select属性表明定位路径
+    + 模板内容的一部分由LRE组成，一部分由XSLT命名空间元素（xsl:value-of元素）组成
 ```
 <html>
 <head>
@@ -302,37 +303,145 @@ nn必须有一个select属性表明定位路径nn模板内容的一部分由LRE�
  + 把一个节点复制到目标树，但不复制子孙节点
  + 如果上下文节点是一个元素节点，则不会复制节点的任何属性值
     + 使用某个元素并可改变其内容或增删属性
+```
+<Persons>
+    <Person />
+    <Person />
+    <Person />
+</Person>
+```
+ + 只处理xsl:copy
+```
+<?xml version=“1.0” encoding=“UTF-8”?>
+<Persons>
+    <Person FirstName=“Jill” LastName=“Harper”/>
+    <Person FirstName=“Claire” LastName=“Vogue”/>
+    <Person FirstName=“Paul” LastName=“Cathedral”/>
+</Persons>
+```
+ + 使用xsl:attribute增加属性
+ + 深度复制，把一个节点及其所有属性节点和子孙节点都复制到目标树
+||xsl:copy|xsl:copy-of|
+|-|-|-|
+|功能|将当前节点从源文档复制到目标树|复制任何节点集到目标树|
+|对当前节点的处理|仅复制当前节点，不复制其子元素或者属性|复制节点及其所有的子孙节点，包括属性和子元素|
+|节点内容|可以使用XSLT代码为新的节点创建内容，如果当前节点是元素节点或者根节点|所有的内容都来自select属性中指定的节点集|
 
-<Persons> <Person /> <Person /> <Person /> </Person><?xml version=“1.0” encoding=“UTF-8”?> <Persons> <Person FirstName=“Jill” LastName=“Harper”/> <Person FirstName=“Claire” LastName=“Vogue”/> <Person FirstName=“Paul” LastName=“Cathedral”/> </Persons>只处理xsl:copy使用xsl:attribute增加属性Persons.xml Persons.xsltPersonsOut.xml Persons2.xslt
-6.3 XSLT样式单的元素和指令
-nn<xsl:copy-of>元素
-qq深度复制，把一个节点及其所有属性节点和子孙节点都复制到目标树xsl:copyxsl:copy-of功能将当前节点从源文档复制到目标树复制任何节点集到目标树对当前节点的处理仅复制当前节点，不复制其子元素或者属性复制节点及其所有的子孙节点，包括属性和子元素节点内容可以使用XSLT代码为新的节点创建内容，如果当前节点是元素节点或者根节点所有的内容都来自select属性中指定的节点集PurchaseOrder.xml PurchaseOrder.xsltInvoice.xml
-6.3 XSLT样式单的元素和指令 nn<xsl:output>元素
-qq使用method属性从XML, HTML或文本文档中选择一种输出格式
-nnmethod属性的值大小写敏感，并且必须小写（xml, html, text）<xsl:output method=“output type” />
-6.3 XSLT样式单的元素和指令 
-nn<xsl:if>元素
-qq测试一个布尔条件
-nn为真则实例化<xsl:if>元素的内容
-nn为假则<xsl:if>元素的内容不会被添加到目标树
-nn输出一些内容或没有任何输出
-<Characters> <Character age=“99”>Julius Caesar</Character> <Character age=“23”>Anne Boleyn</Character> <Character age=“41”>George Washington</Character> <Character age=“45”>Martin Luther</Character> <Character age=“800”>Methuselah</Character> <Character age=“119”>Moses</Character> <Character age=“50”>Asterixthe Gaul</Character> </Characters> <xsl:templatematch=“Character”> <xsl:iftest=“@age > 110 ” > <p><b><xsl:value-ofselect=“.” /></b> is older than expected. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p> </xsl:if> </xsl:template> test属性返回false时，Character元素的模板不输出任何内容Characters.xml Characters.xslt
-6.3 XSLT样式单的元素和指令 
-nn<xsl:choose>元素
-qq多个选项中选取一个
-nnxsl:choose可以有任意个xsl:when元素作为其子元素，每一个都有一个test属性进行逻辑判断
- nn如果xsl:when元素内容均未输出，则输出xsl:otherwise元素内容
-<xsl:templatematch=“Character”> <xsl:choose> <xsl:whentest=“@age > 110” > <p><b><xsl:value-ofselect=“.” /></b> - too high. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p> </xsl:when> <xsl:otherwise> <p><b><xsl:value-ofselect=“.” /></b> - ok</p>. </xsl:otherwise> </xsl:choose> </xsl:template>
+* `<xsl:output>`元素
+ + 使用method属性从XML, HTML或文本文档中选择一种输出格式
+    + method属性的值大小写敏感，并且必须小写（xml, html, text）
 
+`<xsl:output method=“output type” />`
+* `<xsl:if>`元素
+ + 测试一个布尔条件
+    + 为真则实例化`<xsl:if>`元素的内容
+    + 为假则`<xsl:if>`元素的内容不会被添加到目标树
+    + 输出一些内容或没有任何输出
+```
+<Characters>
+    <Character age=“99”>Julius Caesar</Character>
+    <Character age=“23”>Anne Boleyn</Character>
+    <Character age=“41”>George Washington</Character>
+    <Character age=“45”>Martin Luther</Character>
+    <Character age=“800”>Methuselah</Character>
+    <Character age=“119”>Moses</Character>
+    <Character age=“50”>Asterixthe Gaul</Character>
+</Characters>
+```
+```
+<xsl:templatematch=“Character”> 
+    <xsl:iftest=“@age > 110 ” >
+    <p><b><xsl:value-ofselect=“.” /></b> is older than expected. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p>
+    </xsl:if>
+</xsl:template>
+```
+ + test属性返回false时，Character元素的模板不输出任何内容
+* `<xsl:choose>`元素
+ + 多个选项中选取一个
+    + xsl:choose可以有任意个xsl:when元素作为其子元素，每一个都有一个test属性进行逻辑判断
+    + 如果xsl:when元素内容均未输出，则输出xsl:otherwise元素内容
+```
+<xsl:templatematch=“Character”>
+    <xsl:choose>
+        <xsl:whentest=“@age > 110” >
+            <p><b><xsl:value-ofselect=“.” /></b> - too high. Please check if this character’s age, <b><xsl:value-ofselect=“@age” /></b>, is correct.</p>
+            </xsl:when>
+            <xsl:otherwise>
+                <p><b><xsl:value-ofselect=“.” /></b> - ok</p>.         
+            </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
+```
+* `<xsl:for-each>`元素
+ + 把嵌入其中的XSLT指令作用到节点集的每个元素
+ + 可迭代处理整个节点集，并为节点集中每个节点生成输出文档
+    + 理论上处理器可按任意顺序处理节点集中的节点
+```
+<xsl:templatematch=“Object”>
+<ul>
+    <xsl:for-eachselect=”Characteristic”>
+    <li><xsl:value-ofselect=”.” /></li>
+    </xsl:for-each>
+</ul>
+</xsl:template> 
+```
+用LRE表示无序列表的起始标签和结束标签（`<ul>`和`</ul>`），上下文节点是Object元素节点，xsl:for-each为上下文节点的每个子节点生成一个列表项，列表项对应于上下文节点的每个Characteristic元素
 
+* `<xsl:sort>`元素
+ + 可对节点集中的元素排序，可多次使用
+    + 元素在输出中的顺序可完全不同于节点在源文档中的顺序
+ + 可与xsl:apply-templates和xsl:for-each一起使用
+```
+<xsl:apply-templatesselect=”/Objects/Object” >     
+    <xsl:sortselect=”@name” />
+</xsl:apply-templates> 
+```
+ + xsl:sort的select属性值是一个相对定位路径@name，是Object的子节点name属性节点
+```
+<xsl:templatematch=”Object”>
+    <h3>Characteristics of <xsl:value-ofselect=”@name” /></h3>
+    <ul>
+        <xsl:for-eachselect=”Characteristic”>
+        <xsl:sortselect=”.” order=”descending” />
+        <li><xsl:value-ofselect=”.” /></li>
+        </xsl:for-each>
+    </ul>
+</xsl:template> 
+```
+ + xsl:sort的order属性来说明排序模式，默认排序为升序
 
-6.3 XSLT样式单的元素和指令 nn<xsl:for-each>元素qq把嵌入其中的XSLT指令作用到节点集的每个元素qq可迭代处理整个节点集，并为节点集中每个节点生成输出文档nn理论上处理器可按任意顺序处理节点集中的节点<xsl:templatematch=“Object”> <ul> <xsl:for-eachselect=”Characteristic”> <li><xsl:value-ofselect=”.” /></li> </xsl:for-each> </ul> </xsl:template> 用LRE表示无序列表的起始标签和结束标签（<ul>和</ul>），上下文节点是Object元素节点，xsl:for-each为上下文节点的每个子节点生成一个列表项，列表项对应于上下文节点的每个Characteristic元素Objects.xml Objects.xslt6.3 XSLT样式单的元素和指令 nn<xsl:sort>元素qq可对节点集中的元素排序，可多次使用nn元素在输出中的顺序可完全不同于节点在源文档中的顺序qq可与xsl:apply-templates和xsl:for-each一起使用<xsl:apply-templatesselect=”/Objects/Object” > <xsl:sortselect=”@name” /> </xsl:apply-templates> xsl:sort的select属性值是一个相对定位路径@name，是Object的子节点name属性节点<xsl:templatematch=”Object”> <h3>Characteristics of <xsl:value-ofselect=”@name” /></h3> <ul> <xsl:for-eachselect=”Characteristic”> <xsl:sortselect=”.” order=”descending” /> <li><xsl:value-ofselect=”.” /></li> </xsl:for-each> </ul> </xsl:template> xsl:sort的order属性来说明排序模式，默认排序为升序ObjectsSort.xml ObjectsSort.xslt6.3 XSLT样式单的元素和指令 nn<xsl:include>和<xsl:import>元素qq都是xsl:stylesheet的直接子元素qqxsl:include将外部的样式单复制到该元素所在位置，一个样式单只能被包含一次，被包含样式单的模板规则与包含者规则优先级相同<xsl:stylesheetversion="1.0"xmlns:xsl="..."><xsl:includehref="Utility.xsl"/> <xsl:includehref="Tools.xsl"/></xsl:stylesheet><xsl:stylesheetversion="1.0"xmlns:xsl="..."><xsl:importhref="Utility.xsl"/> <xsl:importhref="Tools.xsl"/> <xsl:templatematch="node"> <xsl:apply-imports/> ...</xsl:stylesheet>6.3 XSLT样式单的元素和指令 nnxsl:import和xsl:include的区别nnimport与include必须为顶层元素，如果import与include同时存在，那么import在include之前声明 nninclude与原样式表中的模板处于完全相同的地位（具有相同的默认优先级）,没有任何差别，但是import导入的模板则具有较低的默认优先级nnimportadds components from another schema with a different namespace nnincludeassociates with the target namespace 6.4 XSLT函数 nndocument()可访问上下文节点所在的文档以及其他文档qq可使用多个XML文档作为源文档nnkey()与xsl:key一起使用，为XML源文档提供索引机制nnformat-number()与xsl:decimal-format元素一起使用，可以精确控制保存到目标文档的数值格式nngenerate-id()在目标树中生成ID属性节点6.5 XSLT2.0nnwww.w3.org/tr/xslt20/ nn使用XPath2.0和Xquery的数据模型nnW3C XML Schema数据类型代替了XPath1.0和XSLT1.0的数据类型nn新增部分元素，可实现分组功能nn可转换非良构XML文本数据nn改进了文本解析指令nn可把输出结果保存在多个文档nn新增了专用函数，也可自定义函数
-
-2;, is~P���
-
-
-
-
-
-
-
+* `<xsl:include>`和`<xsl:import>`元素
+ + 都是xsl:stylesheet的直接子元素
+ + xsl:include将外部的样式单复制到该元素所在位置，一个样式单只能被包含一次，被包含样式单的模板规则与包含者规则优先级相同
+```
+<xsl:stylesheetversion="1.0"xmlns:xsl="...">    
+    <xsl:includehref="Utility.xsl"/>     
+    <xsl:includehref="Tools.xsl"/>
+</xsl:stylesheet>
+```
+```
+<xsl:stylesheetversion="1.0"xmlns:xsl="...">
+    <xsl:importhref="Utility.xsl"/>
+    <xsl:importhref="Tools.xsl"/>
+    <xsl:templatematch="node">
+    <xsl:apply-imports/>
+     ...
+</xsl:stylesheet>
+```
+* xsl:import和xsl:include的区别
+ + import与include必须为顶层元素，如果import与include同时存在，那么import在include之前声明 
+ + include与原样式表中的模板处于完全相同的地位（具有相同的默认优先级）,没有任何差别，但是import导入的模板则具有较低的默认优先级  
+ + importadds components from another schema with a different namespace nnincludeassociates with the target namespace 6.4 XSLT函数 
+ + document()可访问上下文节点所在的文档以及其他文档
+ + 可使用多个XML文档作为源文档
+ + key()与xsl:key一起使用，为XML源文档提供索引机制
+ + format-number()与xsl:decimal-format元素一起使用，可以精确控制保存到目标文档的数值格式
+ + generate-id()在目标树中生成ID属性节点
+ + www.w3.org/tr/xslt20/ 
+ + 使用XPath2.0和Xquery的数据模型
+ + W3C XML Schema数据类型代替了XPath1.0和XSLT1.0的数据类型
+ + 新增部分元素，可实现分组功能
+ + 可转换非良构XML文本数据
+ + 改进了文本解析指令
+ + 可把输出结果保存在多个文档
+ + 新增了专用函数，也可自定义函数
