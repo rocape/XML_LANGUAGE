@@ -178,3 +178,20 @@ V．/library/book[3]/following::*表示library的第3个book元素节点之后�
 VI．//chapter[not(@*)]表示所有不包含任何属性的chapter元素节点
 VII．//parent::*表示选出所有的分支节点（非叶节点）
 VIII．//chapter[count(section)=2]表示选出所有包含两个section的chapter元素
+
+* XPath基本表达式类型
+ + 布尔型
+    + boolean()/true()/false()/lang()/not() 
+ + 节点集
+    + XPath中所有节点的集合，XSLT中节点集大都按照节点在文档中的顺序沿正向轴处理 
+    + count()/id()/last()/local-name()/name()/namespace-uri()/position() 
+    + 节点集操作符：|, /, // 
+ + 数值型
+    + XPath1.0中数值为浮点数，可通过数值函数返回整数 
+    + ceiling()/floor()/number()/round()/sum() 
+ + 字符串
+    + Unicode字符序列 
+    + concat()/contains()/normalize-space()/starts-with()/string()/string-length()/substring()/substring-after()/substring-before()/translate() 
+ + XPath基本函数
+    + http://www.w3school.com.cn/xpath/xpath_functions.asp
+
