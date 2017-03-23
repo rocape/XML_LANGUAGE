@@ -144,24 +144,37 @@ NodeTest ::= NameTest | KindTest(7)
 |processing-instruction|选择所有处理指令节点|
 |节点名|按指定的节点选择所有节点|
 
-节点测试
-qq节点测试可以是名称测试或者类型测试 
-qq名称测试表示根据指定的名称对当前节点进行测试；而类型测试则允许根据节点的类型、以及在Schema中定义的数据类型进行测试（仅适用于元素和属性节点）NodeTest ::= NameTest | KindTest 7.3 XPath数据模型 
-nn节点测试
-qq名称测试是非常常见的。在名称测试中，可以使用带命名空间限制的完整的元素名称；还可以用类型对节点进行测试。有些类型的节点（比如注释节点和文本节点）是没有名称的，所以无法使用名称测试，而只能使用类型测试的方式qq在节点测试的名称测试中，还可以使用通配符“*”，它可以匹配所有的元素节点/library/descendant::book表示查找/library元素的所有名为book的子孙节点/library/child::node()表示选择指定关系轴下的所有节点/library/book/text()表示查找book元素下的所有文本节点
-7.3 XPath数据模型 
-nn谓词
-qq根据轴和节点测试得到的节点集，可由谓词来进一步过滤
-qq谓词是XPath路径定位过程的一个可选步骤，在定位路径中可有多个谓词
-qq谓词的形式为在方括号中加入谓词表达式
-nn对节点集进行过滤时，根据节点在集合中的位置判断谓词表达式，当表达式为真时选择该节点，否则不选择//Section[@security=”confidential”] //Section[@security=”public”][@version=”final”] 7.3 XPath数据模型 nn谓词qq谓词使用方括号[]的形式表示，用于对指定关系轴的满足节点测试的所有节点，使用谓词中规定的条件进行筛选 
-qq如果判定谓词部分为一个整数i（或者经过计算得到一个整数），则表示选择序列中的第i个元素/library/book[1]表示选择library中的第一个book元素，等价于/library/book[position()=1]/library/book[@name=“TCP/IP”] 表示选择属性name的值为"TCP/IP"的book元素 /library/book/chapter[last()-1]表示查找倒数第二个chapter元素
-7.3 XPath数据模型 
-nnXPath表达式综合示例I．//book/descendant::*表示所有book元素节点的所有子孙元素节点II．/library/book/chapter/*表示library的所有book元素节点的所有chapter元素节点的所有子元素节点III．//chapter[@num='3']表示所有的num属性等于3的chapter元素节点IV．/*/*/*/paragraph表示在XML文档树第4层中所有的paragraph元素节点V．/library/book[3]/following::*表示library的第3个book元素节点之后的所有节点VI．//chapter[not(@*)]表示所有不包含任何属性的chapter元素节点VII．//parent::*表示选出所有的分支节点（非叶节点）VIII．//chapter[count(section)=2]表示选出所有包含两个section的chapter元素
+ + 节点测试可以是名称测试或者类型测试 
+ + 名称测试表示根据指定的名称对当前节点进行测试；而类型测试则允许根据节点的类型、以及在Schema中定义的数据类型进行测试（仅适用于元素和属性节点）NodeTest ::= NameTest | KindTest 
 
+ + 名称测试是非常常见的。在名称测试中，可以使用带命名空间限制的完整的元素名称；还可以用类型对节点进行测试。有些类型的节点（比如注释节点和文本节点）是没有名称的，所以无法使用名称测试，而只能使用类型测试的方式
+ + 在节点测试的名称测试中，还可以使用通配符“*”，它可以匹配所有的元素节点
+/library/descendant::book表示查找/library元素的所有名为book的子孙节点
+/library/child::node()表示选择指定关系轴下的所有节点
+/library/book/text()表示查找book元素下的所有文本节点
 
+* 谓词
+ + 根据轴和节点测试得到的节点集，可由谓词来进一步过滤
+ + 谓词是XPath路径定位过程的一个可选步骤，在定位路径中可有多个谓词
+ + 谓词的形式为在方括号中加入谓词表达式
+    + 对节点集进行过滤时，根据节点在集合中的位置判断谓词表达式，当表达式为真时选择该节点，否则不选择
+//Section[@security=”confidential”] 
+//Section[@security=”public”][@version=”final”] 
 
-7.4 XPointer和XLink nnXPointer使超级链接可以指向XML文档中更多具体的部分（片断）nnXPointer使用XPath表达式在XML文档中进行定位nnXPointer为XML文档的横向路径定义了一个寻址方案，可以被任何要识别XML文档的一部分或一个位置的应用程序使用 nn是W3C推荐的解决链接到文档指定位置的问题的解决方案 7.4 XPointer和XLink nnXLink是用于在XML文档中创建超级链接的语言，为了提高和改善XML文档的链接能力设计的规范 nnXLink类似于HTML链接，但是更为强大 nnXML文档中的任何元素均可成为XLinknnXLink支持简单链接，也支持可将多重资源链接在一起的扩展链接 nn通过XLink，链接可在被链接文件外进行定义nn允许XML文档在多个文档之间创建链接关系，并创建与被链接文档相互独立的源文档 7.4 XPointer和XLink nnLink qq如果在这个世界上每部电脑中的每个资料块都能够被识别、定址及链接，那将是十分令人振奋的事 qqLink就是说明如何在网络上做到这点的规格文件 7.4 XPointer和XLink nnLink qq一个链接可以有一个、二个甚至是很多个ends，而每一个end都可以是指标，事实上链接本身可以很明确地指定是外部（externally）链接，因而连接到每一个endqq一个链接并不一定要有方向，但它也可以有很多或是没有方向，除此之外，链接的方向不要一定得从context到part才行 qq链接的end可以是某一范围，不一定是要链接到整个resource或某一地方 7.4 XPointer和XLink nnHTML超链接的局限性qq只能指向单个文档 qq链接是单向的 qq为了克服HTML超链接的局限性，W3C推荐使用两个新型的XML链接机制nnXLink和XPointer7.4 XPointer和XLink nnXLink尽可能与HTML超链接兼容 nn可指向指定的XML文档，结合XPointer可指向XML文档内部7.4 XPointer和XLink nn简单XLinkqq与HTML超链接功能类似，但不需定义专门的超链接元素，使用元素属性定义简单XLinkqqinline属性为true表示XLink将链接当前元素与其他元素，为false表示XLink将链接非当前元素的两个元素，默认为true qq使用href属性定义链接目标 nn可指向绝对/相对XML文档地址 <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple”> <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true”> <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true” hrefCDATA #REQUIRED> 7.4 XPointer和XLink nn简单XLinkqqhref链接的目标URI，用来指定链接的目标 qqrole给应用程序提供链接的补充说明的方法，使用XLink的应用程序可以通过查阅此属性来得到一个链接角色的信息 qqtitle可以指定一个给用户提供信息的标签，当该属性为系统和应用程序提供信息时，此属性为用户提供辅助的信息 <PARAGRAPH> This paragraph got a <MYLINK href=“http://www.w3.org/demo.xml”> link </PARAGRAPH>
+ + 谓词使用方括号[]的形式表示，用于对指定关系轴的满足节点测试的所有节点，使用谓词中规定的条件进行筛选 
+ + 如果判定谓词部分为一个整数i（或者经过计算得到一个整数），则表示选择序列中的第i个元素
+/library/book[1]表示选择library中的第一个book元素，等价于
+/library/book[position()=1]
+/library/book[@name=“TCP/IP”] 表示选择属性name的值为"TCP/IP"的book元素
+ /library/book/chapter[last()-1]表示查找倒数第二个chapter元素
+* XPath表达式综合示例
 
+I．//book/descendant::*表示所有book元素节点的所有子孙元素节点II．/library/book/chapter/*表示library的所有book元素节点的所有chapter元素节点的所有子元素节点
 
+III．//chapter[@num='3']表示所有的num属性等于3的chapter元素节点
+IV．/*/*/*/paragraph表示在XML文档树第4层中所有的paragraph元素节点
+V．/library/book[3]/following::*表示library的第3个book元素节点之后的所有节点
 
+VI．//chapter[not(@*)]表示所有不包含任何属性的chapter元素节点
+VII．//parent::*表示选出所有的分支节点（非叶节点）
+VIII．//chapter[count(section)=2]表示选出所有包含两个section的chapter元素
