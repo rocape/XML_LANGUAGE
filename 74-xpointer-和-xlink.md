@@ -105,26 +105,28 @@ root().child(3, #element)
 id(ELEMENT).child(3, #element)(1, #element)
 id(ELEMENT).child(3, #element).child(1, #element) 
 id为ELEMENT的第三个⼦子元素的第⼀一个⼦子元素
-7.4 XPointer和XLink 
-nnXPointer定位XML文档中的元素也是把整个XML文档看作一棵结构树，文档中每个元素都是树上的节点 
-nn定位某个节点有不同的搜索路径 
-qq通过根节点逐级搜索，通过元素id直接定位，通过父元素id先定位父元素再定位子元素 
-qq根据不同情况选择合适的搜索路径（位置名词）
 
-XPointer关于范围的定义
-qq[Definition:point]表示在XML文档中的位置 
-qq[Definition:range]表示一对points节点之间XML文档 
-qq[Definition:location]表示包括points和range的节点集合 
-qq[Definition:location-set]表示一个locations的集合 
-qq[Definition:singleton]是对point和range的一个综合，一个point是一个singleton，一个range也是一个singletonqq[Definition:sub-resource]表示在文档中的一个特定的资源。这里的资源可以是一个特定的元素 
-7.4 XPointer和XLink
- nnXPointer的绝对位置 
-qqXPointer是根据位置项（location term）创建的。每个位置项指定目标文档中的一个点，通常为相对于某个其他已知点（如文档的开始或另一个位置项）。位置项的类型是由关键字如id()、root()或child()来给定。有些位置项在圆括号内有参数
-nnroot()指向XML文档的根元素 
-nnorigin()指向当前XPointer所在的元素
- nnhtml()用来与HTML文档兼容 
-nnid()通过指定id属性的取值，精确快速定位XML中拥有绝对属性的元素
- nn元素必须有id属性，若无则只能使用其他绝对或相对位置定位 <a href=“#origin().ancestor(1, #element)”> <a name=“PointerName”> html(PointerName)定位指针指向的位置<list id=“possibilities”> id(possibilities)直接定位该元素
+* XPointer定位XML文档中的元素也是把整个XML文档看作一棵结构树，文档中每个元素都是树上的节点 
+* 定位某个节点有不同的搜索路径 
+ + 通过根节点逐级搜索，通过元素id直接定位，通过父元素id先定位父元素再定位子元素 
+ + 根据不同情况选择合适的搜索路径（位置名词）
+
+* XPointer关于范围的定义
+ + [Definition:point]表示在XML文档中的位置 
+ + [Definition:range]表示一对points节点之间XML文档 
+ + [Definition:location]表示包括points和range的节点集合 
+ + [Definition:location-set]表示一个locations的集合 
+ + [Definition:singleton]是对point和range的一个综合，一个point是一个singleton，一个range也是一个singleton
+ + [Definition:sub-resource]表示在文档中的一个特定的资源。这里的资源可以是一个特定的元素 
+* XPointer的绝对位置 
+ + XPointer是根据位置项（location term）创建的。每个位置项指定目标文档中的一个点，通常为相对于某个其他已知点（如文档的开始或另一个位置项）。位置项的类型是由关键字如id()、root()或child()来给定。有些位置项在圆括号内有参数
+    + root()指向XML文档的根元素 
+    + origin()指向当前XPointer所在的元素
+    + html()用来与HTML文档兼容 
+    + id()通过指定id属性的取值，精确快速定位XML中拥有绝对属性的元素
+    + 元素必须有id属性，若无则只能使用其他绝对或相对位置定位 
+
+<a href=“#origin().ancestor(1, #element)”> <a name=“PointerName”> html(PointerName)定位指针指向的位置<list id=“possibilities”> id(possibilities)直接定位该元素
 7.4 XPointer和XLink nnXPointer的绝对位置 
 qq绝对位置项origin在与一个或多个相对位置项结合起来时才有用。在文档内的链接（即文档中的一处与同一文档中的另一处链接）中，常常需要引用“此元素后的下一个元素”或“此元素的父元素”。origin绝对位置项引用当前元素，因此这类引用是可能的 
 7.4 XPointer和XLink 
