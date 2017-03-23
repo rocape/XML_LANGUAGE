@@ -37,7 +37,7 @@
     * [7.5 XInclude](75-xinclude.md)
     * [7.6 XBase](76-xbase.md)
 * [第八章 XML与数据库](第八章-xml与数据库.md)
-    * 8.1 XML 与数据库的”爱恨情仇“
+    * [8.1 XML 与数据库的”爱恨情仇“](81-xml-与数据库的爱恨情仇.md)
     * 8.2 XML 数据的存储和管理方式
     * 8.3 DB 产品中的 XML
 * [第九章 DOM](dom.md)
