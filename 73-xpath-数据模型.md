@@ -36,9 +36,35 @@
  3. 序列组合表达式
     + 使用序列操作符union, intersect, except对两个序列进行并、交、差操作，所有这些运算，将从结果序列中删除重复的值 假设$seq1为(A, B)，$seq2为(A, B)，$seq3为(B, C)I．$seq1 union $seq2结果为(A, B) II．$seq1 intersect $seq3结果为(B) III．$seq1 except $seq3结果为(A)
 
+* XPath中节点代表XML文档的逻辑部分 
+ + 根节点
+ + 元素节点
+ + 属性节点
+ + 命名空间节点
+ + 处理指令节点
+ + 注释节点
+ + 文本节点 
+* 节点的属性 
+ + 名称
+    + 一般说来，文档树中的每个节点都应该有一个名称，这个名称可以是简单的本地名称、或者使用命名空间名称进行限定的完整名称。在XPath中，提供了一个node-name()函数，可以返回指定节点的名称 
+    + 对于元素节点，node-name()函数将返回元素的标记；对于属性节点，该函数将返回属性的名称；对于处理指令节点，该函数将返回处理指令的名称；对于命名空间节点，该函数将返回命名空间的前缀。但是，对于根节点、注释节点、文本节点，它们是没有名称的，所以node-name() 函数将返回一个空序列 namespace-uri() 可以返回节点的命名空间全称 
+* 节点的属性 
+ + 字符串值
+    + 每个节点都具有一个字符串值，实际上就是针对该节点使用XPath中的string()函数所得到的字符串结果 
+    + 对于文本节点，其字符串值就是该文本节点的内容；对于属性节点，其字符串值就是该属性的取值。对于元素节点，其字符串值是将以该节点为根的子树的所有文本叶节点从左到右串联起来的结果 <para>Some <em>emphasis</em> here. </para> String(/para)=Some emphasis here. 
 
-XPath中节点代表XML文档的逻辑部分 qq根节点qq元素节点qq属性节点qq命名空间节点qq处理指令节点qq注释节点qq文本节点 7.3 XPath数据模型 nn节点的属性 qq名称nn一般说来，文档树中的每个节点都应该有一个名称，这个名称可以是简单的本地名称、或者使用命名空间名称进行限定的完整名称。在XPath中，提供了一个node-name()函数，可以返回指定节点的名称 nn对于元素节点，node-name()函数将返回元素的标记；对于属性节点，该函数将返回属性的名称；对于处理指令节点，该函数将返回处理指令的名称；对于命名空间节点，该函数将返回命名空间的前缀。但是，对于根节点、注释节点、文本节点，它们是没有名称的，所以node-name() 函数将返回一个空序列 namespace-uri() 可以返回节点的命名空间全称 7.3 XPath数据模型 nn节点的属性 qq字符串值nn每个节点都具有一个字符串值，实际上就是针对该节点使用XPath中的string()函数所得到的字符串结果 nn对于文本节点，其字符串值就是该文本节点的内容；对于属性节点，其字符串值就是该属性的取值。对于元素节点，其字符串值是将以该节点为根的子树的所有文本叶节点从左到右串联起来的结果 <para>Some <em>emphasis</em> here. </para> String(/para)=Some emphasis here. 7.3 XPath数据模型 nn节点的属性 qq标识nn对于XML文档树中的每个节点，系统将采用特定的方式对其进行标识，以便将一个节点与另一个节点区分开来，通常可以使用is操作符比较两个节点是否为同一个节点，而通过等值的比较是无法实现这一点的，因为它只能够判断两个节点的内容、结构是否相等 7.3 XPath数据模型 nnXPath的术语<library> <book> <chapter> </chapter> <chapter> <section> <paragraph/> <paragraph/> </section> </chapter> </book> </library>lllibrary元素是book元素的父元素，而book元素是两个chapter元素的父元素 ll两个chapter元素是book元素的子元素，并且section元素是第二个chapter元素的子元素 llbook元素的两个chapter子元素之间是兄弟关系，因为它们具有相同的父元素 lllibrary、book和第二个chapter是section的祖先元素 ll两个chapter元素、section元素以及两个paragraph元素，都是book元素的子树元素 ll这里使用了术语：父（parent）、子（child）、兄弟（sibling）、祖先（ancestor）、子孙（descendant）7.3 XPath数据模型 nn两种指示路径的方法qq绝对XPath表达式：以一个标准节点（一般为根节点）为起点qq相对XPath表达式：依赖于当前位置qqXPath中，起始点称为上下文（Context）qq所有合法的XPath代码都称为一个表达式（Expression），一个可返回一个节点集的XPath表达式称为定位路径（Location Path）nn定位路径用于在XPath树中从一个节点跳转到另一个节点，由定位步组成，每一步都由一个轴、节点测试和谓词组成nn定位XML文档中的一个指定节点，要将多个定位步组合，每一步代表一个搜索
-
+* 节点的属性 
+ + 标识
+    + 对于XML文档树中的每个节点，系统将采用特定的方式对其进行标识，以便将一个节点与另一个节点区分开来，通常可以使用is操作符比较两个节点是否为同一个节点，而通过等值的比较是无法实现这一点的，因为它只能够判断两个节点的内容、结构是否相等 
+XPath的术语
+![](/assets/7_2.png)
+* 两种指示路径的方法
+ + 绝对XPath表达式：以一个标准节点（一般为根节点）为起点
+ + 相对XPath表达式：依赖于当前位置
+ + XPath中，起始点称为上下文（Context）
+ + 所有合法的XPath代码都称为一个表达式（Expression），一个可返回一个节点集的XPath表达式称为定位路径（Location Path）
+    + 定位路径用于在XPath树中从一个节点跳转到另一个节点，由定位步组成，每一步都由一个轴、节点测试和谓词组成
+    + 定位XML文档中的一个指定节点，要将多个定位步组合，每一步代表一个搜索
 * 操作系统中的路径与XPath路径表达式的类比
 |在操作系统中（比如Unix/Linux操作系统）|在Xpath中|
 |-|-|
@@ -48,13 +74,32 @@ XPath中节点代表XML文档的逻辑部分 qq根节点qq元素节点qq属性�
 |.表示当前目录|.表示当前元素|
 |..表示父目录|..表示当前元素的父元素|
 |/users/dave/*表示/users/dave目录中的所有文件|/library/book/chapter/*表示 /library/book/chapter下的所有元素|
+* 使用轴和节点测试定位路径
+ + 定位路径由一系列定位步骤序列组成，一个定位步骤由一个轴和一个节点测试组成，中间用“::”分隔，谓词在“[]”中
+    + 轴名称::节点测试[谓词]
 
+* 详写语法和简写语法
+ + XPath语法不是用XML语言表示
+    + XPath使用的语法类似于Unix/Linux表示路径的语法
+    + XPath表达式通常作为属性值
+    + XPath用XML表示难以实现文档的良构性
++ 定位路径表达式可以分为相对位置路径表达式和绝对位置路径表达式，绝对位置路径表达式以/开头，后面跟的是相对位置路径表达式，或者直接是简写的绝对位置路径表达式；而相对位置路径表达式则由多个定位步（Step）构成，比如Step1/Step2/Step3 
+LocationPath ::= RelativeLocationPath | AbsoluteLocationPath (1)
+RelativeLocationPath ::= Step | RelativeLocationPath '/' Step | AbbrevRelativeLocationPath (2) 
+AbsoluteLocationPath ::= '/'RelativeLocationPath? | AbbrevAbsoluteLocationPath (3)
+ + 每个定位步由三部分组成，轴标识符（A x i s Specifier）＋节点测试（Node Test）＋零个或多个谓词（Predicate*）
+    + 轴标识符表示对于当前节点（因为是相对位置路径表达式）往哪个方向进行查找，节点测试则通过给出节点的名称指出要查找哪些节点（名称或者类型如何），而谓词表示对所查找到的节点按照指定的方式进行筛选 
 
-使用轴和节点测试定位路径qq定位路径由一系列定位步骤序列组成，一个定位步骤由一个轴和一个节点测试组成，中间用“::”分隔，谓词在“[]”中nn轴名称::节点测试[谓词] 7.3 XPath数据模型 nn详写语法和简写语法qqXPath语法不是用XML语言表示nnXPath使用的语法类似于Unix/Linux表示路径的语法nnXPath表达式通常作为属性值nnXPath用XML表示难以实现文档的良构性7.3 XPath数据模型 nn详写语法和简写语法qq定位路径表达式可以分为相对位置路径表达式和绝对位置路径表达式，绝对位置路径表达式以/开头，后面跟的是相对位置路径表达式，或者直接是简写的绝对位置路径表达式；而相对位置路径表达式则由多个定位步（Step）构成，比如Step1/Step2/Step3 LocationPath ::= RelativeLocationPath | AbsoluteLocationPath (1)RelativeLocationPath ::= Step | RelativeLocationPath '/' Step | AbbrevRelativeLocationPath (2) AbsoluteLocationPath ::= '/'RelativeLocationPath? | AbbrevAbsoluteLocationPath (3)7.3 XPath数据模型 nn详写语法和简写语法qq每个定位步由三部分组成，轴标识符（A x i s Specifier）＋节点测试（Node Test）＋零个或多个谓词（Predicate*）nn轴标识符表示对于当前节点（因为是相对位置路径表达式）往哪个方向进行查找，节点测试则通过给出节点的名称指出要查找哪些节点（名称或者类型如何），而谓词表示对所查找到的节点按照指定的方式进行筛选 7.3 XPath数据模型 nn详写语法和简写语法 Step::=AxisSpecifier NodeTest Predicate* (4)AxisSpecifier::=AxisName '::'| AbbreviatedAxisSpecifier (5)AxisName::='ancestor'| 'ancestor-or-self'| 'attribute'| 'child'| 'descendant' | 'descendant-or-self' | 'following'| 'following-sibling'| 'namespace' | 'parent'| 'preceding'| 'preceding-sibling'| 'self' (6) NodeTest ::= NameTest | KindTest
+Step::=AxisSpecifier NodeTest Predicate* (4)
+AxisSpecifier::=AxisName '::'| AbbreviatedAxisSpecifier (5)
+AxisName::='ancestor'| 'ancestor-or-self'| 'attribute'| 'child'| 'descendant' | 'descendant-or-self' | 'following'| 'following-sibling'| 'namespace' | 'parent'| 'preceding'| 'preceding-sibling'| 'self' (6) 
+NodeTest ::= NameTest | KindTest(7)
 
 * 详写语法和简写语法
  + 在编写XPath表达式时，尽量采用简写语法
+
 |缩写形式|完整表示形式|
+|-|-|
 |（无）|等价于 child::|
 |@|等价于 attribute::|
 |.|等价于 self::node()|
@@ -70,6 +115,7 @@ XPath中节点代表XML文档的逻辑部分 qq根节点qq元素节点qq属性�
     + 属性轴的主节点类型为属性，命名空间轴的主节点类型为命名空间，其他轴的主节点类型为元素
 
 |轴名称|结果|
+|-|-|
 |self|选取上下文节点|
 |parent|选取上下文节点的双亲节点|
 |child|选取上下文节点的所有子元素（默认轴）|
