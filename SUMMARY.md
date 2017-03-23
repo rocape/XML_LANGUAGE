@@ -27,12 +27,12 @@
     * [6.1 XSLT 概述](61-xslt-概述.md)
     * [6.2 XSLT 样式单基本元素](62-xslt-样式单基本元素.md)
     * [6.3 XSLT 样式单的元素和指令](63-xslt-样式单的元素和指令.md)
-    * 6.4 XSLT 函数
-    * 6.5 XSLT 2.0
+    * [6.4 XSLT 函数](64-xslt-函数.md)
+    * [6.5 XSLT 2.0](65-xslt-20.md)
 * [第七章 XPath、XLink、XPointer、XInclude和XBase](xpath、xlink、xpointer、xinclude和xbase.md)
-    * 7.1 XPath的前世今生
-    * 7.2 XML 文档模型
-    * 7.3 XPath 数据模型
+    * [7.1 XPath的前世今生](71-xpath的前世今生.md)
+    * [7.2 XML 文档模型](72-xml-文档模型.md)
+    * [7.3 XPath 数据模型](73-xpath-数据模型.md)
     * 7.4 XPointer 和 XLink
     * 7.5 XInclude
     * 7.6 XBase

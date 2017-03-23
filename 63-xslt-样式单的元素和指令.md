@@ -431,17 +431,4 @@
 * xsl:import和xsl:include的区别
  + import与include必须为顶层元素，如果import与include同时存在，那么import在include之前声明 
  + include与原样式表中的模板处于完全相同的地位（具有相同的默认优先级）,没有任何差别，但是import导入的模板则具有较低的默认优先级  
- + importadds components from another schema with a different namespace nnincludeassociates with the target namespace 6.4 XSLT函数 
- + document()可访问上下文节点所在的文档以及其他文档
- + 可使用多个XML文档作为源文档
- + key()与xsl:key一起使用，为XML源文档提供索引机制
- + format-number()与xsl:decimal-format元素一起使用，可以精确控制保存到目标文档的数值格式
- + generate-id()在目标树中生成ID属性节点
- + www.w3.org/tr/xslt20/ 
- + 使用XPath2.0和Xquery的数据模型
- + W3C XML Schema数据类型代替了XPath1.0和XSLT1.0的数据类型
- + 新增部分元素，可实现分组功能
- + 可转换非良构XML文本数据
- + 改进了文本解析指令
- + 可把输出结果保存在多个文档
- + 新增了专用函数，也可自定义函数
+ + importadds components from another schema with a different namespace nnincludeassociates with the target namespace 
