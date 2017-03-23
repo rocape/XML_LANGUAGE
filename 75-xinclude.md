@@ -1,0 +1,3 @@
+把一个或多个文档包括在其他XML文档中 qqwww.w3.org/TR/xinclude
+
+qq把两个XML文档结构树合并为一个 qq把一个XML文档添加到另一个文档中，需使用includer元素

@@ -33,9 +33,9 @@
     * [7.1 XPath的前世今生](71-xpath的前世今生.md)
     * [7.2 XML 文档模型](72-xml-文档模型.md)
     * [7.3 XPath 数据模型](73-xpath-数据模型.md)
-    * 7.4 XPointer 和 XLink
-    * 7.5 XInclude
-    * 7.6 XBase
+    * [7.4 XPointer 和 XLink](74-xpointer-和-xlink.md)
+    * [7.5 XInclude](75-xinclude.md)
+    * [7.6 XBase](76-xbase.md)
 * [第八章 XML与数据库](第八章-xml与数据库.md)
     * 8.1 XML 与数据库的”爱恨情仇“
     * 8.2 XML 数据的存储和管理方式
