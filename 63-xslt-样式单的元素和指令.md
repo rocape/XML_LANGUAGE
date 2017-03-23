@@ -304,7 +304,7 @@ nn必须有一个select属性表明定位路径nn模板内容的一部分由LRE�
     + 使用某个元素并可改变其内容或增删属性
 
 <Persons> <Person /> <Person /> <Person /> </Person><?xml version=“1.0” encoding=“UTF-8”?> <Persons> <Person FirstName=“Jill” LastName=“Harper”/> <Person FirstName=“Claire” LastName=“Vogue”/> <Person FirstName=“Paul” LastName=“Cathedral”/> </Persons>只处理xsl:copy使用xsl:attribute增加属性Persons.xml Persons.xsltPersonsOut.xml Persons2.xslt
-6.3 XSLT样式单的元素和指令 
+6.3 XSLT样式单的元素和指令
 nn<xsl:copy-of>元素
 qq深度复制，把一个节点及其所有属性节点和子孙节点都复制到目标树xsl:copyxsl:copy-of功能将当前节点从源文档复制到目标树复制任何节点集到目标树对当前节点的处理仅复制当前节点，不复制其子元素或者属性复制节点及其所有的子孙节点，包括属性和子元素节点内容可以使用XSLT代码为新的节点创建内容，如果当前节点是元素节点或者根节点所有的内容都来自select属性中指定的节点集PurchaseOrder.xml PurchaseOrder.xsltInvoice.xml
 6.3 XSLT样式单的元素和指令 nn<xsl:output>元素
