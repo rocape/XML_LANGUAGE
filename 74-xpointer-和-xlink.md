@@ -26,62 +26,85 @@
     + XLink和XPointer
 * XLink尽可能与HTML超链接兼容 
 * 可指向指定的XML文档，结合XPointer可指向XML文档内部
+* 简单XLink
+ + 与HTML超链接功能类似，但不需定义专门的超链接元素，使用元素属性定义简单XLink
+```
+<!ELEMENT MYLINK ANY>
+<!ATTLIST MYLINK xml:linkCDATA #FIXED “simple”> 
+```
+ + inline属性为true表示XLink将链接当前元素与其他元素，为false表示XLink将链接非当前元素的两个元素，默认为true 
+```
+<!ELEMENT MYLINK ANY>
+<!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true”>
+```
+ + 使用href属性定义链接目标 
+    + 可指向绝对/相对XML文档地址 
+```
+ <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true” hrefCDATA #REQUIRED>
+```
+ + href链接的目标URI，用来指定链接的目标 
+ + role给应用程序提供链接的补充说明的方法，使用XLink的应用程序可以通过查阅此属性来得到一个链接角色的信息 
+ + title可以指定一个给用户提供信息的标签，当该属性为系统和应用程序提供信息时，此属性为用户提供辅助的信息 
+```
+<PARAGRAPH> 
+This paragraph got a 
+<MYLINK href=“http://www.w3.org/demo.xml”> link 
+</PARAGRAPH> 
+```
+ + show属性定义了如何向用户显示目标内容。常取以下三个值：
+    + new目标内容应该显示在独立的环境中（对于浏览器，应该是新的浏览器窗口），将xlink:show属性设置为new，与HTML中target="_blank"的意思是一样的 
+    + replace目标内容应该替换原来环境中的源内容，对于浏览器，这是超链接的常规特征 
+    + embedded内容应该嵌入源文档的链接位置，选择embedded与在HTML页面中嵌入一张图片非常相似，目标资源将源文档中定义的链接替换掉
+    + xlink:show属性其他可能的值还包括other和none。other值的意思是使链接按具体的实现进行动作，并表示它应该在链接中寻找其他信息来表明它该如何动作。none值也是将链接的动作留给具体实现来决定，但它并不表示在链接内有何种暗示
+ + actuate属性定义了何时触发链接。它可以取以下两个值：
+    + onRequest用户必须采取某些操作才能够触发链接。它类似于HTML超链接的工作方式，用户必须点击链接的文本才能够激活链接 
+    + onLoad加载源文档时，链接将自动激活。当xlink:show属性为embedded时，该属性最有用，但是当xlink:show为new时，也可以使用该属性。例如，打开源文档时，自动打开另一个环境窗口，并加载目的信息
+ + type指定作为一个元素被创建的链接的类型，分为：
+    + simple简单链接，类似html的超链接 
+    + extendedresource允许创建一个指向多个文档的多向链接 
+    + locator指向远程资源 
+    + arc描述两个链接之间的横向路径
+```
+<GOTO 
+xlink:type=”simple” 
+xlink:href=”http://www.123.com” 
+xlink:title=”Address” 
+xlink:show=”replace” 
+xlink:actuate=”onRequest”> 
+this is as linked element 
+</GOTO> 
+```
+* 扩展XLink
+ + 把描述链接本身的属性与描述链接目标的属性分开 
+ + 父元素定义描述链接本身的属性，不同子元素定义各自的href属性，则不同子元素可共享相同的链接基本属性
+    + 父元素称为扩展XLink元素，子元素称为XLink定位符 
+<!ELEMENT MYEXTLINK ANY> <!ATTLIST MEXTLINK xml:linkCDATA #FIXED “extended” inline(true|false) “true” content-title CDATA #IMPLIED content-role CDATA #IMPLIED> <!ELEMENT MYEXTLOCATOR EMPTY> <!ATTLIST MEXTLOCATOR xml:linkCDATA #FIXED “locator” role CDATA #IMPLIED title CDATA #IMPLIED show(embed|replace|new) #IMPLIED actuate(auto|user) #IMPLIED behavior CDATA #IMPLIED>
 
+ + 扩展链接具有更复杂的链接功能，它可以：
+    + 链接两个以上的资源 
+    + 创建位于源文档以外的资源之间的链接（out-of-line-linking）
+    + 从被链接资源的定义中分离出链接的方向
+ + 声明扩展链接时，会用到四种类型的子元素：`<xlink:title>`, `<xlink:arc>`,` <xlink:locator>`和`<xlink:resource>`，和一些属性：xlink:type, xlink:role,xlink:title, xlink:from, xlink:to
 
+* 外联XLink
+ + 前面所介绍的链接（简单和扩展）都是内联链接。内联链接（如同HTML中的a元素）使用内联元素的内容作为包含链接的文档部分。通过这种方式展示给访问者 
+ + XLink也可以是外联方式。外联链接可能不存在于它所连接的任何文档中，而是将链接保存在各个独立的链接文档中 
+ + 要将链接标记为外联，可将xlink:inline属性设置成false值 
+* 扩展XLink组
+ + 扩展链接组元素包含连接一组特定文档的链接。依靠扩展链接文档元素，组中的每个文档都作为目标来定位。应用程序负责推定如何激活组成员中的连接、并怎么理解这种连接。利用扩展链接组，可以在文档之间维护链接列表
+* XPointer由说明元素在XML文档中位置的名词来表达 
+ + 绝对位置：root表明整个文档的开始 
+    + 必须出现在XPointer的开始，即使在开始不注明绝对位置，也默认使用一个绝对位置 
+ + 相对位置：child表明上下文节点的子节点 
+ + 直接指定元素id 
+ + 前后两个相邻位置名词相同时，后一个可省略
+child(3, #element) 
+root().child(3, #element) 
+根元素的第三个⼦子元素
 
-
-简单XLinkqq与HTML超链接功能类似，但不需定义专门的超链接元素，使用元素属性定义简单XLinkqqinline属性为true表示XLink将链接当前元素与其他元素，为false表示XLink将链接非当前元素的两个元素，默认为true qq使用href属性定义链接目标 nn可指向绝对/相对XML文档地址 <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple”> <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true”> <!ELEMENT MYLINK ANY> <!ATTLIST MYLINK xml:linkCDATA #FIXED “simple” inline(true|false) “true” hrefCDATA #REQUIRED> 7.4 XPointer和XLink nn简单XLinkqqhref链接的目标URI，用来指定链接的目标 qqrole给应用程序提供链接的补充说明的方法，使用XLink的应用程序可以通过查阅此属性来得到一个链接角色的信息 qqtitle可以指定一个给用户提供信息的标签，当该属性为系统和应用程序提供信息时，此属性为用户提供辅助的信息 <PARAGRAPH> This paragraph got a <MYLINK href=“http://www.w3.org/demo.xml”> link </PARAGRAPH> 7.4 XPointer和XLink nn简单Xlinkqqshow属性定义了如何向用户显示目标内容。常取以下三个值：nnnew目标内容应该显示在独立的环境中（对于浏览器，应该是新的浏览器窗口），将xlink:show属性设置为new，与HTML中target="_blank"的意思是一样的 nnreplace目标内容应该替换原来环境中的源内容，对于浏览器，这是超链接的常规特征 nnembedded内容应该嵌入源文档的链接位置，选择embedded与在HTML页面中嵌入一张图片非常相似，目标资源将源文档中定义的链接替换掉7.4 XPointer和XLink nn简单Xlinkqqxlink:show属性其他可能的值还包括other和none。other值的意思是使链接按具体的实现进行动作，并表示它应该在链接中寻找其他信息来表明它该如何动作。none值也是将链接的动作留给具体实现来决定，但它并不表示在链接内有何种暗示7.4 XPointer和XLink nn简单Xlinkqqactuate属性定义了何时触发链接。它可以取以下两个值：nnonRequest用户必须采取某些操作才能够触发链接。它类似于HTML超链接的工作方式，用户必须点击链接的文本才能够激活链接 nnonLoad加载源文档时，链接将自动激活。当xlink:show属性为embedded时，该属性最有用，但是当xlink:show为new时，也可以使用该属性。例如，打开源文档时，自动打开另一个环境窗口，并加载目的信息7.4 XPointer和XLink nn简单Xlinkqqtype指定作为一个元素被创建的链接的类型，分为：nnsimple简单链接，类似html的超链接 nnextendedresource允许创建一个指向多个文档的多向链接 nnlocator指向远程资源 nnarc描述两个链接之间的横向路径<GOTO xlink:type=”simple” xlink:href=”http://www.123.com” xlink:title=”Address” xlink:show=”replace” xlink:actuate=”onRequest”> this is as linked element </GOTO> 7.4 XPointer和XLink nn扩展XLinkqq把描述链接本身的属性与描述链接目标的属性分开 qq父元素定义描述链接本身的属性，不同子元素定义各自的href属性，则不同子元素可共享相同的链接基本属性 nn父元素称为扩展XLink元素，子元素称为XLink定位符 <!ELEMENT MYEXTLINK ANY> <!ATTLIST MEXTLINK xml:linkCDATA #FIXED “extended” inline(true|false) “true” content-title CDATA #IMPLIED content-role CDATA #IMPLIED> <!ELEMENT MYEXTLOCATOR EMPTY> <!ATTLIST MEXTLOCATOR xml:linkCDATA #FIXED “locator” role CDATA #IMPLIED title CDATA #IMPLIED show(embed|replace|new) #IMPLIED actuate(auto|user) #IMPLIED behavior CDATA #IMPLIED> 7.4 XPointer和XLink nn扩展XLinkqq扩展链接具有更复杂的链接功能，它可以：nn链接两个以上的资源 nn创建位于源文档以外的资源之间的链接（out-of-line-linking）nn从被链接资源的定义中分离出链接的方向qq声明扩展链接时，会用到四种类型的子元素：<xlink:title>, <xlink:arc>, <xlink:locator>和<xlink:resource>，和一些属性：xlink:type, xlink:role,xlink:title, xlink:from, xlink:t
-
-
-
-
-
-
-
-
-
-
-7.4 XPointer和XLink 
-
-
-
-nn简单Xlinkqqxlink:show属性其他可能的值还包括other和none。other值的意思是使链接按具体的实现进行动作，并表示它应该在链接中寻找其他信息来表明它该如何动作。none值也是将链接的动作留给具体实现来决定，但它并不表示在链接内有何种暗示
-7.4 XPointer和XLink 
-nn简单Xlinkqqactuate属性定义了何时触发链接。它可以取以下两个值：
-nnonRequest用户必须采取某些操作才能够触发链接。它类似于HTML超链接的工作方式，用户必须点击链接的文本才能够激活链接 
-nnonLoad加载源文档时，链接将自动激活。当xlink:show属性为embedded时，该属性最有用，但是当xlink:show为new时，也可以使用该属性。例如，打开源文档时，自动打开另一个环境窗口，并加载目的信息
-7.4 XPointer和XLink 
-nn简单Xlinkqqtype指定作为一个元素被创建的链接的类型，分为：
-nnsimple简单链接，类似html的超链接 
-nnextendedresource允许创建一个指向多个文档的多向链接 
-nnlocator指向远程资源 
-nnarc描述两个链接之间的横向路径
-<GOTO xlink:type=”simple” xlink:href=”http://www.123.com” xlink:title=”Address” xlink:show=”replace” xlink:actuate=”onRequest”> this is as linked element </GOTO>
- 7.4 XPointer和XLink 
-nn扩展XLinkqq把描述链接本身的属性与描述链接目标的属性分开 
-qq父元素定义描述链接本身的属性，不同子元素定义各自的href属性，则不同子元素可共享相同的链接基本属性
- nn父元素称为扩展XLink元素，子元素称为XLink定位符
- <!ELEMENT MYEXTLINK ANY> <!ATTLIST MEXTLINK xml:linkCDATA #FIXED “extended” inline(true|false) “true” content-title CDATA #IMPLIED content-role CDATA #IMPLIED> <!ELEMENT MYEXTLOCATOR EMPTY> <!ATTLIST MEXTLOCATOR xml:linkCDATA #FIXED “locator” role CDATA #IMPLIED title CDATA #IMPLIED show(embed|replace|new) #IMPLIED actuate(auto|user) #IMPLIED behavior CDATA #IMPLIED> 
-7.4 XPointer和XLink
- nn扩展XLinkqq扩展链接具有更复杂的链接功能，它可以：
-nn链接两个以上的资源 
-nn创建位于源文档以外的资源之间的链接（out-of-line-linking）nn从被链接资源的定义中分离出链接的方向
-qq声明扩展链接时，会用到四种类型的子元素：<xlink:title>, <xlink:arc>, <xlink:locator>和<xlink:resource>，和一些属性：xlink:type, xlink:role,xlink:title, xlink:from, xlink:to
-7.4 XPointer和XLink 
-nn外联XLink
-qq前面所介绍的链接（简单和扩展）都是内联链接。内联链接（如同HTML中的a元素）使用内联元素的内容作为包含链接的文档部分。通过这种方式展示给访问者 
-qqXLink也可以是外联方式。外联链接可能不存在于它所连接的任何文档中，而是将链接保存在各个独立的链接文档中 
-q要将链接标记为外联，可将xlink:inline属性设置成false值 
-7.4 XPointer和XLink 
-nn扩展XLink组
-qq扩展链接组元素包含连接一组特定文档的链接。依靠扩展链接文档元素，组中的每个文档都作为目标来定位。应用程序负责推定如何激活组成员中的连接、并怎么理解这种连接。利用扩展链接组，可以在文档之间维护链接列表
-7.4 XPointer和XLink
- nnXPointer由说明元素在XML文档中位置的名词来表达 
-qq绝对位置：root表明整个文档的开始 
-nn必须出现在XPointer的开始，即使在开始不注明绝对位置，也默认使用一个绝对位置 
-qq相对位置：child表明上下文节点的子节点 
-qq直接指定元素id 
-qq前后两个相邻位置名词相同时，后一个可省略 child(3, #element) root().child(3, #element) 根元素的第三个⼦子元素id(ELEMENT).child(3, #element)(1, #element) id(ELEMENT).child(3, #element).child(1, #element) id为ELEMENT的第三个⼦子元素的第⼀一个⼦子元素
+id(ELEMENT).child(3, #element)(1, #element)
+id(ELEMENT).child(3, #element).child(1, #element) 
+id为ELEMENT的第三个⼦子元素的第⼀一个⼦子元素
 7.4 XPointer和XLink 
 nnXPointer定位XML文档中的元素也是把整个XML文档看作一棵结构树，文档中每个元素都是树上的节点 
 nn定位某个节点有不同的搜索路径 
