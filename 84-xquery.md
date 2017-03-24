@@ -127,22 +127,51 @@ return<result>{ $b/title} </result>
  6. ⑥在任何其他的情况下，转换将产生类型错误。
 
 * 布尔值计算的示例 根据上述的规则，下面的where 语句将返回true：
-规则②：where(<a/>,<b/>)
+
+规则②：where(`<a/>,<b/>`)
+
 规则③：where("true"castasxs:boolean)
+
 规则④：where("false")
+
 规则⑤：where(123)
+
 根据上述的规则，下面的where 语句将返回false：
+
 规则①：where( )
+
 规则③：where("false"castasxs:boolean)
+
 规则④：where("")
+
 规则⑤：where(0)
+
 根据上述的规则，下面的where 语句将产生类型错误：
 规则①、规则②和规则⑥（非空序列，并且包含多个项目，但第一个项目不是节点）：
-where(123,<a/>)、where("true"castasxs:boolean,<a/>)
+`where(123,<a/>)、where("true"castasxs:boolean,<a/>)`
 
 
+* order by语句 
+ + order by语句是XQuery提供指定结果次序的功能；如果没有order by子句，结果的次序由for和let子句、以及排序模式决定。order by语句中可以指定排序是ascending或descending，缺省情况为ascending 方式。
+ + 在order by语句中可以同时指定多个排序标准，首先按照第一标准进行排序，如果出现相等的情况，再依次按照后续的标准进行排序。
+* order by语句的基本使用
+ + 对于排序，循环操作（使用for 语句）是必需的。
+let$b:= fn:doc("bib-demo1.xml")/bib/book
+orderby$b/title
+return<result>{ $b/title } </result>
 
+* return语句
++ 在FLWOR中，return语句为候选结果集中的每一个项计算一次，这些计算结果连接形成FLWOR表达式的结果。
+ + return语句返回结果的顺序由排序模式或者order by语句决定。
+ + 可以输出任何文本信息，包括html、xml、xhtml、纯文本等各种形式。 + XQuery提供了一些构造方法，以便在查询中创建XML 结构，即创建元素、属性、文档、文本、注释和处理指令节点。这些构造方法主要分为两大类：直接构造方法（类似于XML形式的表示方法）；计算构造方法（使用带括号的表示方法）。
+* 直接构造方法
+ + 直接构造方法就是直接在XQuery查询计划中合适的位置按照XML的格式编写相应的内容 
+ + XQuery文件的后缀名通常为.xq或者.xquery，并不是一个XML文档。经过XQuery 查询引擎处理之后，将直接输出其中所包含的类似XML格式的直接编码，从而在结果XML文档中形成相应的组成部分（包括元素、属性、文本、以及注释等等）。
+* ① 元素及其文本内容的直接构造
 
-
-
-
+* ② 属性的直接构造
+I． <shoesize="7"/> 
+II．<shoesize="{7}"/>
+III．<shoesize="{( )}"/> 
+IV．<chapterref="[{1, 5 to7, 9}]"/>
+V．let$hat:= <hatsize="23"/> return<shoesize="As big as {$hat/@size}"/>
