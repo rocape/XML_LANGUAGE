@@ -27,23 +27,52 @@ XML 数据查询语言的特征 nn平台一致性nn面向XML 的（XML-Centric�
 
 
 * XQuery基本语法
-
+```
 SELECT column_list  FROM table_source
 ORDER BY order_by_expression
 WHERE search_condition 
-
+```
+```
 for $b indoc("bib-demo1.xml")/bib/book
-
 let$t := $b/title, $a := $b/author
-
 where$a/last="Stevens"
 order by $t
-
-return<result>{ $t} { $a } </result>
-
-
-
-
+return <result>{ $t} { $a } </result>
+```
+```
+<?xml version="1.0" encoding="UTF-8"?><bib><bookyear="1994"><title>TCP/IP Illustrated</title><author><last>Stevens</last><first>W.</first></author><publisher>Addison-Wesley</publisher><price>65.95</price></book><bookyear="1992"><title>Advanced Programming</title><author><last>Stevens</last><first>W.</first></author><publisher>Addison-Wesley</publisher><price>65.95</price></book> </bib>
+```
+```
+<result><title>Advanced Programming</title><author><last>Stevens</last><first>W.</first></author></result><result><title>TCP/IP Illustrated</title><author><last>Stevens</last><first>W.</first></author> </result>
+```
+* FLWOR表达式 
+ + FLWOR表达式是XQuery查询计划基本形式 
+ + XQuery查询计划的逻辑组成部分，其中包含 
+    + FOR子句、LET子句、WHERE子句、ORDER BY子句、RETURN 子句
+    + XPath路径表达式和内置函数
+    + 各种自定义函数
+    + 命名空间
+```
+<product dept="WMN">
+    <number>557</number>
+    <name language="en">Fleece Pullover</name>
+    <colorchoices>navy black</colorchoices>
+</product>
+<product dept="ACC">
+    <number>563</number>
+    <name language="en">Floppy Sun Hat</name>
+</product>
+<product dept="ACC">
+    <number>563</number>
+    <name language="en">Deluxe Travel Bag</name>
+</product>
+<product dept="MEN">
+    <number>784</number>
+    <name language="en">Cotton Dress Shirt</name>
+    <colorChoices>white gray</colorChoices>
+    <desc>Our<i>favorite<i>shirt!</desc>
+</product>
+```
 
 
 
