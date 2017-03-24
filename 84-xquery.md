@@ -73,6 +73,46 @@ return <result>{ $t} { $a } </result>
     <desc>Our<i>favorite<i>shirt!</desc>
 </product>
 ```
+路径表达式也可以使用符号@属性。例如下面这个路径表达式：
+doc("catalog.xml")/*/product/@dept
+查询语句
+```
+for $prod in doc("catalog.xml")/catalog/product
+where $prod/@dept="ACC"
+order by $prod/name
+return $prod/name
+```
+结果
+```
+<name language="en">Deluxe Travel Bag</name>
+<name language="en">Floppy sun Hat</name>
+```
+FOR-LET-WHERE-ORDERBY-RETURN
+![](/assets/8_1.png)
+* for子句
+ + SELECT ... FROM ... 用于指定从某个数据库表中检索若干列的内容；严格地说，这个操作的执行过程是，按照实际存储顺序（或索引结构）、依次访问该数据库表中的每一条记录，并从中取出指定列的内容，然后再执行后续的操作。如果单独考虑SELECT ... FROM ...，它实际上是一个在目标数据集合中进行循环遍历的取值过程，以便对所取出的数据进行进一步的筛选和排序等操作
+ + 在XQuery中，for子句用于完成类似的工作，它也相当于高级程序设计语言中的for循环。
+
+* for子句中的范围变量
+ + 在for子句中，$variable_name表示声明一个范围变量（range variable），然后为这个范围变量指定取值范围的集合，依次进行绑定。
+ + 比如，for$bindoc(“bib-demo1.xml”)/bib/book表示$b的取值范围为bib-demo1.xml中的book节点（使用了关键字in）。在执行该查询计划时进行循环遍历取值，然后对所取出的数据节点进行进一步的筛选和处理等操作 
+* let子句 
+ + 类似于SQL中的DECLARE和SET语句，用于定义一个局部变量，并为其赋值。
+
+Declare @i as int Set @i = 100 
+let$iasxs:integer := 100
+
+ + let中的普通变量与for中的循环变量不同，它的取值仅进行一次性地绑定，而不是循环依次绑定。
+* where语句
+ + where语句可以指定一系列的判断条件，根据for和let语句所生成的变量绑定元组进行筛选 
+ + where语句是可选的，并且判断条件应该得到一个有效的布尔值（true或false），如果判断条件的计算结果为true，则保留该元组；否则，则放弃该元组
+
+
+
+
+
+
+
 
 
 
