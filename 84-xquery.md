@@ -168,10 +168,28 @@ return<result>{ $b/title } </result>
  + 直接构造方法就是直接在XQuery查询计划中合适的位置按照XML的格式编写相应的内容 
  + XQuery文件的后缀名通常为.xq或者.xquery，并不是一个XML文档。经过XQuery 查询引擎处理之后，将直接输出其中所包含的类似XML格式的直接编码，从而在结果XML文档中形成相应的组成部分（包括元素、属性、文本、以及注释等等）。
 * ① 元素及其文本内容的直接构造
+```
+...
+return <result>{$t}{$a}</result>
+    <result>
+    {
+            for$bindoc(“bib-demo1.xml”)/bib/book
+            let$t:= $b/title, $a:= $b/author
+            where$a/last=”Stevens”orderby$t
+            return<result>{ $t} { $a} </result>
+    }
+    </result>
+```
 
 * ② 属性的直接构造
-I． <shoesize="7"/> 
-II．<shoesize="{7}"/>
-III．<shoesize="{( )}"/> 
-IV．<chapterref="[{1, 5 to7, 9}]"/>
-V．let$hat:= <hatsize="23"/> return<shoesize="As big as {$hat/@size}"/>
+
+I． `<shoesize="7"/>` 
+
+II．`<shoesize="{7}"/>`
+
+III．`<shoesize="{( )}"/>` 
+
+IV．`<chapterref="[{1, 5 to7, 9}]"/>`
+
+V．`let$hat:= <hatsize="23"/> return<shoesize="As big as {$hat/@size}"/>`
+
