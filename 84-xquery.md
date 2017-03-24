@@ -106,12 +106,41 @@ let$iasxs:integer := 100
 * where语句
  + where语句可以指定一系列的判断条件，根据for和let语句所生成的变量绑定元组进行筛选 
  + where语句是可选的，并且判断条件应该得到一个有效的布尔值（true或false），如果判断条件的计算结果为true，则保留该元组；否则，则放弃该元组
+* where语句的使用
+ + 比如下面的两个查询是完全等价的。
+```
+for$bindoc("bib-demo1.xml")/bib/book
+where$b/author/last="Stevens"
+return<result>{ $b/title} </result>
+for$bindoc("bib-demo1.xml")/bib/book[author/last = "Stevens"]
+return<result>{ $b/title} </result>
+```
+ + 可以使用XPath表达式中的判定谓词来取代where语句中的某些判断条件，从可读性的角度来说，建议尽可能使用前面一种方法书写
 
+* where语句中布尔值的计算
 
+ 1. ① 如果操作数是一个空序列（( )），那么转换将返回false。
+ 2. ②如果操作数是一个序列，并且其中的第一项是节点，那么转换将返回true。
+ 3. ③如果操作数是一个仅包含单个原子值项目的序列，并且这个项目的类型为xs:boolean，那么转换将返回该项目的值。
+ 4. ④如果操作数是一个仅包含单个原子值项目的序列，并且这个项目的类型为xs:string、xs:anyURI、xs:untypedAtomic，那么对于长度为零的值，转换将返回false；否则返回true。
+ 5. ⑤如果操作数是一个仅包含单个原子值项目的序列，并且这个项目的类型为数值类型，那么对于非零的值，转换将返回true；否则返回false。
+ 6. ⑥在任何其他的情况下，转换将产生类型错误。
 
+* 布尔值计算的示例 根据上述的规则，下面的where 语句将返回true：
+规则②：where(<a/>,<b/>)
+规则③：where("true"castasxs:boolean)
+规则④：where("false")
+规则⑤：where(123)
+根据上述的规则，下面的where 语句将返回false：
+规则①：where( )
+规则③：where("false"castasxs:boolean)
+规则④：where("")
+规则⑤：where(0)
+根据上述的规则，下面的where 语句将产生类型错误：
+规则①、规则②和规则⑥（非空序列，并且包含多个项目，但第一个项目不是节点）：
+where(123,<a/>)、where("true"castasxs:boolean,<a/>)
 
-
-
+
 
 
 
