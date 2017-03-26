@@ -8,8 +8,40 @@
 * DOM的优缺点 
  + DOM的优势主要表现在：易用性强，使用DOM时，将把所有的XML文档信息都存于内存中，并且遍历简单，支持XPath，增强了易用性。
  + DOM的缺点主要表现在：效率低，解析速度慢，内存占用量过高，对于大文件来说几乎不可能使用。另外效率低还表现在大量的消耗时间，因为使用DOM进行解析时，将为文档的每个element、attribute、processing-instrUCtion和comment都创建一个对象，这样在DOM机制中所运用的大量对象的创建和销毁无疑会影响其效率。
+* 文档模型
+ + Java中的可用文档模型数一直在增加。除了DOM外，还有以下几种：
 
-文档模型Electric XML（EXML）JDOM dom4j XML Pull Parser (XPP）JDOM的目的是成为Java特定文档模型，JDOM仅使用具体类而不使用接口，并大量使用了集合类是JDOM的一种智能分支，包括集成的XPath支持、Schema支持以及用于大文档或流化文档的基于事件的处理是支持分布式计算的商业项目的附属产物，只能适当地支持XML文档的子集，它没有为验证提供任何支持并且有更严格的许可证XPP只能适当支持XML文档的子集，并且不支持对文档提供验证Java中的可用文档模型数一直在增加。除了DOM外，还有以下几种：DOM的四个基本接口介绍Document接口Document接口表示整个HTML或XML文档。它不仅指文档的根，并提供对文档数据的基本访问。Document接口是对文档进行操作的入口，它是从Node接口继承过来的。该接口位于org.w3c.dom包中。提供对文挡中数据进行访问和操作的入口 该接口的常用方法有以下几种：Element createElement(String tagName)方法：创建指定类型的元素。Node adoptNode(Node source)方法：试图把另一文档中的节点采用到该文档中。Attr createAttribute(String name)方法：根据给定的名称name创建Attr。NodeList getElementsByTagName(String tagname)方法：按文档顺序返回包含在文档中且具有给定标记名称的所有元素的列表。Text createTextNode(String data)方法：根据给定字符串data创建Text节点。Node importNode(Node importedNode, boolean deep)方法：将另一文档的importedNode节点插入到该文档中，而不改变或移除原始文档中的原节点。Element getElementById(String element)方法：返回名为element的Element对象。NodeList接口NodeList接口提供对节点的有序集合的抽象，没有定义或约束如何实现此集合。该接口位于org.w3c.dom包中，NodeList对象是不断变化的。int getLength()方法：列表中的节点数。Node item(int index)方法：返回集合中的索引为index的节点。如果index大于或等于此列表中的节点数，则返回null。主要方法有以下两个：Node接口Node接口是其他大多数接口的父类，像Document、Element、Attribute、Text、Comment等接口都是从Node接口继承过来的。它表示该文档树中的单个节点。常用的方法有以下几种：Node appendChild(Node newChild)方法：将节点newChild添加到此节点的子节点列表的末尾。NamedNodeMap getAttributes()方法：返回包含此节点的属性的NamedNodeMap对象；否则为null。Node getFirstChild()方法：此节点的第一个子节点。Node getLastChild()方法：此节点的最后一个节点。Node getNextSibling()方法：直接在此节点之后的节点。String getNodeValue()方法：此节点的值，取决于其类型；Node getParentNode()方法：此节点的父节点。Node removeChild(Node oldChild)方法：从子节点列表中移除oldChild所指示的子节点，并将其返回。注意：在DOM中每个元素的字符数据（元素值）也是一个Node对象。
+
+|JDOM|JDOM的目的是成为Java特定文档模型，JDOM仅使用具体类而不使用接口，并大量使用了集合类|
+|-|-|
+|dom4j|是JDOM的一种智能分支，包括集成的XPath支持、Schema支持以及用于大文档或流化文档的基于事件的处理|
+|Electric XML（EXML）|是支持分布式计算的商业项目的附属产物，只能适当地支持XML文档的子集，它没有为验证提供任何支持并且有更严格的许可证|
+|XML Pull Parser (XPP）|XPP只能适当支持XML文档的子集，并且不支持对文档提供验证|
+####DOM的四个基本接口介绍
+* Document接口
+ + Document接口表示整个HTML或XML文档。它不仅指文档的根，并提供对文档数据的基本访问。Document接口是对文档进行操作的入口，它是从Node接口继承过来的。该接口位于org.w3c.dom包中。提供对文挡中数据进行访问和操作的入口
+ + 该接口的常用方法有以下几种：
+|Node adoptNode(Node source)方法|试图把另一文档中的节点采用到该文档中。|
+|-|-|
+|Attr createAttribute(String name)方法|根据给定的名称name创建Attr。|
+|Element createElement(String tagName)方法|创建指定类型的元素。|
+|Element getElementById(String element)方法|返回名为element的Element对象。|
+|NodeList getElementsByTagName(String tagname)方法|按文档顺序返回包含在文档中且具有给定标记名称的所有元素的列表。|
+|Node importNode(Node importedNode, boolean deep)方法|将另一文档的importedNode节点插入到该文档中，而不改变或移除原|
+|Text createTextNode(String data)方法|根据给定字符串data创建Text节点。|
+
+![](/assets/9_1.png)
+
+* NodeList接口
+ + NodeList接口提供对节点的有序集合的抽象，没有定义或约束如何实现此集合。该接口位于org.w3c.dom包中，NodeList对象是不断变化的。
+主要方法有以下两个：
+|int getLength()方法|列表中的节点数。|
+|-|-|
+|Node item(int index)方法|返回集合中的索引为index的节点。如果index大于或等于此列表中的节点数，则返回null。|
+* Node接口
+ + Node接口是其他大多数接口的父类，像Document、Element、Attribute、Text、Comment等接口都是从Node接口继承过来的。它表示该文档树中的单个节点。
+ + 常用的方法有以下几种：
+Node appendChild(Node newChild)方法：将节点newChild添加到此节点的子节点列表的末尾。NamedNodeMap getAttributes()方法：返回包含此节点的属性的NamedNodeMap对象；否则为null。Node getFirstChild()方法：此节点的第一个子节点。Node getLastChild()方法：此节点的最后一个节点。Node getNextSibling()方法：直接在此节点之后的节点。String getNodeValue()方法：此节点的值，取决于其类型；Node getParentNode()方法：此节点的父节点。Node removeChild(Node oldChild)方法：从子节点列表中移除oldChild所指示的子节点，并将其返回。注意：在DOM中每个元素的字符数据（元素值）也是一个Node对象。
 
 
 NodeList和Node示例import javax.xml.parsers.*; import org.w3c.dom.*; public class TestNode{ public static void main(String args[ ]){ try{ DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); DocumentBuilder builder=factory.newDocumentBuilder(); Document doc=builder.parse("test.xml"); NodeList list=doc.getElementsByTagName("student"); for (int i=0;i<list.getLength();i++){ Element node=(Element)list.item(i); System.out.print("name: "); System.out.println (node.getElementsByTagName ("name").item(0).getFirstChild().getNodeValue()); System.out.print("age: "); System.out.println (node.getElementsByTagName("age"). item(0).getFirstChild().getNodeValue()); System.out.print("address: "); System.out.println (node.getElementsByTagName ("address").item(0).getFirstChild().getNodeValue()); System.out.println();} }catch(Exception e){e.printStackTrace();} } } 打印address元素的信息 打印元素name的信息打印age元素的信息 test.xml文件的内容如下：<class> <student> <name>zhangsan</name> <age>20</age> <address>china</address> </student> <student> <name>lisi</name> <age>25</age> <address>china</address> </student> </class> 运行效果图NamedNodeMap接口实现NamedNodeMap接口的对象用于表示可以通过名称访问的节点的集合。NamedNodeMap表示的是一组节点和其唯一名称的一一对应关系，这个接口主要用在属性节点的表示上。在实现NamedNodeMap的对象中所包含的Node对象还可以通过顺序索引进行访问，但并不意味着DOM指定这些节点的顺序。在DOM中NamedNodeMap对象也是不断变化的。NamedNodeMap接口主要方法 NamedNodeMap接口主要有以下几种方法：int getLength()方法：返回该NamedNodeMap对象中的节点数。Node getNamedItem(String name)方法：返回名称为name的节点。Node getNamedItemNS(String namespaceURI, String localName)方法：返回通过本地名称和名称空间URI所指定的节点。Node removeNamedItemNS(String namespaceURI, String localName)方法：移除通过本地名称和名称空间URI所指定的节点。Node item(int index)方法：返回索引值为index的项。Node removeNamedItem(String name)方法：移除名称为name的节点。Node setNamedItemNS(Node arg)方法：使用其namespaceURI和localName添加节点。
