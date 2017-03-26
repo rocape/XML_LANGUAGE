@@ -1,31 +1,51 @@
-8.4 XQuery 
-nnXQuery（XML Query）是一种专门用于XML半结构化数据的查询语言，W3C于2007年1月23日正式发布了XQuery 1.0规范（XQuery1.0: An XML Query Language，http://www.w3.org/TR/xquery/）。
-nn与其他半结构化数据查询语言相比，由于它是W3C的推荐标准，所以受到了业界广泛的支持。目前，由不同的软件提供商所实现的XQuery软件包大约有40多种，适用于不同的开发语言、平台和环境。XML数据查询语言
-nn对于XML数据，查询语言的基本任务与关系数据库查询语言是相同的，主要包括如下几个方面：
+###8.4 XQuery 
+* XQuery（XML Query）是一种专门用于XML半结构化数据的查询语言，W3C于2007年1月23日正式发布了XQuery 1.0规范（XQuery1.0: An XML Query Language，http://www.w3.org/TR/xquery/）。
+* 与其他半结构化数据查询语言相比，由于它是W3C的推荐标准，所以受到了业界广泛的支持。目前，由不同的软件提供商所实现的XQuery软件包大约有40多种，适用于不同的开发语言、平台和环境。
+####XML数据查询语言
+* 对于XML数据，查询语言的基本任务与关系数据库查询语言是相同的，主要包括如下几个方面：
+ + 检索数据
+ + 聚集或汇总数据
+ + 连接来自不同数据源的数据
+ + 插入新的数据、更新或删除已有的数据
+ + 修改数据本身的结构
+ + 支持某些过程操作
+####从结构化数据查询语言SQL到半结构化查询语言XQuery
+* SQL结构化查询语言是用于关系数据库系统的标准查询语言，包括数据定义语言DDL、数据操纵语言DML、数据控制语言DCL。
+* 关系数据和半结构化所使用的底层数据结构完全不同，无法使用原有的SQL。
 
-qq检索数据
-qq聚集或汇总数据
-qq连接来自不同数据源的数据
-qq插入新的数据、更新或删除已有的数据
-qq修改数据本身的结构
-qq支持某些过程操作从结构化数据查询语言SQL到半结构化查询语言XQuery
-nnSQL结构化查询语言是用于关系数据库系统的标准查询语言，包括数据定义语言DDL、数据操纵语言DML、数据控制语言DCL。
-nn关系数据和半结构化所使用的底层数据结构完全不同，无法使用原有的SQL。
-
-* 关系数据与XML数据之间的区别
+####关系数据与XML数据之间的区别
 ||关系数据|XML数据|
 |-|-|-|
 |整体组成|由表、记录、字段组成。它们满足严格的数据库模式定义，具有明确的结构特征。|由元素、属性、文本、处理指令、XML声明、注释等内容组成;与数据库表相比，结构松散。|
 |每个数据单元的内容模型|每条记录由若干个字段构成，必须是能够唯一标识的。|每个节点可以包含具有层次结构混合内容，即由属性、文本、子元素等构成。不需要单独使用唯一的标识，它在整个文档树中所处的位置可以标识该节点。|
 |查询结果|记录和字段的顺序无关紧要。|顺序是非常重要的。|
-
-SQL/XML 
-nnISO/IEC 9075系列标准的最新版本SQL 2003中，作为其中的第14部分“XML相关规范（SQL/XML）”，第一次在SQL语言中正式引入了XML技术，它指出通用数据库管理系统应如何支持XML的存储、检索、转换，为基于XML的数据库应用的开发、集成、部署和运行提供了完整的集成解决方案。
-nn这些SQL/XML功能的作用是将存储于关系数据库表结构中的数据映射为XML层次结构，而并不是对原始的XML数据进行查询检索。
-
-XML 数据查询语言的特征 nn平台一致性nn面向XML 的（XML-Centric）nn具备集合处理的能力nn易于使用nn广泛的适应性XQuery 的诞生nn关系数据库中的SQL/XML无法完成对半结构化数据的查询检索。因此，出现了许多的半结构化数据查询语言，包括XQL、XML-QL、XSQL、UnQL、StruQL、YATL、LOREL以及Quilt，其中Quilt 是XQuery的前身。nnQuilt最初作为用户级语法的测试工具，在定义需求、用例以及底层数据模型和代数方面进行了很多积极的努力，它本身借用了其他半结构化查询语言的一些优点，比如引入了路径表达语法、引入了变量绑定、提供了构造查询结果的语句、支持嵌套查询等。XQuery 1.0 nn2007年初，XML查询工作组提交了正式的XQuery 1.0 规范。nnXQuery是一种用于文件和数据库中基于XML文档内容的新型查询语言，构建于Quilt 查询语言的基础之上，从而综合了其他一些查询语言的优势和特点。nnXQuery是由一些SQL专家制订，它的出现是因为SQL这种用于关系数据查询的语言无法完美地处理XML文档。XQuery的特点 nn作为W3C发布的一种规范，Xquery与W3C所发布的其他规范之间具有很好的兼容性，比如XQuery使用与XML Schema一致的内置数据类型系统、并支持使用XML Schema提供自定义的类型信息、XQuery 1.0依靠XPath2.0路径表达式进行对层次化文档的操作、XQuery 1.0与XPath2.0使用一组公共的操作符和函数。nn与XSLT相比，XQuery具有以下的特征：qq易于使用qq更加简洁qq强类型语言qq更广泛地使用场景XQuery 基本语法和相关概念nnXQuery相当于查询XML数据的SQL语言，并且XQuery规范本身就是由一些SQL专家们制订，所以它的基本语法与SQL语言非常相似。nn与SQL中的select语句向对应，XQuery中提供了FLWOR语句，可以完成对XML数据的查询、筛选、排序。qqFOR-LET-WHERE-ORDERBY-RETURN
-
-
+####SQL/XML 
+* ISO/IEC 9075系列标准的最新版本SQL 2003中，作为其中的第14部分“XML相关规范（SQL/XML）”，第一次在SQL语言中正式引入了XML技术，它指出通用数据库管理系统应如何支持XML的存储、检索、转换，为基于XML的数据库应用的开发、集成、部署和运行提供了完整的集成解决方案。
+* 这些SQL/XML功能的作用是将存储于关系数据库表结构中的数据映射为XML层次结构，而并不是对原始的XML数据进行查询检索。
+####XML 数据查询语言的特征
+* 平台一致性
+* 面向XML 的（XML-Centric）
+* 具备集合处理的能力
+* 易于使用
+* 广泛的适应性
+####XQuery 的诞生
+* 关系数据库中的SQL/XML无法完成对半结构化数据的查询检索。因此，出现了许多的半结构化数据查询语言，包括XQL、XML-QL、XSQL、UnQL、StruQL、YATL、LOREL以及Quilt，其中Quilt 是XQuery的前身。
+* Quilt最初作为用户级语法的测试工具，在定义求、用例以及底层数据模型和代数方面进行了很多积极的努力，它本身借用了其他半结构化查询语言的一些优点，比如引入了路径表达语法、引入了变量绑定、提供了构造查询结果的语句、支持嵌套查询等。
+####XQuery 1.0 
+* 2007年初，XML查询工作组提交了正式的XQuery 1.0 规范。
+* XQuery是一种用于文件和数据库中基于XML文档内容的新型查询语言，构建于Quilt 查询语言的基础之上，从而综合了其他一些查询语言的优势和特点。
+* XQuery是由一些SQL专家制订，它的出现是因为SQL这种用于关系数据查询的语言无法完美地处理XML文档。
+####XQuery的特点 
+* 作为W3C发布的一种规范，Xquery与W3C所发布的其他规范之间具有很好的兼容性，比如XQuery使用与XML Schema一致的内置数据类型系统、并支持使用XML Schema提供自定义的类型信息、XQuery 1.0依靠XPath2.0路径表达式进行对层次化文档的操作、XQuery 1.0与XPath2.0使用一组公共的操作符和函数。
+* 与XSLT相比，XQuery具有以下的特征：
+ + 易于使用
+ + 更加简洁
+ + 强类型语言
+ + 更广泛地使用场景
+####XQuery 基本语法和相关概念
+* XQuery相当于查询XML数据的SQL语言，并且XQuery规范本身就是由一些SQL专家们制订，所以它的基本语法与SQL语言非常相似。
+* 与SQL中的select语句向对应，XQuery中提供了FLWOR语句，可以完成对XML数据的查询、筛选、排序。
+ + FOR-LET-WHERE-ORDERBY-RETURN
 * XQuery基本语法
 ```
 SELECT column_list  FROM table_source
@@ -76,13 +96,16 @@ return <result>{ $t} { $a } </result>
 路径表达式也可以使用符号@属性。例如下面这个路径表达式：
 doc("catalog.xml")/*/product/@dept
 查询语句
+
 ```
 for $prod in doc("catalog.xml")/catalog/product
 where $prod/@dept="ACC"
 order by $prod/name
 return $prod/name
 ```
+
 结果
+
 ```
 <name language="en">Deluxe Travel Bag</name>
 <name language="en">Floppy sun Hat</name>
@@ -192,4 +215,88 @@ III．`<shoesize="{( )}"/>`
 IV．`<chapterref="[{1, 5 to7, 9}]"/>`
 
 V．`let$hat:= <hatsize="23"/> return<shoesize="As big as {$hat/@size}"/>`
+
+I． `<shoesize="7"/>`结果为`<shoe size="7"/>`
+
+II．`<shoesize="{7}"/>`结果为`<shoe size="7"/>`
+
+III．`<shoesize="{( )}"/>`结果为`<shoe size=""/>`
+
+
+IV．`<chapterref="[{1, 5 to7, 9}]"/>`结果为`<chapter ref="[1 5 6 7 9]"/>`
+
+V．`let$hat:= <hatsize="23"/> return<shoesize="As big as {$hat/@size}"/>`
+结果为`<shoe size="As big as 23"/>`
+
+* ③ 其他内容的直接构造
+```
+let $salary := 1000
+return
+<income xmlns= "http://mycompany.org">
+    <!-- From 2006 to 2007 -->
+    <?basis time="monthly"?>
+    {$salary}
+</income>
+```
+```
+let $salary := 1000
+return
+<income xmlns= "http://mycompany.org">
+    <!-- From 2006 to 2007 -->
+    <?basis time="monthly"?>
+    {$salary}
+</income>
+    其结果为：
+<income xmlns="http://mycompany.org">
+    <!-- From 2006 to 2007 -->
+    <?basis time="monthly"?>
+    1000 
+</income>
+```
+####计算构造方法
+* XQuery中构造XML内容的另一种方法是计算构造方法，通过采用一系列的计算构造语法，可以构造各种各样的XML内容。
+
+* ①元素及其文本内容的计算构造
+```
+CompElemConstructor::="element" (QName|("{"   Expr   "}")) "{" 
+ContentExpr? "} "  
+ContentExpr ::= Expr  
+```
+* 使用计算构造方法来构造元素，首先使用关键字“element”，然后以硬编码的方式指定该元素的名称QName（限定的名称，可以包含命名空间前缀）、或者使用表达式(“{” Expr“}”) 动态地计算出该元素的名称，最后使用内容表达式“{” ContentExpr? “}” 计算出该元素的内容（如果没有表达式ContentExpr，则该元素为空元素）。
+* 在XML中，元素可以包含子元素，所以某个元素的CompElemConstructor中可能嵌套地包含其他元素的CompElemConstructor。
+
+####元素计算构造的示例 
+```
+let$salary:= 1000
+return<income>{$salary}</income>
+let$salary:= 1000
+returnelementincome {$salary}
+
+for$nodein(<student>WangFang</student>,<city>Beijing</city>)
+return element{concat("new", node-name($node))} {data($node)}
+<newstudent>WangFang</newstudent> 
+<newcity>Beijing</newcity>
+for$nodein(<student>WangFang</student>,<city>Beijing</city>)
+return
+element{concat("new", node-name($node))} 
+       {element{concat("sub", node-name($node))}
+{data($node)} }<newstudent>
+<substudent>WangFang</substudent>
+</newstudent>
+<newcity>
+<subcity>Beijing</subcity> 
+</newcity>
+```
+②属性的计算构造
+n使用计算构造方法来构造属性，首先使用关键字“attribute”，然后以硬编码的方式指定该属性的名称QName（限定的名称，可以包含命名空间前缀）、或者使用表达式(“{“Expr”}”) 动态地计算出该属性的名称，最后使用表达式“{” Expr? “}”计算出该属性的值（如果没有表达式Expr，则属性值为空）。
+
+属性计算构造的示例 for$nodein (<couple><husband>Tom</husband> <wife>Alice</wife></couple>)/element()returnelementperson {attributegender {if(node-name($node) castasxs:string="husband") then"male"else"female"},data($node) }<persongender="male">Tom</person> <persongender="female">Alice</person>
+
+③其他内容的计算构造CompTextConstructor::= "text" "{" Expr"}" CompPIConstructor::= "processing-instruction" (NCName| ("{" Expr"}")) "{" Expr? "}" CompCommentConstructor::= "comment" "{" Expr"}" <result>{for$nodein(<student>WangFang</student>,<city>Beijing</city>)returnelement{node-name($node)} {data($node),comment{"appended-text"},text{2+3},processing-instructionpi-name {"some-pi"}}}</result><result><student>WangFang<!--appended-text-->5<?pi-name some-pi?></student><city>Beijing<!--appended-text-->5<?pi-name some-pi?></city> </result>
+
+条件表达式 IfExpr::= "if" "(" TestExpr")" "then" ExprSingle"else" ExprSingleExprSingle::= FLWORExpr| QuantifiedExpr| IfExprsome $p in //price satisfies $p > 10000 every $p in //price satisfies $p > 10000 some $s in $S satisfies $s/C exists($S[C]) every $s in $S satisfies not(C) not(some $s in $S satisfies C)
+
+
+灵活地使用XQuery nnXQuery 1.0的类型系统及类型操作qqXQuery 1.0中的类型系统与XPath2.0的类型系统完全一致。qq在XQuery中，增加了一些有关类型的操作，比如typeswitch操作符。typeswitch操作符类似于高级程序设计语言中的switch语句，不同的是，它根据输入参数的类型来进行分支选择，而不是输入参数的值。typeswitch($customer/billing-address)case$aaselement(*, USAddress) return$a/statecase$aaselement(*, CanadaAddress) return$a/provincecase$aaselement(*, JapanAddress) return$a/prefecture defaultreturn"unknown"在XQuery中编写自定义的函数nn在XQuery中，除了使用内置函数之外，还允许用户声明他们自己的函数。函数声明需要指定函数的名称、参数名称及数据类型、以及返回值的数据类型。nn函数定义的基本语法如下所示：FunctionDecl::= "declare" "function" QName"(" ParamList? ")" ("as" SequenceType)? (EnclosedExpr| "external") ParamList::= Param("," Param)* Param::= "$" QNameTypeDeclaration? TypeDeclaration::= "as" SequenceTypexqueryversion"1.0";declarefunctionHelloWorld() asxs:stringreturn"Hello World!"HelloWorld( )xqueryversion"1.0";declarefunctionlocal:HelloWorld() asxs:string{"Hello World!"};local:HelloWorld()模块的定义以及导入nn模块是一组函数或变量的命名的集合。可以将一组相关的函数和变量定义在某个模块中，然后在需要的时候导入并使用 模块的定义以及导入modulenamespacehello = "http://example.org/hello-function";declarefunctionhello:HelloWorld() asxs:string{"Hello World!"};declarevariable$hello:piasxs:double:=3.141592653589793;module1.xquery xqueryversion"1.0";importmodulenamespacemod1 = http://example.org/hello-functionat"module1.xquery";<result><function-call>{mod1:HelloWorld()}</function-call><showVariable>{$mod1:pi}</showVariable> </result>MainQuery.xquery <result><function-call>Hello World!</function-call><showVariable>3.14159265358979</showVariable> </result>在XQuery中声明命名空间NamespaceDecl ::= "declare" "namespace" NCName "=" URILiteral xqueryversion"1.0";declarenamespacehere ="www.example.org";declarefunctionhere:HelloWorld() asxs:string{"Hello World!"};here:HelloWorld()xqueryversion"1.0";declarenamespacehere = "http://example.org";<here:ele>Element </here:ele><here:elexmlns:here="http://example.org">Element </here:ele>xqueryversion"1.0";declaredefaultelementnamespace"http://example.org/names";<ele>Element </ele><elexmlns="http://example.org/names">Element </ele>使用外部XML Schemann在XQuery中，有时候我们需要使用与目标XML文档相关联的XML Schema来提供数据的类型信息（XQuery实际上是对经过模式验证后的信息集PSVI 进行操作）。nn有时候目标XML文档并没有指定任何关联的Schema模式，而需要使用某些外部XML Schema来完成两项任务。qq第一，对输入的XML数据进行验证，从而确保原始数据的有效性，并充分地利用Schema中的结构信息完成相关的操作；qq第二，对输出的XML数据进行验证，从而确保所得结果的有效性。导入和使用Schema nn导入了一个没有目标命名空间的Schema文件，指定了该文件的位置，并将缺省的元素/类型命名空间指定为空。importschemadefaultelementnamespace""at"http://example.org/xyz.xsd
+
 
