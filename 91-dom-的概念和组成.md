@@ -41,7 +41,16 @@
 * Node接口
  + Node接口是其他大多数接口的父类，像Document、Element、Attribute、Text、Comment等接口都是从Node接口继承过来的。它表示该文档树中的单个节点。
  + 常用的方法有以下几种：
-Node appendChild(Node newChild)方法：将节点newChild添加到此节点的子节点列表的末尾。NamedNodeMap getAttributes()方法：返回包含此节点的属性的NamedNodeMap对象；否则为null。Node getFirstChild()方法：此节点的第一个子节点。Node getLastChild()方法：此节点的最后一个节点。Node getNextSibling()方法：直接在此节点之后的节点。String getNodeValue()方法：此节点的值，取决于其类型；Node getParentNode()方法：此节点的父节点。Node removeChild(Node oldChild)方法：从子节点列表中移除oldChild所指示的子节点，并将其返回。注意：在DOM中每个元素的字符数据（元素值）也是一个Node对象。
+|Node appendChild(Node newChild)方法|将节点newChild添加到此节点的子节点列表的末尾。|
+|-|-|
+|NamedNodeMap getAttributes()方法|返回包含此节点的属性的NamedNodeMap对象；否则为null。|
+|Node getFirstChild()方法|此节点的第一个子节点。|
+|Node getLastChild()方法|此节点的最后一个节点。|
+|Node getNextSibling()方法|直接在此节点之后的节点。|
+|String getNodeValue()方法|此节点的值，取决于其类型；|
+|Node getParentNode()方法|此节点的父节点。|
+|Node removeChild(Node oldChild)方法|从子节点列表中移除oldChild所指示的子节点，并将其返回。|
+ + 注意：在DOM中每个元素的字符数据（元素值）也是一个Node对象。
 
 
 NodeList和Node示例import javax.xml.parsers.*; import org.w3c.dom.*; public class TestNode{ public static void main(String args[ ]){ try{ DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); DocumentBuilder builder=factory.newDocumentBuilder(); Document doc=builder.parse("test.xml"); NodeList list=doc.getElementsByTagName("student"); for (int i=0;i<list.getLength();i++){ Element node=(Element)list.item(i); System.out.print("name: "); System.out.println (node.getElementsByTagName ("name").item(0).getFirstChild().getNodeValue()); System.out.print("age: "); System.out.println (node.getElementsByTagName("age"). item(0).getFirstChild().getNodeValue()); System.out.print("address: "); System.out.println (node.getElementsByTagName ("address").item(0).getFirstChild().getNodeValue()); System.out.println();} }catch(Exception e){e.printStackTrace();} } } 打印address元素的信息 打印元素name的信息打印age元素的信息 test.xml文件的内容如下：<class> <student> <name>zhangsan</name> <age>20</age> <address>china</address> </student> <student> <name>lisi</name> <age>25</age> <address>china</address> </student> </class> 运行效果图NamedNodeMap接口实现NamedNodeMap接口的对象用于表示可以通过名称访问的节点的集合。NamedNodeMap表示的是一组节点和其唯一名称的一一对应关系，这个接口主要用在属性节点的表示上。在实现NamedNodeMap的对象中所包含的Node对象还可以通过顺序索引进行访问，但并不意味着DOM指定这些节点的顺序。在DOM中NamedNodeMap对象也是不断变化的。NamedNodeMap接口主要方法 NamedNodeMap接口主要有以下几种方法：int getLength()方法：返回该NamedNodeMap对象中的节点数。Node getNamedItem(String name)方法：返回名称为name的节点。Node getNamedItemNS(String namespaceURI, String localName)方法：返回通过本地名称和名称空间URI所指定的节点。Node removeNamedItemNS(String namespaceURI, String localName)方法：移除通过本地名称和名称空间URI所指定的节点。Node item(int index)方法：返回索引值为index的项。Node removeNamedItem(String name)方法：移除名称为name的节点。Node setNamedItemNS(Node arg)方法：使用其namespaceURI和localName添加节点。
