@@ -52,8 +52,7 @@
 |Node removeChild(Node oldChild)方法|从子节点列表中移除oldChild所指示的子节点，并将其返回。|
  + 注意：在DOM中每个元素的字符数据（元素值）也是一个Node对象。
 
-
-NodeList和Node示例
+####NodeList和Node示例
 ```
 import javax.xml.parsers.*; 
 import org.w3c.dom.*;
@@ -95,9 +94,12 @@ public class TestNode{
         <address>china</address>
     </student>
 </class>
+```
 + 运行效果图
 ![](/assets/9_2.bmp)
+
 ####NamedNodeMap接口
+
 * 实现NamedNodeMap接口的对象用于表示可以通过名称访问的节点的集合。
 * NamedNodeMap表示的是一组节点和其唯一名称的一一对应关系，这个接口主要用在属性节点的表示上。
 * 在实现NamedNodeMap的对象中所包含的Node对象还可以通过顺序索引进行访问，但并不意味着DOM指定这些节点的顺序。
@@ -149,7 +151,7 @@ public class TestNamedNodeMap{
 ![](/assets/9_3.bmp)
 ![](/assets/9_7.png)
 ####DOM的使用
-使用DOM解析XML文档并打印
+* 使用DOM解析XML文档并打印
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <PEOPLE>
