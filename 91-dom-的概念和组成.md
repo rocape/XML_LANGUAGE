@@ -98,13 +98,13 @@ public class TestNode{
 + 运行效果图
 ![](/assets/9_2.bmp)
 
-####NamedNodeMap接口
+####NamedNodeMap接口
 
 * 实现NamedNodeMap接口的对象用于表示可以通过名称访问的节点的集合。
 * NamedNodeMap表示的是一组节点和其唯一名称的一一对应关系，这个接口主要用在属性节点的表示上。
 * 在实现NamedNodeMap的对象中所包含的Node对象还可以通过顺序索引进行访问，但并不意味着DOM指定这些节点的顺序。
 * 在DOM中NamedNodeMap对象也是不断变化的。
-####NamedNodeMap接口主要方法 
+####NamedNodeMap接口主要办法
 * NamedNodeMap接口主要有以下几种方法：
 |int getLength()方法|返回该NamedNodeMap对象中的节点数。|
 |-|-|
@@ -114,6 +114,7 @@ public class TestNode{
 |Node item(int index)方法|返回索引值为index的项|
 |Node removeNamedItem(String name)方法|移除名称为name的节点。|
 |Node setNamedItemNS(Node arg)方法|使用其namespaceURI和localName添加节点。|
+
 ```
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
@@ -140,6 +141,7 @@ public class TestNamedNodeMap{
 } 
 
 ```
+
 * student.xml的文件内容如下：
 ```
 <class>
@@ -147,6 +149,7 @@ public class TestNamedNodeMap{
     <student id="D002" name="lisi" age="23"></student>
 </class>
 ```
+
 * 运行效果图
 ![](/assets/9_3.bmp)
 ![](/assets/9_7.png)
@@ -268,6 +271,79 @@ import org.apache.crimson.tree.XmlDocument;
 }
 ```
 ![](/assets/9_6.bmp)
+
+####JDOM简介
+* JDOM是一个开源项目，它基于树型结构，利用纯Java的技术对XML文档实现解析、生成、序列化以及多种操作。JDOM 直接为Java编程服务。它利用强而有力的Java语言的诸多特性（方法重载、集合概念以及映射），把SAX和DOM的功能有效地结合起来。在使用设计上尽可能地隐藏原来使用XML过程中的复杂性。利用JDOM处理XML文档将是一件轻松、简单的事。
+* JDOM 在2000年的春天被Brett McLaughlin和Jason Hunter开发出来，以弥补DOM及SAX在实际应用中的不足。这些不足之处主要在于SAX没有文档修改、随机访问以及输出的功能，而对于DOM来说，Java程序员在使用时总觉得不太方便。
+* JDOM的最新版本为JDOM Beta 10。最近JDOM被收录到JSR-102内，这标志着JDOM成为了Java平台组成中的一部分。
+####JDOM类库 
+* 在使用JDOM时要下载JDOM类库，将其加载到JDK中。JDOM类库是由以下几个包组成：
+|包名|说明|
+|-|-|
+|org.jdom|包含了所有的xml文档要素的java类。|
+|org.jdom.adapters|包含了与dom适配的java类。|
+|org.jdom.filter| 包含了xml文档的过滤器类。|
+|org.jdom.input|包中提供的构造类从任何数据源中构造文档。|
+|org.jdom.output|包含了读取xml文档的类。|
+|org.jdom.transform|包含了将jdom xml文档接口转换为其他xml文档接口。|
+|org.jdom.xpath|包含了对xml文档xpath操作的类。|
+
+
+####DOM解析带DTD验证的XML文档
+* person.xml 文件是带DTD验证的XML文档
+
+```
+import java.io.*;
+import org.jdom.*;
+import org.jdom.input.*;
+import org.jdom.output.*;
+public class TestJDOM1{
+    public void select(){
+        try {
+            SAXBuilder builder=new SAXBuilder(true);
+            Document doc=builder.build( new FileInputStream(new File("person.xml")));
+            XMLOutputter outputter=new XMLOutputter();
+            outputter.setEncoding("gb2312");
+            outputter.output(doc, System.out);
+        }catch(Exception e){
+            System.out.println(e); 
+        } 
+    } 
+    public static void main(String args[ ]) { 
+        new TestJDOM1().select(); 
+    }
+} 
+```
+
+
+####JDOM解析带有Schema验证的XML 
+```
+import java.io.*;
+import org.jdom.*;
+import org.jdom.input.*;
+import org.jdom.output.*;
+public class TestJDOMSchema{
+    String xml="family.xml";
+    String schema="family.xsd";
+    public void validate() {
+        try{
+            SAXBuilder saxBuilder = new SAXBuilder(true); 
+            saxBuilder.setValidation(true);
+            saxBuilder.setFeature("http://apache.org/xml/“ + "features/validation/schema", true); 
+            saxBuilder.setProperty( "http://apache.org/xml/properties/schema/" + "external-noNamespaceSchemaLocation",schema);
+            Document jdomDoc = saxBuilder.build(new FileInputStream(new File(xml)));
+            XMLOutputter xmlOutputter = new XMLOutputter();
+            xmlOutputter.setEncoding("gb2312");
+            xmlOutputter.output(jdomDoc, System.out); 
+        }catch(Exception e){
+        System.out.println("验证失败:"+e);
+    }
+} 
+public static void main(String args[]){
+    new TestJDOMSchema ().validate(); 
+} 
+} 
+```
 ####使用JDOM编写XML文档
 ```
 import java.io.*;
