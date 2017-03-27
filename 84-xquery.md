@@ -287,16 +287,52 @@ element{concat("new", node-name($node))}
 <subcity>Beijing</subcity> 
 </newcity>
 ```
-②属性的计算构造
-n使用计算构造方法来构造属性，首先使用关键字“attribute”，然后以硬编码的方式指定该属性的名称QName（限定的名称，可以包含命名空间前缀）、或者使用表达式(“{“Expr”}”) 动态地计算出该属性的名称，最后使用表达式“{” Expr? “}”计算出该属性的值（如果没有表达式Expr，则属性值为空）。
+#####②属性的计算构造
+* 使用计算构造方法来构造属性，首先使用关键字“attribute”，然后以硬编码的方式指定该属性的名称QName（限定的名称，可以包含命名空间前缀）、或者使用表达式(“{“Expr”}”) 动态地计算出该属性的名称，最后使用表达式“{” Expr? “}”计算出该属性的值（如果没有表达式Expr，则属性值为空）。
 
-属性计算构造的示例 for$nodein (<couple><husband>Tom</husband> <wife>Alice</wife></couple>)/element()returnelementperson {attributegender {if(node-name($node) castasxs:string="husband") then"male"else"female"},data($node) }<persongender="male">Tom</person> <persongender="female">Alice</person>
+####属性计算构造的示例 
+```
+for$nodein (<couple><husband>Tom</husband> <wife>Alice</wife></couple>)/element()returnelementperson {attributegender {if(node-name($node) castasxs:string="husband") then"male"else"female"},data($node) }<persongender="male">Tom</person> <persongender="female">Alice</person>
+```
+####③其他内容的计算构造
+```
+CompTextConstructor::= "text" "{" Expr"}" CompPIConstructor::= "processing-instruction" (NCName| ("{" Expr"}")) "{" Expr? "}" CompCommentConstructor::= "comment" "{" Expr"}" <result>{for$nodein(<student>WangFang</student>,<city>Beijing</city>)returnelement{node-name($node)} {data($node),comment{"appended-text"},text{2+3},processing-instructionpi-name {"some-pi"}}}</result><result><student>WangFang<!--appended-text-->5<?pi-name some-pi?></student><city>Beijing<!--appended-text-->5<?pi-name some-pi?></city> </result>
+```
 
-③其他内容的计算构造CompTextConstructor::= "text" "{" Expr"}" CompPIConstructor::= "processing-instruction" (NCName| ("{" Expr"}")) "{" Expr? "}" CompCommentConstructor::= "comment" "{" Expr"}" <result>{for$nodein(<student>WangFang</student>,<city>Beijing</city>)returnelement{node-name($node)} {data($node),comment{"appended-text"},text{2+3},processing-instructionpi-name {"some-pi"}}}</result><result><student>WangFang<!--appended-text-->5<?pi-name some-pi?></student><city>Beijing<!--appended-text-->5<?pi-name some-pi?></city> </result>
+####条件表达式 
+```
+IfExpr::= "if" "(" TestExpr")" "then" ExprSingle"else" ExprSingleExprSingle::= FLWORExpr| QuantifiedExpr| IfExprsome $p in //price satisfies $p > 10000 every $p in //price satisfies $p > 10000 some $s in $S satisfies $s/C exists($S[C]) every $s in $S satisfies not(C) not(some $s in $S satisfies C)
+```
 
-条件表达式 IfExpr::= "if" "(" TestExpr")" "then" ExprSingle"else" ExprSingleExprSingle::= FLWORExpr| QuantifiedExpr| IfExprsome $p in //price satisfies $p > 10000 every $p in //price satisfies $p > 10000 some $s in $S satisfies $s/C exists($S[C]) every $s in $S satisfies not(C) not(some $s in $S satisfies C)
+####灵活地使用XQuery 
+* XQuery 1.0的类型系统及类型操作
+ + XQuery 1.0中的类型系统与XPath2.0的类型系统完全一致。
+ + 在XQuery中，增加了一些有关类型的操作，比如typeswitch操作符。typeswitch操作符类似于高级程序设计语言中的switch语句，不同的是，它根据输入参数的类型来进行分支选择，而不是输入参数的值。
 
+```
+typeswitch($customer/billing-address)case$aaselement(*, USAddress) return$a/statecase$aaselement(*, CanadaAddress) return$a/provincecase$aaselement(*, JapanAddress) return$a/prefecture defaultreturn"unknown"
+```
+####在XQuery中编写自定义的函数
+* 在XQuery中，除了使用内置函数之外，还允许用户声明他们自己的函数。函数声明需要指定函数的名称、参数名称及数据类型、以及返回值的数据类型。
+* 函数定义的基本语法如下所示：
+```
+FunctionDecl::= "declare" "function" QName"(" ParamList? ")" ("as" SequenceType)? (EnclosedExpr| "external") ParamList::= Param("," Param)* Param::= "$" QNameTypeDeclaration? TypeDeclaration::= "as" SequenceTypexqueryversion"1.0";declarefunctionHelloWorld() asxs:stringreturn"Hello World!"HelloWorld( )xqueryversion"1.0";declarefunctionlocal:HelloWorld() asxs:string{"Hello World!"};local:HelloWorld()
+```
+####模块的定义以及导入
+* 模块是一组函数或变量的命名的集合。可以将一组相关的函数和变量定义在某个模块中，然后在需要的时候导入并使用 
 
-灵活地使用XQuery nnXQuery 1.0的类型系统及类型操作qqXQuery 1.0中的类型系统与XPath2.0的类型系统完全一致。qq在XQuery中，增加了一些有关类型的操作，比如typeswitch操作符。typeswitch操作符类似于高级程序设计语言中的switch语句，不同的是，它根据输入参数的类型来进行分支选择，而不是输入参数的值。typeswitch($customer/billing-address)case$aaselement(*, USAddress) return$a/statecase$aaselement(*, CanadaAddress) return$a/provincecase$aaselement(*, JapanAddress) return$a/prefecture defaultreturn"unknown"在XQuery中编写自定义的函数nn在XQuery中，除了使用内置函数之外，还允许用户声明他们自己的函数。函数声明需要指定函数的名称、参数名称及数据类型、以及返回值的数据类型。nn函数定义的基本语法如下所示：FunctionDecl::= "declare" "function" QName"(" ParamList? ")" ("as" SequenceType)? (EnclosedExpr| "external") ParamList::= Param("," Param)* Param::= "$" QNameTypeDeclaration? TypeDeclaration::= "as" SequenceTypexqueryversion"1.0";declarefunctionHelloWorld() asxs:stringreturn"Hello World!"HelloWorld( )xqueryversion"1.0";declarefunctionlocal:HelloWorld() asxs:string{"Hello World!"};local:HelloWorld()模块的定义以及导入nn模块是一组函数或变量的命名的集合。可以将一组相关的函数和变量定义在某个模块中，然后在需要的时候导入并使用 模块的定义以及导入modulenamespacehello = "http://example.org/hello-function";declarefunctionhello:HelloWorld() asxs:string{"Hello World!"};declarevariable$hello:piasxs:double:=3.141592653589793;module1.xquery xqueryversion"1.0";importmodulenamespacemod1 = http://example.org/hello-functionat"module1.xquery";<result><function-call>{mod1:HelloWorld()}</function-call><showVariable>{$mod1:pi}</showVariable> </result>MainQuery.xquery <result><function-call>Hello World!</function-call><showVariable>3.14159265358979</showVariable> </result>在XQuery中声明命名空间NamespaceDecl ::= "declare" "namespace" NCName "=" URILiteral xqueryversion"1.0";declarenamespacehere ="www.example.org";declarefunctionhere:HelloWorld() asxs:string{"Hello World!"};here:HelloWorld()xqueryversion"1.0";declarenamespacehere = "http://example.org";<here:ele>Element </here:ele><here:elexmlns:here="http://example.org">Element </here:ele>xqueryversion"1.0";declaredefaultelementnamespace"http://example.org/names";<ele>Element </ele><elexmlns="http://example.org/names">Element </ele>使用外部XML Schemann在XQuery中，有时候我们需要使用与目标XML文档相关联的XML Schema来提供数据的类型信息（XQuery实际上是对经过模式验证后的信息集PSVI 进行操作）。nn有时候目标XML文档并没有指定任何关联的Schema模式，而需要使用某些外部XML Schema来完成两项任务。qq第一，对输入的XML数据进行验证，从而确保原始数据的有效性，并充分地利用Schema中的结构信息完成相关的操作；qq第二，对输出的XML数据进行验证，从而确保所得结果的有效性。导入和使用Schema nn导入了一个没有目标命名空间的Schema文件，指定了该文件的位置，并将缺省的元素/类型命名空间指定为空。importschemadefaultelementnamespace""at"http://example.org/xyz.xsd
+```modulenamespacehello = "http://example.org/hello-function";declarefunctionhello:HelloWorld() asxs:string{"Hello World!"};declarevariable$hello:piasxs:double:=3.141592653589793;module1.xquery xqueryversion"1.0";importmodulenamespacemod1 = http://example.org/hello-functionat"module1.xquery";<result><function-call>{mod1:HelloWorld()}</function-call><showVariable>{$mod1:pi}</showVariable> </result>MainQuery.xquery <result><function-call>Hello World!</function-call><showVariable>3.14159265358979</showVariable> </result>
+```
+####在XQuery中声明命名空间
+```
+NamespaceDecl ::= "declare" "namespace" NCName "=" URILiteral xqueryversion"1.0";declarenamespacehere ="www.example.org";declarefunctionhere:HelloWorld() asxs:string{"Hello World!"};here:HelloWorld()xqueryversion"1.0";declarenamespacehere = "http://example.org";<here:ele>Element </here:ele><here:elexmlns:here="http://example.org">Element </here:ele>xqueryversion"1.0";declaredefaultelementnamespace"http://example.org/names";<ele>Element </ele><elexmlns="http://example.org/names">Element </ele>
+```
+####使用外部XML Schema
+* 在XQuery中，有时候我们需要使用与目标XML文档相关联的XML Schema来提供数据的类型信息（XQuery实际上是对经过模式验证后的信息集PSVI 进行操作）。
+* 有时候目标XML文档并没有指定任何关联的Schema模式，而需要使用某些外部XML Schema来完成两项任务。
+ + 第一，对输入的XML数据进行验证，从而确保原始数据的有效性，并充分地利用Schema中的结构信息完成相关的操作；
+ + 第二，对输出的XML数据进行验证，从而确保所得结果的有效性。
+####导入和使用Schema 
+* 导入了一个没有目标命名空间的Schema文件，指定了该文件的位置，并将缺省的元素/类型命名空间指定为空。importschemadefaultelementnamespace""at"http://example.org/xyz.xsd
 
 
