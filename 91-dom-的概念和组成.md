@@ -53,7 +53,60 @@
  + 注意：在DOM中每个元素的字符数据（元素值）也是一个Node对象。
 
 
-NodeList和Node示例import javax.xml.parsers.*; import org.w3c.dom.*; public class TestNode{ public static void main(String args[ ]){ try{ DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); DocumentBuilder builder=factory.newDocumentBuilder(); Document doc=builder.parse("test.xml"); NodeList list=doc.getElementsByTagName("student"); for (int i=0;i<list.getLength();i++){ Element node=(Element)list.item(i); System.out.print("name: "); System.out.println (node.getElementsByTagName ("name").item(0).getFirstChild().getNodeValue()); System.out.print("age: "); System.out.println (node.getElementsByTagName("age"). item(0).getFirstChild().getNodeValue()); System.out.print("address: "); System.out.println (node.getElementsByTagName ("address").item(0).getFirstChild().getNodeValue()); System.out.println();} }catch(Exception e){e.printStackTrace();} } } 打印address元素的信息 打印元素name的信息打印age元素的信息 test.xml文件的内容如下：<class> <student> <name>zhangsan</name> <age>20</age> <address>china</address> </student> <student> <name>lisi</name> <age>25</age> <address>china</address> </student> </class> 运行效果图NamedNodeMap接口实现NamedNodeMap接口的对象用于表示可以通过名称访问的节点的集合。NamedNodeMap表示的是一组节点和其唯一名称的一一对应关系，这个接口主要用在属性节点的表示上。在实现NamedNodeMap的对象中所包含的Node对象还可以通过顺序索引进行访问，但并不意味着DOM指定这些节点的顺序。在DOM中NamedNodeMap对象也是不断变化的。NamedNodeMap接口主要方法 NamedNodeMap接口主要有以下几种方法：int getLength()方法：返回该NamedNodeMap对象中的节点数。Node getNamedItem(String name)方法：返回名称为name的节点。Node getNamedItemNS(String namespaceURI, String localName)方法：返回通过本地名称和名称空间URI所指定的节点。Node removeNamedItemNS(String namespaceURI, String localName)方法：移除通过本地名称和名称空间URI所指定的节点。Node item(int index)方法：返回索引值为index的项。Node removeNamedItem(String name)方法：移除名称为name的节点。Node setNamedItemNS(Node arg)方法：使用其namespaceURI和localName添加节点。
+NodeList和Node示例
+```
+import javax.xml.parsers.*; 
+import org.w3c.dom.*;
+public class TestNode{
+    public static void main(String args[ ]){ 
+        try{ 
+                DocumentBuilderFactory factory =             
+                DocumentBuilderFactory.newInstance(); 
+                DocumentBuilder builder=factory.newDocumentBuilder();
+                Document doc=builder.parse("test.xml"); 
+                NodeList list=doc.getElementsByTagName("student");
+                for(int i=0;i<list.getLength();i++){ 
+                    Element node=(Element)list.item(i);
+                    System.out.print("name: "); 
+                    System.out.println (node.getElementsByTagName ("name").item(0).getFirstChild().getNodeValue()); 
+                    System.out.print("age: ");
+                    System.out.println (node.getElementsByTagName("age"). item(0).getFirstChild().getNodeValue());
+                     System.out.print("address: ");
+                     System.out.println (node.getElementsByTagName ("address").item(0).getFirstChild().getNodeValue()); 
+                    System.out.println();
+                }
+        }catch(Exception e){
+            e.printStackTrace();
+        } 
+    } 
+} 
+```
+ + test.xml文件的内容如下：
+```
+<class>
+    <student>
+        <name>zhangsan</name>
+        <age>20</age>
+        <address>china</address>
+    </student>
+    <student>
+        <name>lisi</name>
+        <age>25</age>
+        <address>china</address>
+    </student>
+</class>
++ 运行效果图
+![](/assets/9_2.bmp)
+![](/assets/9_7.png)
+####DOm的使用
+
+
+
+
+
+
+
+NamedNodeMap接口实现NamedNodeMap接口的对象用于表示可以通过名称访问的节点的集合。NamedNodeMap表示的是一组节点和其唯一名称的一一对应关系，这个接口主要用在属性节点的表示上。在实现NamedNodeMap的对象中所包含的Node对象还可以通过顺序索引进行访问，但并不意味着DOM指定这些节点的顺序。在DOM中NamedNodeMap对象也是不断变化的。NamedNodeMap接口主要方法 NamedNodeMap接口主要有以下几种方法：int getLength()方法：返回该NamedNodeMap对象中的节点数。Node getNamedItem(String name)方法：返回名称为name的节点。Node getNamedItemNS(String namespaceURI, String localName)方法：返回通过本地名称和名称空间URI所指定的节点。Node removeNamedItemNS(String namespaceURI, String localName)方法：移除通过本地名称和名称空间URI所指定的节点。Node item(int index)方法：返回索引值为index的项。Node removeNamedItem(String name)方法：移除名称为name的节点。Node setNamedItemNS(Node arg)方法：使用其namespaceURI和localName添加节点。
 
 import javax.xml.parsers.*; import org.w3c.dom.*; public class TestNamedNodeMap{ public static void main(String args[ ]){ try{ DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); DocumentBuilder builder=factory.newDocumentBuilder(); Document doc=builder.parse("student.xml"); NodeList list=doc.getElementsByTagName("student"); for (int i=0;i<list.getLength();i++){ Node node=list.item(i); NamedNodeMap np=node.getAttributes(); System.out.println("第"+(i+1) +"个student元素的属性信息："); for(int j=0;j<np.getLength();j++){ Node attr=np.item(j); System.out.println(attr.getNodeName()+"=" +attr.getNodeValue()+""); } System.out.println(); }}catch(Exception e){e.printStackTrace();} } } 获得属性集合<class> <student id="A002" name="zhangsan" age="24"></student> <student id="D002" name="lisi" age="23"></student> </class> 运行效果图student.xml的文件内容如下：15/4/2216childNodesattributes Node ParentNode PreviouSibling (前1兄弟) nextSibling (后1兄弟) NodeList NameNodeMap DOM的使用使用DOM解析XML文档并打印<?xml version="1.0" encoding="UTF-8"?> <PEOPLE> <PERSON PERSONID="E01" age="30"> <NAME>Tony Blaa</NAME> <ADDRESS>10 Downing Street, London, UK</ADDRESS> <TEL>(061) 98765</TEL> <EMAIL>blair@everywhere.com</EMAIL> </PERSON> <PERSON PERSONID="E02" sex="F"> <NAME>Bill Clinton</NAME> <ADDRESS>White House, USA</ADDRESS> <TEL>(001) 6400 98765</TEL> <EMAIL>bill@everywhere.com</EMAIL> </PERSON> <PERSON PERSONID="E03" age="25"> <NAME>Tom Cruise</NAME> <ADDRESS>57 Jumbo Street, New York, USA</ADDRESS> <TEL>(001) 4500 67859</TEL> <EMAIL>cruise@everywhere.com</EMAIL> </PERSON> <PERSON PERSONID="E04" sex="F"> <NAME>Linda Goodman</NAME> <ADDRESS>78 Crax Lane, London, UK</ADDRESS> <TEL>(061) 54 56789</TEL> <EMAIL>linda@everywhere.com</EMAIL> </PERSON> </PEOPLE>
 
@@ -66,4 +119,52 @@ import javax.xml.parsers.*; import org.w3c.dom.*; public class DomJiexi1{ public
 
 
 
-使用JDOM编写XML文档import java.io.*; import org.jdom.*; import org.jdom.input.*; import org.jdom.output.*; public class TestJDOM2{ public void Create() { try { Document doc = new Document(); Element root = new Element("根元素"); doc.setRootElement(root); Element el1 = new Element("first"); el1.setAttribute("属性", "属性值"); Text text1=new Text("字符数据"); Element em = new Element("second").addContent("元素二"); el1.addContent(text1); el1.addContent(em); Element el2 = new Element("third").addContent("元素三"); root.addContent(el1); root.addContent(el2); XMLOutputter outputter = new XMLOutputter("\t",true); outputter.setEncoding("gb2312"); outputter.output(doc, System.out); }catch(Exception e) { System.out.println(e); } } public static void main(String args[ ]) { new TestJDOM2 ().Create(); } } 缩进，自动换行中文处理15/4/2228DOM应用 必须通过一种计算机语言,在WEB页面中，广泛使用的是：VBScriptVB的一个子集 JavaScript由sun和Netscape公司联合 推出的脚本语言 http://www.w3.org/TR/REC-DOM-Level-1/ecma-script-language-binding.html15/4/2229W3C对DOM定义的支持 nnLevel 0:可使用JavaScript访问HTML nnLevel 1:允许访问除DTD、样式表以外，XML文档的所有部分 nnLevel 2:尚未推出，或许允许访问DTD、样式表、命名空间。15/4/2230DOM 结构模型 DOM对象映射了XML文档的树型结构 XML分析器对XML文档分析后，其中的信息被转化成一棵对象节点树。titleDocumenttitlebooksbookbookbook bookinfoRecomen- dationresumechapter bookinforesumeRecomen- dation capter authorpublishprice titlepara publisherISBNpubdate IDbookcategoryamountremainamount矩形表示节点 椭圆表示属性 根节点含根元素处理指令等 15/4/2231创建Document对象 nn对于VB：或者 qqDim xmlDom As DOMDocument qqSet xmlDom = New DOMDocument nn对于ASP(VBScript)：qqset xmlDom =Server.CreateObject("MSXML2.DOMDocument.4.0")15/4/2232创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>建立XML DOM对象 15/4/2233创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>设置xmlDom的async为false,即异步为假，保证XML解析器暂停执行，直到XML文件加载完成15/4/2234创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>加载XML文件 15/4/2235创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>加载的XML文件名 任何XML文件都可加载 15/4/2236创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>
+####使用JDOM编写XML文档
+```
+import java.io.*;
+import org.jdom.*;
+import org.jdom.input.*;
+import org.jdom.output.*;
+    public class TestJDOM2{ public void Create() {
+        try {
+            Document doc = new Document();
+            Element root = new Element("根元素");
+            doc.setRootElement(root);
+            Element el1 = new Element("first");
+            el1.setAttribute("属性", "属性值");
+            Text text1=new Text("字符数据");
+            Element em = new Element("second").addContent("元素二");             
+            el1.addContent(text1);
+            el1.addContent(em);
+            Element el2 = new Element("third").addContent("元素三"); 
+            root.addContent(el1);
+            root.addContent(el2);
+            XMLOutputter outputter = new XMLOutputter("\t",true);             
+            outputter.setEncoding("gb2312");
+            outputter.output(doc, System.out); 
+        }catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+    public static void main(String args[ ]) {
+        new TestJDOM2 ().Create();
+    } 
+} 
+```
+####DOM应用
+必须通过一种计算机语言,在WEB页面中，广泛使用的是：
+VBScriptVB的一个子集
+ JavaScript由sun和Netscape公司联合 推出的脚本语言 
+http://www.w3.org/TR/REC-DOM-Level-1/ecma-script-language-binding.html
+####W3C对DOM定义的支持 
+* Level 0:可使用JavaScript访问HTML 
+* Level 1:允许访问除DTD、样式表以外，XML文档的所有部分
+* Level 2:尚未推出，或许允许访问DTD、样式表、命名空间。
+####DOM 结构模型 
+* DOM对象映射了XML文档的树型结构
+* XML分析器对XML文档分析后，其中的信息被转化成一棵对象节点树。
+
+##图9.7
+
+
+矩形表示节点 椭圆表示属性 根节点含根元素处理指令等 15/4/2231创建Document对象 nn对于VB：或者 qqDim xmlDom As DOMDocument qqSet xmlDom = New DOMDocument nn对于ASP(VBScript)：qqset xmlDom =Server.CreateObject("MSXML2.DOMDocument.4.0")15/4/2232创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>建立XML DOM对象 15/4/2233创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>设置xmlDom的async为false,即异步为假，保证XML解析器暂停执行，直到XML文件加载完成15/4/2234创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>加载XML文件 15/4/2235创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>加载的XML文件名 任何XML文件都可加载 15/4/2236创建Document对象 <SCRIPT language="VBScript"> set xmlDom = CreateObject("MSXML2.DOMDocument.4.0") xmlDom.async = "false" xmlDom.load("code9_1.xml") for each ddd in xmlDom.documentElement.childNodes document.write("<TR><TD>" & ddd.nodename & "</TD>") document.write("<TD>" & ddd.text & "</TD></TR>") next </SCRIPT>
