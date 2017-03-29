@@ -51,5 +51,5 @@ else{
    visits=parseInt(visits)+1;
 }
 setCookie("counter", visits, now)
-document.write("您是到访的第" + visits + "位用户！")
+document.write("阅读量：" + visits)
 </script>
