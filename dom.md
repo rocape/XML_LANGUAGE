@@ -2,34 +2,6 @@
 ####了解DOM 
 * DOM是Document Object Model的缩写，即文档对象模型。W3C已于2000年11月13日推出了DOM level 2规范。DOM是HTML和XML文档的编程接口规范，它与平台和语言是无关的，因而可以用各种语言和在各种平台上实现。该模型定义了HTML和XML文件在内存中文档结构，提供了对HTML和XML文件的访问、存取方法。利用DOM规范，可以实现DOM文档和XML之间的相互转换，对相应DOM文档的内容进行遍历或其他操作。如果要自由的操纵XML文件，就要用到DOM规范。DOM的原理简单的说，就是通过解析XML文档，为XML文档在逻辑上建立一个树模型，树的节点是一个个对象。我们通过存取这些对象就能够操作XML文档中的内容了。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
@@ -44,11 +16,13 @@ function Preview(obj) {
 </script>
 </head>
 <BODY leftMargin=0 marginwidth="0" >
-<TEXTAREA id=code1 style="WIDTH: 560px; HEIGHT: 200px"> 这里是你想运行的代码区域</TEXTAREA>
+<TEXTAREA id=code1 style="WIDTH: 560px; HEIGHT: 200px"> 请输入代码</TEXTAREA>
 <BR>
 <BUTTON onclick=Preview(code1)>Run</BUTTON>
 </body>
 </html>
+
+
 http://10.10.1.254
 
 
