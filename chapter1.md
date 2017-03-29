@@ -1,5 +1,4 @@
-<html>
-<head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <script type="text/javascript" language="javascript" >
 var nicEditorConfig = bkClass.extend({
@@ -47,5 +46,4 @@ var nicEditorConfig = bkClass.extend({
 ;
 </script>
 </head>
-</body>
-</html>
+
