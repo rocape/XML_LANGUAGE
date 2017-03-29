@@ -18,8 +18,7 @@ var visits;//以下设置COOKIES时间为1年,自己随便设置该时间..
 expdate.setTime(expdate.getTime()+(24*60*60*1000*365));
 if(!(visits=GetCookie("visits")))
 visits=0;visits++;SetCookie("visits",visits,expdate,"/",null,false);//以下信息显示可以使用标准的HTML语法,自己随便设置。
-//document.write("阅读量："+"<FONT COLOR=red>"+visits+"</FONT>");
+document.write("阅读量："+"<FONT COLOR=red>"+visits+"</FONT>");
+document.close(); 
 //-->
-
 </SCRIPT>
-阅读量：<FONT COLOR=red>+visits+</FONT>
