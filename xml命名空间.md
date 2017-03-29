@@ -11,18 +11,15 @@ break;
 {visits=0;SetCookie("visits",visits,expdate,"/",null,false);location.reload();}
 //-->
 </SCRIPT>
-<SCRIPT language="JavaScript"><!--
+<SCRIPT language="JavaScript">
+<!--
 var expdate=new Date();
 var visits;//以下设置COOKIES时间为1年,自己随便设置该时间..
 expdate.setTime(expdate.getTime()+(24*60*60*1000*365));
 if(!(visits=GetCookie("visits")))
 visits=0;visits++;SetCookie("visits",visits,expdate,"/",null,false);//以下信息显示可以使用标准的HTML语法,自己随便设置。
-document.write("你已经光临本页"+"<FONT COLOR=red>"+visits+"</FONT>"+"次！");if(visits==1)//来访1次的信息显示
-document.write("<br>"+"欢迎光临本站，觉得本站内容如何？");if(visits==2)//来访2次的信息显示，以下类推，自己随便增加。
-document.write("<br>"+"再次光临不胜容幸!今后要常来啊！欢迎订阅本站邮件列表。");if(visits==3)
-document.write("<br>"+"常客，在本站的论坛发个帖子如何？");if(visits==4)
-document.write("<br>"+"你这个疯子!");if(visits>=5)
-document.write("<br>"+"疯狂的家伙!我真的非常喜欢你。");
+//document.write("阅读量："+"<FONT COLOR=red>"+visits+"</FONT>");
 //-->
 
 </SCRIPT>
+阅读量：<FONT COLOR=red>+visits+</FONT>
