@@ -1,10 +1,3 @@
 {
-    "title":"XML教程"
-    "author":"兰州大学信息学院 王明贵"
-    "description":"本教程主要是为了一起学习XML，愉快的编程，如有不足之处，请大家多多指教！" 
-    "links" : {
-      "sidebar" : {
-        "Github" : "https://github.com/wmgcy199464/XML_LANGUAGE"
-        }
-    }
+    "title" : "XML教程"
 }
