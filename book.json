@@ -11,7 +11,6 @@
 
   	"plugins": [
 		"disqus",
-		"duoshuo",
 		"github",
 		"github-buttons",
 		"editlink",
@@ -24,10 +23,6 @@
  	"pluginsConfig": {
 		"disqus": {
 			"shortName": "XML教程"
-		},
-		"duoshuo" : {
-			"shortName" : "贴",
-			"theme" : "default"
 		},
 		"github": {
 			"url": "https://github.com/wmgcy199464"
