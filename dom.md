@@ -17,12 +17,3 @@ function Preview(obj) {
 <br/>
 <button onclick=Preview(code1)>Run</button>
 </body>
-
-
-
-http://10.10.1.254
-
-
-
-
-
