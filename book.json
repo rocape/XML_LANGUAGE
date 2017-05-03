@@ -22,7 +22,7 @@
 	],
  	"pluginsConfig": {
 		"disqus": {
-			"shortName": "xmllanguage"
+			"shortName": "xml_language"
 		},
 		"github": {
 			"url": "https://github.com/wmgcy199464"
