@@ -121,8 +121,14 @@
 ```
 
 <script type="text/javascript" src="xmlRun.js">
-var code1='<book>'+'\n'+'<author>'+'\n'+'<firstname>tom</firstname>'+'\n'+'<lastname>hanks</lastname>'+'\n'+'</author>'+'\n'+'......'+'\n'+'</book>';
 </script>
+<input type="text" id="code1" value="<book>
+ <author>
+ <firstname>tom</firstname>
+ <lastname>hanks</lastname>
+ </author>
+ ......
+</book>">
 <button onclick=Preview(code1)>Test</button>
 
 
