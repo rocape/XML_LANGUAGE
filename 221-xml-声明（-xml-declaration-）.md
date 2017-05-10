@@ -121,7 +121,7 @@
 ```
 
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<script type="text/javascript" src="./xmlRun.js"  >
+<script type="text/javascript" src="https://github.com/wmgcy199464/XML_LANGUAGE/blob/master/xmlRun.js"  >
 </script>
 <textarea id=code1 style="WIDTH: 560px; height: 200px"> 请输入代码</textarea>
 <br/>
