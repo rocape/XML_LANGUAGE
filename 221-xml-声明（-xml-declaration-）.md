@@ -121,17 +121,8 @@
 ```
 
 <script type="text/javascript" src="xmlRun.js">
+var code1='<book>'+'\n'+'<author>'+'\n'+'<firstname>tom</firstname>'+'\n'+'<lastname>hanks</lastname>'+'\n'+'</author>'+'\n'+'......'+'\n'+'</book>';
 </script>
-<textarea id=code1 style="WIDTH: 560px; height: 200px"> 
- <book>
-    <author>
-        <firstname>tom</firstname>
-        <lastname>hanks</lastname>
-    </author>
-    ......
-</book>
-</textarea>
-<br/>
 <button onclick=Preview(code1)>Test</button>
 
 
