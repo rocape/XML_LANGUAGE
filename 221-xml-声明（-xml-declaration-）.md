@@ -120,12 +120,27 @@
 </book>
 ```
 
-<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<script type="text/javascript" src="https://github.com/wmgcy199464/XML_LANGUAGE/blob/master/xmlRun.js"  >
+<script type="text/javascript" language="javascript" >
+//运行文本域代码
+function Preview(obj) {
+ var TestWin=window.open('','',''); //打开一个窗口并赋给变量TestWin。
+ TestWin.opener = null // 防止代码对论谈页面修改
+ TestWin.document.write(obj.value); //向这个打开的窗口中写入代码code，这样就实现了运行代码功能。
+ TestWin.document.close();
+}
 </script>
-<textarea id=code1 style="WIDTH: 560px; height: 200px"> 请输入代码</textarea>
+<textarea id=code1 style="WIDTH: 560px; height: 200px"> 
+<book>
+    <author>
+        <firstname>tom</firstname>
+        <lastname>hanks</lastname>
+    </author>
+    ......
+</book>
+
+</textarea>
 <br/>
-<button onclick=Preview(code1)>Test</button>
+<button onclick=Preview(code1)>Run</button>
 
 
 
