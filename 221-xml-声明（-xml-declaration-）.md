@@ -135,7 +135,6 @@ function Preview(){
 <button onclick=Preview()>Test</button>
 
 
-
 * 那么在实际使用时，应该选择哪一种方式呢？
 
 * 对于简单的标量数据（无结构的数据），可以采用属性，否则应该采用子元素。
@@ -147,6 +146,7 @@ function Preview(){
     ......
 </book>
 ```
+
 <script type="text/javascript" language="javascript">
 function Preview(){
  var TestWin=window.open('','Test',''); 
@@ -158,10 +158,9 @@ function Preview(){
  TestWin.document.write(str4);
  TestWin.document.close();
 }
-
 </script>
-
 <button onclick=Preview()>Test</button>
+
 * 这种方法修改了元数据的内容，即属性名称本身，可能会影响到已经编写的用于解析该文档的应用程序。所以，使用子元素的方案在可扩展性方面更好。
 `
 <book author1="tom hanks"author2="mike jimmy">...</book>
