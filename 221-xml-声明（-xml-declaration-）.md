@@ -130,13 +130,13 @@ function Preview(obj) {
 }
 </script>
 <textarea id=code1 style="WIDTH: 560px; height: 200px"> 
-"<book>
+ <book>
     <author>
         <firstname>tom</firstname>
         <lastname>hanks</lastname>
     </author>
     ......
-</book>"
+</book>
 </textarea>
 <br/>
 <button onclick=Preview(code1)>Test</button>
