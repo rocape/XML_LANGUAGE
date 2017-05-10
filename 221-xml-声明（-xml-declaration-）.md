@@ -137,7 +137,6 @@ function Preview(obj) {
     </author>
     ......
 </book>
-
 </textarea>
 <br/>
 <button onclick=Preview(code1)>Test</button>
