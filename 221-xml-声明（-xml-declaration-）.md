@@ -140,7 +140,7 @@ function Preview(obj) {
 
 </textarea>
 <br/>
-<button onclick=Preview(code1)>Run</button>
+<button onclick=Preview(code1)>Test</button>
 
 
 
