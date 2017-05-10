@@ -121,7 +121,7 @@
 ```
 
 <script type="text/javascript" language="javascript">
-Preview(){
+function Preview(){
  var TestWin=window.open('','Test',''); 
  TestWin.opener = null;
  var str1='<?xml version="1.0" encoding="UTF-8"?>';
@@ -129,7 +129,8 @@ Preview(){
  var str3='<book>'+'\n'+'<author>'+'\n'+'<firstname>tom</firstname>'+'\n'+'<lastname>hanks</lastname>'+'\n'+'</author>'+'\n'+'......'+'\n'+'</book>';
  var str4=str1+'\n'+str2+'\n'+str3;
  TestWin.document.write(str4);
- TestWin.document.close();}
+ TestWin.document.close();
+}
 </script>
 <button onclick=Preview()>Test</button>
 
