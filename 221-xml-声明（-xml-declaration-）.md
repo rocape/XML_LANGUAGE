@@ -120,16 +120,18 @@
 </book>
 ```
 
-<script type="text/javascript" src="xmlRun.js">
+<script type="text/javascript" language="javascript">
+Preview(){
+ var TestWin=window.open('','Test',''); 
+ TestWin.opener = null;
+ var str1='<?xml version="1.0" encoding="UTF-8"?>';
+ var str2='<?xml-stylesheet type="text/css" href="student.css"?>';
+ var str3='<book>'+'\n'+'<author>'+'\n'+'<firstname>tom</firstname>'+'\n'+'<lastname>hanks</lastname>'+'\n'+'</author>'+'\n'+'......'+'\n'+'</book>';
+ var str4=str1+'\n'+str2+'\n'+str3;
+ TestWin.document.write(str4);
+ TestWin.document.close();}
 </script>
-<input type="text" id="code1" value="<book>
- <author>
- <firstname>tom</firstname>
- <lastname>hanks</lastname>
- </author>
- ......
-</book>">
-<button onclick=Preview(code1)>Test</button>
+<button onclick=Preview()>Test</button>
 
 
 
