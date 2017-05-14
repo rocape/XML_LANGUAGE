@@ -134,6 +134,11 @@ function Preview(){
 </script>
 <button onclick=Preview()>Test</button>
 
+<script type="text/javascript" src="testXml.js">
+</script>
+<textarea id="code" width:400px height:300px>请输入代码</textarea>
+<button onclick=validateXML(code)>Test</button>
+
 
 * 那么在实际使用时，应该选择哪一种方式呢？
 
