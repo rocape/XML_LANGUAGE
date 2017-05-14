@@ -124,8 +124,8 @@ function Preview(){
 alert("Hello");
 }
 </script>
-<textarea style="width:400px height:180px" id=code>请输入代码</textarea>
-<button onclick=Preview()>Test</button>
+<textarea style="width:400px;height:180px" id=code>请输入代码</textarea>
+<button onclick=Preview(code)>Test</button>
 
 
 
