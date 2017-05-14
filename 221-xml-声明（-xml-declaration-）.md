@@ -119,7 +119,7 @@
     ......
 </book>
 ```
-<script type="text/javascript" src="testxml.js">
+<script src="testxml.js">
 </script>
 <button onclick=demo()>Test</button>
 
