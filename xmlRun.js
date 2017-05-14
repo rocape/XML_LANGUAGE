@@ -1,6 +1,4 @@
-
-function validateXML(xmlcode)
+function preview(xmlcode)
 {
-	alert(xmlcode.value);
 	alert("Hello");
 }
