@@ -122,7 +122,7 @@
 <script type="text/javascript" src="xmlRun.js">
 </script>
 <textarea style="width:600px;height:180px" id=code>请输入代码</textarea>
-<button onclick=Preview(code)>Test</button>
+<button onclick=preview(code)>Test</button>
 
 
 
