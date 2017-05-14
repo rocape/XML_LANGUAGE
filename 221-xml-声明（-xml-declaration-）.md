@@ -136,7 +136,7 @@ function Preview(){
 
 <script type="text/javascript" src="testXml.js">
 </script>
-<textarea id="code" width:400px height:300px>请输入代码</textarea>
+<textarea id=code style="width:400px;height:300px">请输入代码</textarea>
 <button onclick=validateXML(code)>Test</button>
 
 
