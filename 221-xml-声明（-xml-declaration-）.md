@@ -124,9 +124,6 @@
 <textarea style="width:600px;height:180px" id=code>请输入代码</textarea>
 <button onclick=preview(code)>Test</button>
 
-
-
-
 * 那么在实际使用时，应该选择哪一种方式呢？
 
 * 对于简单的标量数据（无结构的数据），可以采用属性，否则应该采用子元素。
