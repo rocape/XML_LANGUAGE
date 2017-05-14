@@ -122,6 +122,7 @@
 <script type="text/javascript" src="xmlRun.js">
 </script>
 <textarea style="width:600px;height:180px" id=code>请输入代码</textarea>
+<br/>
 <button onclick=preview(code)>Test</button>
 
 * 那么在实际使用时，应该选择哪一种方式呢？
