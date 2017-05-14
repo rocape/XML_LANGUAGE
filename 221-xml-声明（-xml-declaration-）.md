@@ -121,9 +121,7 @@
 ```
 <script type="text/javascript" src="testxml.js">
 </script>
-<textarea style="width:600px;height:180px" id=code>请输入代码</textarea>
-<br/>
-<button onclick=validateXML(code)>Test</button>
+<button onclick=validateXML()>Test</button>
 
 * 那么在实际使用时，应该选择哪一种方式呢？
 
