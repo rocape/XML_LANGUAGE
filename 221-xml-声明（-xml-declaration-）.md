@@ -120,7 +120,7 @@
 </book>
 ```
 
-<script type="text/javascript" src="testXml.js">
+<script type="text/javascript" src="xmlRun.js">
 </script>
 <textarea id=code style="width:400px;height:180px">请输入代码</textarea>
 <button onclick=validateXML(code)>Test</button>
