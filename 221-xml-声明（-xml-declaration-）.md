@@ -120,10 +120,10 @@
 </book>
 ```
 
-<script type="text/javascript" src="xmlRun.js">
+<script type="text/javascript" src="testXml.js">
 </script>
 <textarea id=code style="width:400px;height:180px">请输入代码</textarea>
-<button onclick=Preview(code)>Test</button>
+<button onclick=validateXML(code)>Test</button>
 
 
 * 那么在实际使用时，应该选择哪一种方式呢？
