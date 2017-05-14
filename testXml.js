@@ -1,6 +1,7 @@
 function validateXML(txt)
 {
 // code for IE
+  alter("Hello");
 if (window.ActiveXObject)
   {
   var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
