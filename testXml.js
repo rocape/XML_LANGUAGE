@@ -4,6 +4,7 @@ function validateXML(xmlcode)
     var xmlDoc,errorMessage,errorCode = 0;
     // code for IE
 	  var xmlContent=xmlcode.value;
+	alert(xmlContent);
     if(window.ActiveXObject)
     {
         xmlDoc  = new ActiveXObject("Microsoft.XMLDOM");
