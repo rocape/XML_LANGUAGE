@@ -119,12 +119,9 @@
     ......
 </book>
 ```
-<script type="text/javascript" language="javascript">
-function Preview(){
-alert("Hello");
-}
+<script type="text/javascript" src="xmlRun.js">
 </script>
-<textarea style="width:400px;height:180px" id=code>请输入代码</textarea>
+<textarea style="width:600px;height:180px" id=code>请输入代码</textarea>
 <button onclick=Preview(code)>Test</button>
 
 
