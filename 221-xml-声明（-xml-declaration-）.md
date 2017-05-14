@@ -121,7 +121,7 @@
 ```
 <script type="text/javascript" src="testxml.js">
 </script>
-<button onclick=validateXML()>Test</button>
+<button onclick=demo()>Test</button>
 
 * 那么在实际使用时，应该选择哪一种方式呢？
 
