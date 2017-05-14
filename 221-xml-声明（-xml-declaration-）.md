@@ -120,23 +120,9 @@
 </book>
 ```
 
-<script type="text/javascript" language="javascript">
-function Preview(){
- var TestWin=window.open('','Test',''); 
- TestWin.opener = null;
- var str1='<?xml version="1.0" encoding="UTF-8"?>';
- var str2='<?xml-stylesheet type="text/css" href="student.css"?>';
- var str3='<book>'+'\n'+'<author>'+'\n'+'<firstname>tom</firstname>'+'\n'+'<lastname>hanks</lastname>'+'\n'+'</author>'+'\n'+'......'+'\n'+'</book>';
- var str4=str1+'\n'+str2+'\n'+str3;
- TestWin.document.write(str4);
- TestWin.document.close();
-}
-</script>
-<button onclick=Preview()>Test</button>
-
 <script type="text/javascript" src="testXml.js">
 </script>
-<textarea id=code style="width:400px;height:300px">请输入代码</textarea>
+<textarea id=code style="width:400px;height:180px">请输入代码</textarea>
 <button onclick=validateXML(code)>Test</button>
 
 
