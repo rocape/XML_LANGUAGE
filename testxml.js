@@ -1,4 +1,4 @@
-function validateXML(xmlcode)
+function validateXML()
 {
   alert("Hello");
  }
