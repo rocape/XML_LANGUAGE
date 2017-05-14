@@ -1,4 +1,4 @@
-function validateXML()
+function demo()
 {
   alert("Hello");
  }
