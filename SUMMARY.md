@@ -1,7 +1,4 @@
-# Summary
-
-## 第一部分
-
+# Table of contents
 * [绪论](绪论.md)
 * [第一章 XML的发展背景及原因](README.md)
   * [1.1XML诞生的背景](11xml诞生的背景.md)
